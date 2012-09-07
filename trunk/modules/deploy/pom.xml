@@ -1,0 +1,109 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>org.jowidgets.modeler.deploy.modules</artifactId>
+	<packaging>pom</packaging>
+	<name>${project.artifactId}</name>
+
+	<parent>
+		<groupId>org.jowidgets.modeler</groupId>
+		<artifactId>org.jowidgets.modeler.parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
+
+	<properties>
+		<deploy.dir>../../deploy</deploy.dir>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.4.1</version>
+				<executions>
+					<execution>
+						<id>auto-clean</id>
+						<phase>package</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+						<configuration>
+							<filesets>
+								<fileset>
+									<directory>${deploy.dir}</directory>
+									<includes>
+										<include>**/*.war</include>
+									</includes>
+									<followSymlinks>false</followSymlinks>
+								</fileset>
+							</filesets>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.2</version>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+							
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>org.jowidgets.modeler.starter.webapp.h2</artifactId>
+									<version>${project.version}</version>
+									<type>war</type>
+									<overWrite>true</overWrite>
+									<destFileName>modeler-h2.war</destFileName>
+									<outputDirectory>${deploy.dir}</outputDirectory>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>org.jowidgets.modeler.starter.webapp.rwt.h2</artifactId>
+									<version>${project.version}</version>
+									<type>war</type>
+									<overWrite>true</overWrite>
+									<destFileName>modeler-h2-web.war</destFileName>
+									<outputDirectory>${deploy.dir}</outputDirectory>
+								</artifactItem>
+							
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>org.jowidgets.modeler.starter.webapp.oracle</artifactId>
+									<version>${project.version}</version>
+									<type>war</type>
+									<overWrite>true</overWrite>
+									<destFileName>modeler-oracle.war</destFileName>
+									<outputDirectory>${deploy.dir}</outputDirectory>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>org.jowidgets.modeler.starter.webapp.rwt.oracle</artifactId>
+									<version>${project.version}</version>
+									<type>war</type>
+									<overWrite>true</overWrite>
+									<destFileName>modeler-oracle-web.war</destFileName>
+									<outputDirectory>${deploy.dir}</outputDirectory>
+								</artifactItem>
+
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
