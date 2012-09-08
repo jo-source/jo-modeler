@@ -31,32 +31,46 @@ package org.jowidgets.modeler.service.descriptor;
 import org.jowidgets.cap.common.api.bean.IBeanPropertyBluePrint;
 import org.jowidgets.cap.common.api.sort.Sort;
 import org.jowidgets.i18n.api.IMessage;
-import org.jowidgets.modeler.common.bean.IEntity;
+import org.jowidgets.modeler.common.bean.IEntityModel;
 import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
 import org.jowidgets.util.Assert;
 
-public final class EntityDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
+public final class EntityModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
 
-	public EntityDtoDescriptorBuilder() {
-		super(IEntity.class);
+	public EntityModelDtoDescriptorBuilder() {
+		super(IEntityModel.class);
 
-		setLabelSingular(getMessage("entity"));
-		setLabelPlural(getMessage("entities"));
-		setRenderingPattern("$" + IEntity.NAME_PROPERTY + "$");
-		setDefaultSorting(Sort.create(IEntity.NAME_PROPERTY));
+		setLabelSingular(getMessage("label.singular"));
+		setLabelPlural(getMessage("label.plural"));
+		setRenderingPattern("$" + IEntityModel.NAME_PROPERTY + "$");
+		setDefaultSorting(Sort.create(IEntityModel.NAME_PROPERTY));
 
 		addIdProperty();
 
-		final IBeanPropertyBluePrint propertyBp = addProperty(IEntity.NAME_PROPERTY);
+		IBeanPropertyBluePrint propertyBp = addProperty(IEntityModel.NAME_PROPERTY);
 		propertyBp.setLabel(getMessage("name.label"));
 		propertyBp.setDescription(getMessage("name.description"));
 		propertyBp.setMandatory(true);
+
+		propertyBp = addProperty(IEntityModel.LABEL_SINGULAR_PROPERTY);
+		propertyBp.setLabel(getMessage("labelSingular.label"));
+		propertyBp.setDescription(getMessage("labelSingular.description"));
+		propertyBp.setMandatory(true);
+
+		propertyBp = addProperty(IEntityModel.LABEL_PLURAL_PROPERTY);
+		propertyBp.setLabel(getMessage("labelPlural.label"));
+		propertyBp.setDescription(getMessage("labelPlural.description"));
+		propertyBp.setMandatory(true);
+
+		propertyBp = addProperty(IEntityModel.RENDERING_PATTERN_PROPERTY);
+		propertyBp.setLabel(getMessage("renderingPattern.label"));
+		propertyBp.setDescription(getMessage("renderingPattern.description"));
 
 		addVersionProperty();
 	}
 
 	private static IMessage getMessage(final String keySuffix) {
 		Assert.paramNotEmpty(keySuffix, "keySuffix");
-		return ModelerEntityMessages.getMessage("EntityDtoDescriptorBuilder." + keySuffix);
+		return ModelerEntityMessages.getMessage("EntityModelDtoDescriptorBuilder." + keySuffix);
 	}
 }

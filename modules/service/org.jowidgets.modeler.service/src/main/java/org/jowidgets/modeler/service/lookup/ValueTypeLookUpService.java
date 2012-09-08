@@ -26,44 +26,48 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.common.security;
+package org.jowidgets.modeler.service.lookup;
 
-import java.lang.reflect.Field;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public final class ModelerAuthKeys {
+import org.jowidgets.cap.common.api.CapCommonToolkit;
+import org.jowidgets.cap.common.api.execution.IExecutionCallback;
+import org.jowidgets.cap.common.api.lookup.ILookUpEntry;
+import org.jowidgets.cap.common.api.lookup.ILookUpToolkit;
+import org.jowidgets.cap.service.api.adapter.ISyncLookUpService;
 
-	//CRUD services
-	public static final String CREATE_ENTITY_MODEL = "CREATE_ENTITY_MODEL";
-	public static final String READ_ENTITY_MODEL = "READ_ENTITY_MODEL";
-	public static final String UPDATE_ENTITY_MODEL = "UPDATE_ENTITY_MODEL";
-	public static final String DELETE_ENTITY_MODEL = "DELETE_ENTITY_MODEL";
+public final class ValueTypeLookUpService implements ISyncLookUpService {
 
-	public static final String CREATE_PROPERTY_MODEL = "CREATE_PROPERTY_MODEL";
-	public static final String READ_PROPERTY_MODEL = "READ_PROPERTY_MODEL";
-	public static final String UPDATE_PROPERTY_MODEL = "UPDATE_PROPERTY_MODEL";
-	public static final String DELETE_PROPERTY_MODEL = "DELETE_PROPERTY_MODEL";
+	public static final String STRING_KEY = String.class.getName();
+	public static final String LONG_KEY = Long.class.getName();
+	public static final String INTEGER_KEY = Integer.class.getName();
+	public static final String DOUBLE_KEY = Double.class.getName();
+	public static final String DATE_KEY = Date.class.getName();
 
-	//Authorizations collection
-	public static final Collection<String> ALL_AUTHORIZATIONS = createAuthorizations();
+	private static List<ILookUpEntry> entries;
 
-	private ModelerAuthKeys() {}
-
-	private static List<String> createAuthorizations() {
-		final List<String> result = new LinkedList<String>();
-		for (final Field field : ModelerAuthKeys.class.getDeclaredFields()) {
-			if (field.getType().equals(String.class)) {
-				try {
-					result.add((String) field.get(ModelerAuthKeys.class));
-				}
-				catch (final Exception e) {
-					throw new RuntimeException(e);
-				}
-			}
+	@Override
+	public List<ILookUpEntry> readValues(final IExecutionCallback executionCallback) {
+		if (entries == null) {
+			entries = createEntries();
 		}
-		return result;
+		return entries;
+	}
+
+	private static List<ILookUpEntry> createEntries() {
+		final ILookUpToolkit lookUpToolkit = CapCommonToolkit.lookUpToolkit();
+		final List<ILookUpEntry> result = new LinkedList<ILookUpEntry>();
+
+		result.add(lookUpToolkit.lookUpEntry(STRING_KEY, "String"));
+		result.add(lookUpToolkit.lookUpEntry(INTEGER_KEY, "Integer"));
+		result.add(lookUpToolkit.lookUpEntry(LONG_KEY, "Long"));
+		result.add(lookUpToolkit.lookUpEntry(DOUBLE_KEY, "Double"));
+		result.add(lookUpToolkit.lookUpEntry(DATE_KEY, "Date"));
+
+		return Collections.unmodifiableList(result);
 	}
 
 }

@@ -30,6 +30,8 @@ package org.jowidgets.modeler.common.bean;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -40,18 +42,38 @@ import org.jowidgets.cap.security.common.api.annotation.ReadAuthorization;
 import org.jowidgets.cap.security.common.api.annotation.UpdateAuthorization;
 import org.jowidgets.modeler.common.security.ModelerAuthKeys;
 
-@CreateAuthorization(ModelerAuthKeys.CREATE_ENTITY)
-@ReadAuthorization(ModelerAuthKeys.READ_ENTITY)
-@UpdateAuthorization(ModelerAuthKeys.UPDATE_ENTITY)
-@DeleteAuthorization(ModelerAuthKeys.DELETE_ENTITY)
-public interface IEntity extends IBean {
+@CreateAuthorization(ModelerAuthKeys.CREATE_PROPERTY_MODEL)
+@ReadAuthorization(ModelerAuthKeys.READ_PROPERTY_MODEL)
+@UpdateAuthorization(ModelerAuthKeys.UPDATE_PROPERTY_MODEL)
+@DeleteAuthorization(ModelerAuthKeys.DELETE_PROPERTY_MODEL)
+public interface IPropertyModel extends IBean {
 
 	String NAME_PROPERTY = "name";
+	String LABEL_PROPERTY = "label";
+	String LABEL_LONG_PROPERTY = "labelLong";
+	String DESCRIPTION_PROPERTY = "description";
+	String VISIBLE_PROPERTY = "visible";
+	String MANDATORY_PROPERTY = "mandatory";
+	String EDITABLE_PROPERTY = "editable";
+	String SEARCHABLE_PROPERTY = "searchable";
+	String ELEMENT_VALUE_TYPE_PROPERTY = "elementValueType";
+	String COLLECTION_PROPERTY = "collection";
+	String TABLE_WIDTH_PROPERTY = "tableWidth";
 
 	List<String> ALL_PROPERTIES = new LinkedList<String>() {
 		private static final long serialVersionUID = 1L;
 		{
 			add(NAME_PROPERTY);
+			add(LABEL_PROPERTY);
+			add(LABEL_LONG_PROPERTY);
+			add(DESCRIPTION_PROPERTY);
+			add(VISIBLE_PROPERTY);
+			add(MANDATORY_PROPERTY);
+			add(EDITABLE_PROPERTY);
+			add(SEARCHABLE_PROPERTY);
+			add(COLLECTION_PROPERTY);
+			add(ELEMENT_VALUE_TYPE_PROPERTY);
+			add(TABLE_WIDTH_PROPERTY);
 		}
 	};
 
@@ -61,4 +83,56 @@ public interface IEntity extends IBean {
 
 	void setName(String name);
 
+	@NotNull
+	@Size(min = 1, max = 25)
+	String getLabel();
+
+	void setLabel(String label);
+
+	@Size(min = 1, max = 40)
+	String getLabelLong();
+
+	void setLabelLong(String labelLong);
+
+	@Size(min = 1, max = 100)
+	String getDescription();
+
+	void setDescription(String description);
+
+	@NotNull
+	Boolean getVisible();
+
+	void setVisible(Boolean visible);
+
+	@NotNull
+	Boolean getMandatory();
+
+	void setMandatory(Boolean mandatory);
+
+	@NotNull
+	Boolean getEditable();
+
+	void setEditable(Boolean editable);
+
+	@NotNull
+	Boolean getSearchable();
+
+	void setSearchable(Boolean searchable);
+
+	@NotNull
+	Boolean getCollection();
+
+	void setCollection(Boolean collection);
+
+	@NotNull
+	@Size(min = 1, max = 500)
+	String getElementValueType();
+
+	void setElementValueType(String type);
+
+	@Min(0)
+	@Max(500)
+	Integer getTableWidth();
+
+	void setTableWidth(Integer width);
 }

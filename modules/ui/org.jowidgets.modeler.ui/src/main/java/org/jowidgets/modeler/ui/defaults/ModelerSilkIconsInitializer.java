@@ -44,7 +44,8 @@ public final class ModelerSilkIconsInitializer {
 		final IImageRegistry registry = Toolkit.getImageRegistry();
 
 		registry.registerImageConstant(ModelerIcons.MODELER_ICON, SilkIcons.TABLE);
-		registry.registerImageConstant(ModelerIcons.ENTITY, SilkIcons.TABLE);
+		registry.registerImageConstant(ModelerIcons.ENTITY_MODEL, SilkIcons.TABLE);
+		registry.registerImageConstant(ModelerIcons.PROPERTY_MODEL, SilkIcons.TEXTFIELD);
 	}
 
 }

@@ -25,45 +25,59 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+package org.jowidgets.modeler.common.bean;
 
-package org.jowidgets.modeler.common.security;
-
-import java.lang.reflect.Field;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-public final class ModelerAuthKeys {
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-	//CRUD services
-	public static final String CREATE_ENTITY_MODEL = "CREATE_ENTITY_MODEL";
-	public static final String READ_ENTITY_MODEL = "READ_ENTITY_MODEL";
-	public static final String UPDATE_ENTITY_MODEL = "UPDATE_ENTITY_MODEL";
-	public static final String DELETE_ENTITY_MODEL = "DELETE_ENTITY_MODEL";
+import org.jowidgets.cap.common.api.bean.IBean;
+import org.jowidgets.cap.security.common.api.annotation.CreateAuthorization;
+import org.jowidgets.cap.security.common.api.annotation.DeleteAuthorization;
+import org.jowidgets.cap.security.common.api.annotation.ReadAuthorization;
+import org.jowidgets.cap.security.common.api.annotation.UpdateAuthorization;
+import org.jowidgets.modeler.common.security.ModelerAuthKeys;
 
-	public static final String CREATE_PROPERTY_MODEL = "CREATE_PROPERTY_MODEL";
-	public static final String READ_PROPERTY_MODEL = "READ_PROPERTY_MODEL";
-	public static final String UPDATE_PROPERTY_MODEL = "UPDATE_PROPERTY_MODEL";
-	public static final String DELETE_PROPERTY_MODEL = "DELETE_PROPERTY_MODEL";
+@CreateAuthorization(ModelerAuthKeys.CREATE_ENTITY_MODEL)
+@ReadAuthorization(ModelerAuthKeys.READ_ENTITY_MODEL)
+@UpdateAuthorization(ModelerAuthKeys.UPDATE_ENTITY_MODEL)
+@DeleteAuthorization(ModelerAuthKeys.DELETE_ENTITY_MODEL)
+public interface IEntityModel extends IBean {
 
-	//Authorizations collection
-	public static final Collection<String> ALL_AUTHORIZATIONS = createAuthorizations();
+	String NAME_PROPERTY = "name";
+	String LABEL_SINGULAR_PROPERTY = "labelSingular";
+	String LABEL_PLURAL_PROPERTY = "labelPlural";
+	String RENDERING_PATTERN_PROPERTY = "renderingPattern";
 
-	private ModelerAuthKeys() {}
-
-	private static List<String> createAuthorizations() {
-		final List<String> result = new LinkedList<String>();
-		for (final Field field : ModelerAuthKeys.class.getDeclaredFields()) {
-			if (field.getType().equals(String.class)) {
-				try {
-					result.add((String) field.get(ModelerAuthKeys.class));
-				}
-				catch (final Exception e) {
-					throw new RuntimeException(e);
-				}
-			}
+	List<String> ALL_PROPERTIES = new LinkedList<String>() {
+		private static final long serialVersionUID = 1L;
+		{
+			add(NAME_PROPERTY);
 		}
-		return result;
-	}
+	};
 
+	@NotNull
+	@Size(min = 2, max = 25)
+	String getName();
+
+	void setName(String name);
+
+	@NotNull
+	@Size(min = 2, max = 25)
+	String getLabelSingular();
+
+	void setLabelSingular(String label);
+
+	@NotNull
+	@Size(min = 2, max = 25)
+	String getLabelPlural();
+
+	void setLabelPlural(String label);
+
+	@Size(min = 2, max = 100)
+	String getRenderingPattern();
+
+	void setRenderingPattern(String pattern);
 }

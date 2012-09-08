@@ -31,8 +31,10 @@ package org.jowidgets.modeler.service.entity;
 import org.jowidgets.cap.service.api.entity.IBeanEntityBluePrint;
 import org.jowidgets.cap.service.jpa.tools.entity.JpaEntityServiceBuilderWrapper;
 import org.jowidgets.modeler.common.entity.EntityIds;
-import org.jowidgets.modeler.service.descriptor.EntityDtoDescriptorBuilder;
-import org.jowidgets.modeler.service.persistence.bean.EntityImpl;
+import org.jowidgets.modeler.service.descriptor.EntityModelDtoDescriptorBuilder;
+import org.jowidgets.modeler.service.descriptor.PropertyModelDtoDescriptorBuilder;
+import org.jowidgets.modeler.service.persistence.bean.EntityModel;
+import org.jowidgets.modeler.service.persistence.bean.PropertyModel;
 import org.jowidgets.service.api.IServiceRegistry;
 
 public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWrapper {
@@ -41,8 +43,12 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 		super(registry);
 
 		//IEntity
-		final IBeanEntityBluePrint entityBp = addEntity().setEntityId(EntityIds.ENTITY).setBeanType(EntityImpl.class);
-		entityBp.setDtoDescriptor(new EntityDtoDescriptorBuilder());
+		IBeanEntityBluePrint entityBp = addEntity().setEntityId(EntityIds.ENTITY_MODEL).setBeanType(EntityModel.class);
+		entityBp.setDtoDescriptor(new EntityModelDtoDescriptorBuilder());
+
+		//IProperty
+		entityBp = addEntity().setEntityId(EntityIds.PROPERTY_MODEL).setBeanType(PropertyModel.class);
+		entityBp.setDtoDescriptor(new PropertyModelDtoDescriptorBuilder());
 	}
 
 }
