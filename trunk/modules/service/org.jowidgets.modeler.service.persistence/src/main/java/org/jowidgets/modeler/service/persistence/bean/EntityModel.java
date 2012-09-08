@@ -63,6 +63,14 @@ public class EntityModel extends Bean implements IEntityModel {
 	@BatchSize(size = 1000)
 	private final Set<EntityModelPropertyModelLink> entityModelPropertyModelLinks = new HashSet<EntityModelPropertyModelLink>();
 
+	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "destinationEntityModel")
+	@BatchSize(size = 1000)
+	private final Set<RelationModel> destinationEntityOfSourceEntityRelation = new HashSet<RelationModel>();
+
+	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "sourceEntityModel")
+	@BatchSize(size = 1000)
+	private final Set<RelationModel> sourceEntityOfDestinationEntityRelation = new HashSet<RelationModel>();;
+
 	@Override
 	public String getName() {
 		return name;

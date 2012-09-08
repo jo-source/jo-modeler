@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -37,13 +37,17 @@ import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
 import org.jowidgets.modeler.common.lookup.LookUpIds;
 import org.jowidgets.util.Assert;
 
-public final class RelationModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
+public class RelationModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
 
 	public RelationModelDtoDescriptorBuilder() {
+		this("label.singular", "label.plural");
+	}
+
+	public RelationModelDtoDescriptorBuilder(final String labelSingularKey, final String labelPluralKey) {
 		super(IRelationModel.class);
 
-		setLabelSingular(getMessage("label.singular"));
-		setLabelPlural(getMessage("label.plural"));
+		setLabelSingular(getMessage(labelSingularKey));
+		setLabelPlural(getMessage(labelPluralKey));
 		setRenderingPattern("$" + IRelationModel.NAME_PROPERTY + "$");
 		setDefaultSorting(Sort.create(IRelationModel.NAME_PROPERTY));
 
