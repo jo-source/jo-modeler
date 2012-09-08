@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -35,13 +35,17 @@ import org.jowidgets.modeler.common.bean.IEntityModel;
 import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
 import org.jowidgets.util.Assert;
 
-public final class EntityModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
+public class EntityModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
 
 	public EntityModelDtoDescriptorBuilder() {
+		this("label.singular", "label.plural");
+	}
+
+	public EntityModelDtoDescriptorBuilder(final String labelSingularKey, final String labelPluralKey) {
 		super(IEntityModel.class);
 
-		setLabelSingular(getMessage("label.singular"));
-		setLabelPlural(getMessage("label.plural"));
+		setLabelSingular(getMessage(labelSingularKey));
+		setLabelPlural(getMessage(labelPluralKey));
 		setRenderingPattern("$" + IEntityModel.NAME_PROPERTY + "$");
 		setDefaultSorting(Sort.create(IEntityModel.NAME_PROPERTY));
 

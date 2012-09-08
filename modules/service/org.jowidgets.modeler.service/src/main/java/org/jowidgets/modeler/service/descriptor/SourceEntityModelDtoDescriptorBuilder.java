@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,25 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.common.entity;
+package org.jowidgets.modeler.service.descriptor;
 
-public enum EntityIds {
+public final class SourceEntityModelDtoDescriptorBuilder extends EntityModelDtoDescriptorBuilder {
 
-	ENTITY_MODEL,
-	PROPERTY_MODEL,
-	RELATION_MODEL,
-
-	ENTITY_MODEL_PROPERTY_MODEL_LINK,
-
-	LINKED_PROPERTY_MODEL_OF_ENTITY_MODEL,
-	LINKABLE_PROPERTY_MODEL_OF_ENTITY_MODEL,
-	LINKED_ENTITY_MODEL_OF_PROPERTY_MODEL,
-	LINKABLE_ENTITY_MODEL_OF_PROPERTY_MODEL,
-
-	LINKED_RELATION_MODEL_OF_ENTITY_MODEL,
-	LINKABLE_ENTITY_MODEL_OF_ENTITY_MODEL,
-
-	SOURCE_ENTITY_MODEL_OF_RELATION_MODEL,
-	DESTINATION_ENTITY_MODEL_OF_RELATION_MODEL;
+	public SourceEntityModelDtoDescriptorBuilder() {
+		super("source.label.singular", "source.label.plural");
+	}
 
 }
