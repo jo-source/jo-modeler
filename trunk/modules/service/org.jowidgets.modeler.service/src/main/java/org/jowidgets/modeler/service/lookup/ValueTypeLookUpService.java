@@ -46,23 +46,15 @@ import org.jowidgets.modeler.service.persistence.bean.EntityModel;
 
 public final class ValueTypeLookUpService implements ISyncLookUpService {
 
+	public static final String ENTITY_VALUE_TYPE_KEY_PREFIX = "ENTITY_VALUE_TYPE_KEY:";
 	public static final String STRING_KEY = String.class.getName();
 	public static final String LONG_KEY = Long.class.getName();
 	public static final String INTEGER_KEY = Integer.class.getName();
 	public static final String DOUBLE_KEY = Double.class.getName();
 	public static final String DATE_KEY = Date.class.getName();
 
-	private static List<ILookUpEntry> entries;
-
 	@Override
 	public List<ILookUpEntry> readValues(final IExecutionCallback executionCallback) {
-		if (entries == null) {
-			entries = createEntries();
-		}
-		return entries;
-	}
-
-	private static List<ILookUpEntry> createEntries() {
 		final ILookUpToolkit lookUpToolkit = CapCommonToolkit.lookUpToolkit();
 		final List<ILookUpEntry> result = new LinkedList<ILookUpEntry>();
 
@@ -78,7 +70,7 @@ public final class ValueTypeLookUpService implements ISyncLookUpService {
 		criteriaQuery.from(EntityModel.class);
 
 		for (final EntityModel entity : em.createQuery(criteriaQuery).getResultList()) {
-			result.add(lookUpToolkit.lookUpEntry(entity.getId(), entity.getLabelSingular()));
+			result.add(lookUpToolkit.lookUpEntry(ENTITY_VALUE_TYPE_KEY_PREFIX + entity.getName(), entity.getLabelSingular()));
 		}
 
 		return Collections.unmodifiableList(result);

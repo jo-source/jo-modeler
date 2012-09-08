@@ -26,19 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.common.entity;
+package org.jowidgets.modeler.service.lookup;
 
-public enum EntityIds {
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
-	ENTITY_MODEL,
-	PROPERTY_MODEL,
-	RELATION_MODEL,
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaQuery;
 
-	ENTITY_MODEL_PROPERTY_MODEL_LINK,
+import org.jowidgets.cap.common.api.CapCommonToolkit;
+import org.jowidgets.cap.common.api.execution.IExecutionCallback;
+import org.jowidgets.cap.common.api.lookup.ILookUpEntry;
+import org.jowidgets.cap.common.api.lookup.ILookUpToolkit;
+import org.jowidgets.cap.service.api.adapter.ISyncLookUpService;
+import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
+import org.jowidgets.modeler.service.persistence.bean.EntityModel;
 
-	LINKED_PROPERTY_MODEL_OF_ENTITY_MODEL,
-	LINKABLE_PROPERTY_MODEL_OF_ENTITY_MODEL,
-	LINKED_ENTITY_MODEL_OF_PROPERTY_MODEL,
-	LINKABLE_ENTITY_MODEL_OF_PROPERTY_MODEL;
+public final class EntityModelsLookUpService implements ISyncLookUpService {
+
+	@Override
+	public List<ILookUpEntry> readValues(final IExecutionCallback executionCallback) {
+		final ILookUpToolkit lookUpToolkit = CapCommonToolkit.lookUpToolkit();
+		final List<ILookUpEntry> result = new LinkedList<ILookUpEntry>();
+
+		final EntityManager em = EntityManagerProvider.get();
+
+		final CriteriaQuery<EntityModel> criteriaQuery = em.getCriteriaBuilder().createQuery(EntityModel.class);
+		criteriaQuery.from(EntityModel.class);
+
+		for (final EntityModel entity : em.createQuery(criteriaQuery).getResultList()) {
+			result.add(lookUpToolkit.lookUpEntry(entity.getId(), entity.getLabelSingular()));
+		}
+
+		return Collections.unmodifiableList(result);
+	}
 
 }

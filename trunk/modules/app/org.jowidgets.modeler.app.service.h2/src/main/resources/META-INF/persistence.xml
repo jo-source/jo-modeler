@@ -17,7 +17,8 @@
 		<class>org.jowidgets.modeler.service.persistence.bean.EntityModel</class>
 		<class>org.jowidgets.modeler.service.persistence.bean.PropertyModel</class>
 		<class>org.jowidgets.modeler.service.persistence.bean.EntityModelPropertyModelLink</class>
-		
+		<class>org.jowidgets.modeler.service.persistence.bean.RelationModel</class>
+			
 		<properties>	
 			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
 			<property name="hibernate.connection.driver_class" value="org.h2.Driver"></property>		
