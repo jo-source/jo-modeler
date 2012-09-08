@@ -30,6 +30,7 @@ package org.jowidgets.modeler.common.entity;
 
 public enum EntityIds {
 
-	ENTITY
+	ENTITY_MODEL,
+	PROPERTY_MODEL;
 
 }

@@ -37,7 +37,9 @@ import org.jowidgets.cap.service.hibernate.api.HibernateServiceToolkit;
 import org.jowidgets.cap.service.jpa.api.IJpaServicesDecoratorProviderBuilder;
 import org.jowidgets.cap.service.jpa.api.JpaServiceToolkit;
 import org.jowidgets.cap.service.tools.CapServiceProviderBuilder;
+import org.jowidgets.modeler.common.lookup.LookUpIds;
 import org.jowidgets.modeler.service.entity.ModelerEntityServiceBuilder;
+import org.jowidgets.modeler.service.lookup.ValueTypeLookUpService;
 import org.jowidgets.service.api.IServicesDecoratorProvider;
 import org.jowidgets.useradmin.common.security.AuthorizationProviderServiceId;
 import org.jowidgets.useradmin.service.entity.UserAdminEntityServiceBuilder;
@@ -51,6 +53,8 @@ public abstract class AbstractModelerServiceProviderBuilder extends CapServicePr
 		addService(IPasswordChangeService.ID, new PasswordChangeServiceImpl());
 
 		addService(IEntityService.ID, createEntityService());
+
+		addLookUpService(LookUpIds.VALUE_TYPES, new ValueTypeLookUpService());
 
 		addServiceDecorator(createJpaServiceDecoratorProvider());
 		addServiceDecorator(createCancelServiceDecoratorProvider());

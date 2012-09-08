@@ -60,7 +60,8 @@ public final class ModelerApplicationFactory {
 	}
 
 	private static void createComponentTree(final IWorkbenchApplicationModelBuilder model) {
-		addEntityComponent(model, EntityIds.ENTITY, ModelerIcons.ENTITY);
+		addEntityComponent(model, EntityIds.ENTITY_MODEL, ModelerIcons.ENTITY_MODEL);
+		addEntityComponent(model, EntityIds.PROPERTY_MODEL, ModelerIcons.PROPERTY_MODEL);
 	}
 
 	private static void addEntityComponent(

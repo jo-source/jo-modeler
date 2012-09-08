@@ -14,7 +14,8 @@
 		<class>org.jowidgets.useradmin.service.persistence.bean.Role</class>
 		<class>org.jowidgets.useradmin.service.persistence.bean.RoleAuthorizationLink</class>
 		
-		<class>org.jowidgets.modeler.service.persistence.bean.EntityImpl</class>
+		<class>org.jowidgets.modeler.service.persistence.bean.EntityModel</class>
+		<class>org.jowidgets.modeler.service.persistence.bean.PropertyModel</class>
 		
 		<properties>	
 			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />

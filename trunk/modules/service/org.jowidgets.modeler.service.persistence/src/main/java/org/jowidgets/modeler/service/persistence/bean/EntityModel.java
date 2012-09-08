@@ -33,15 +33,24 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Index;
-import org.jowidgets.modeler.common.bean.IEntity;
+import org.jowidgets.modeler.common.bean.IEntityModel;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
-public class EntityImpl extends Bean implements IEntity {
+public class EntityModel extends Bean implements IEntityModel {
 
 	@Basic
 	@Index(name = "NameIndex")
 	private String name;
+
+	@Basic
+	private String labelSingular;
+
+	@Basic
+	private String labelPlural;
+
+	@Basic
+	private String renderingPattern;
 
 	@Override
 	public String getName() {
@@ -51,6 +60,36 @@ public class EntityImpl extends Bean implements IEntity {
 	@Override
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String getLabelSingular() {
+		return labelSingular;
+	}
+
+	@Override
+	public void setLabelSingular(final String labelSingular) {
+		this.labelSingular = labelSingular;
+	}
+
+	@Override
+	public String getLabelPlural() {
+		return labelPlural;
+	}
+
+	@Override
+	public void setLabelPlural(final String labelPlural) {
+		this.labelPlural = labelPlural;
+	}
+
+	@Override
+	public String getRenderingPattern() {
+		return renderingPattern;
+	}
+
+	@Override
+	public void setRenderingPattern(final String renderingPattern) {
+		this.renderingPattern = renderingPattern;
 	}
 
 }
