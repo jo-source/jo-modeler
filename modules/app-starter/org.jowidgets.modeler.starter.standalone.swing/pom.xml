@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>org.jowidgets.modeler.starter.standalone.swing</artifactId>
@@ -11,20 +12,26 @@
 	</parent>
 
 	<dependencies>
-	
+
 		<dependency>
 			<groupId>org.jowidgets.modeler</groupId>
 			<artifactId>org.jowidgets.modeler.starter.standalone.common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.cap.addons.widgets.graph.impl.prefuse.swing</artifactId>
+			<version>${jocap.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi.impl.swing</artifactId>
 			<version>${jowidgets.version}</version>
 		</dependency>
-		
+
 	</dependencies>
 
-	
+
 </project>

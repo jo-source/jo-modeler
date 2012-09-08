@@ -28,12 +28,20 @@
 
 package org.jowidgets.modeler.service.entity;
 
+import org.jowidgets.cap.common.api.service.IReaderService;
 import org.jowidgets.cap.service.api.entity.IBeanEntityBluePrint;
+import org.jowidgets.cap.service.api.entity.IBeanEntityLinkBluePrint;
+import org.jowidgets.cap.service.jpa.api.query.ICriteriaQueryCreatorBuilder;
+import org.jowidgets.cap.service.jpa.api.query.JpaQueryToolkit;
 import org.jowidgets.cap.service.jpa.tools.entity.JpaEntityServiceBuilderWrapper;
+import org.jowidgets.modeler.common.bean.IEntityModel;
+import org.jowidgets.modeler.common.bean.IEntityModelPropertyModelLink;
+import org.jowidgets.modeler.common.bean.IPropertyModel;
 import org.jowidgets.modeler.common.entity.EntityIds;
 import org.jowidgets.modeler.service.descriptor.EntityModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.PropertyModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.persistence.bean.EntityModel;
+import org.jowidgets.modeler.service.persistence.bean.EntityModelPropertyModelLink;
 import org.jowidgets.modeler.service.persistence.bean.PropertyModel;
 import org.jowidgets.service.api.IServiceRegistry;
 
@@ -42,13 +50,77 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 	public ModelerEntityServiceBuilder(final IServiceRegistry registry) {
 		super(registry);
 
-		//IEntity
+		//IEntityModel
 		IBeanEntityBluePrint entityBp = addEntity().setEntityId(EntityIds.ENTITY_MODEL).setBeanType(EntityModel.class);
 		entityBp.setDtoDescriptor(new EntityModelDtoDescriptorBuilder());
+		addEntityModelLinkDescriptors(entityBp);
 
-		//IProperty
+		//IPropertyModel
 		entityBp = addEntity().setEntityId(EntityIds.PROPERTY_MODEL).setBeanType(PropertyModel.class);
 		entityBp.setDtoDescriptor(new PropertyModelDtoDescriptorBuilder());
+		addPropertyModelLinkDescriptors(entityBp);
+
+		//Linked entity models of property models
+		entityBp = addEntity().setEntityId(EntityIds.LINKED_ENTITY_MODEL_OF_PROPERTY_MODEL).setBeanType(EntityModel.class);
+		entityBp.setDtoDescriptor(new EntityModelDtoDescriptorBuilder());
+		entityBp.setReaderService(createEntityModelOfPropertyModelReader(true));
+		addEntityModelLinkDescriptors(entityBp);
+
+		//Linkable entity models of property models
+		entityBp = addEntity().setEntityId(EntityIds.LINKABLE_ENTITY_MODEL_OF_PROPERTY_MODEL).setBeanType(EntityModel.class);
+		entityBp.setDtoDescriptor(new EntityModelDtoDescriptorBuilder());
+		entityBp.setReaderService(createEntityModelOfPropertyModelReader(false));
+
+		//Linked property models of entity models
+		entityBp = addEntity().setEntityId(EntityIds.LINKED_PROPERTY_MODEL_OF_ENTITY_MODEL).setBeanType(PropertyModel.class);
+		entityBp.setDtoDescriptor(new PropertyModelDtoDescriptorBuilder());
+		entityBp.setReaderService(createPropertyModelOfEntityModelReader(true));
+		addPropertyModelLinkDescriptors(entityBp);
+
+		//Linkable property models of entity models
+		entityBp = addEntity().setEntityId(EntityIds.LINKABLE_PROPERTY_MODEL_OF_ENTITY_MODEL).setBeanType(PropertyModel.class);
+		entityBp.setDtoDescriptor(new PropertyModelDtoDescriptorBuilder());
+		entityBp.setReaderService(createPropertyModelOfEntityModelReader(false));
+	}
+
+	private void addEntityModelLinkDescriptors(final IBeanEntityBluePrint entityBp) {
+		addEntityModelPropertyModelLinkDescriptor(entityBp);
+	}
+
+	private void addPropertyModelLinkDescriptors(final IBeanEntityBluePrint entityBp) {
+		addPropertyModelEntityModelLinkDescriptor(entityBp);
+	}
+
+	private void addEntityModelPropertyModelLinkDescriptor(final IBeanEntityBluePrint entityBp) {
+		final IBeanEntityLinkBluePrint bp = entityBp.addLink();
+		bp.setLinkEntityId(EntityIds.ENTITY_MODEL_PROPERTY_MODEL_LINK);
+		bp.setLinkBeanType(EntityModelPropertyModelLink.class);
+		bp.setLinkedEntityId(EntityIds.LINKED_PROPERTY_MODEL_OF_ENTITY_MODEL);
+		bp.setLinkableEntityId(EntityIds.LINKABLE_PROPERTY_MODEL_OF_ENTITY_MODEL);
+		bp.setSourceProperties(IEntityModelPropertyModelLink.ENTITY_MODEL_ID_PROPERTY);
+		bp.setDestinationProperties(IEntityModelPropertyModelLink.PROPERTY_MODEL_ID_PROPERTY);
+	}
+
+	private void addPropertyModelEntityModelLinkDescriptor(final IBeanEntityBluePrint entityBp) {
+		final IBeanEntityLinkBluePrint bp = entityBp.addLink();
+		bp.setLinkEntityId(EntityIds.ENTITY_MODEL_PROPERTY_MODEL_LINK);
+		bp.setLinkBeanType(EntityModelPropertyModelLink.class);
+		bp.setLinkedEntityId(EntityIds.LINKED_ENTITY_MODEL_OF_PROPERTY_MODEL);
+		bp.setLinkableEntityId(EntityIds.LINKABLE_ENTITY_MODEL_OF_PROPERTY_MODEL);
+		bp.setSourceProperties(IEntityModelPropertyModelLink.PROPERTY_MODEL_ID_PROPERTY);
+		bp.setDestinationProperties(IEntityModelPropertyModelLink.ENTITY_MODEL_ID_PROPERTY);
+	}
+
+	private IReaderService<Void> createPropertyModelOfEntityModelReader(final boolean linked) {
+		final ICriteriaQueryCreatorBuilder<Void> queryBuilder = JpaQueryToolkit.criteriaQueryCreatorBuilder(PropertyModel.class);
+		queryBuilder.setParentPropertyPath(linked, "entityModelPropertyModelLinks", "entityModel");
+		return getServiceFactory().readerService(PropertyModel.class, queryBuilder.build(), IPropertyModel.ALL_PROPERTIES);
+	}
+
+	private IReaderService<Void> createEntityModelOfPropertyModelReader(final boolean linked) {
+		final ICriteriaQueryCreatorBuilder<Void> queryBuilder = JpaQueryToolkit.criteriaQueryCreatorBuilder(EntityModel.class);
+		queryBuilder.setParentPropertyPath(linked, "entityModelPropertyModelLinks", "propertyModel");
+		return getServiceFactory().readerService(EntityModel.class, queryBuilder.build(), IEntityModel.ALL_PROPERTIES);
 	}
 
 }

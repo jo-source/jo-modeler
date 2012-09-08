@@ -56,8 +56,7 @@ public interface IPropertyModel extends IBean {
 	String MANDATORY_PROPERTY = "mandatory";
 	String EDITABLE_PROPERTY = "editable";
 	String SEARCHABLE_PROPERTY = "searchable";
-	String ELEMENT_VALUE_TYPE_PROPERTY = "elementValueType";
-	String COLLECTION_PROPERTY = "collection";
+	String VALUE_TYPE_PROPERTY = "valueType";
 	String TABLE_WIDTH_PROPERTY = "tableWidth";
 
 	List<String> ALL_PROPERTIES = new LinkedList<String>() {
@@ -71,8 +70,7 @@ public interface IPropertyModel extends IBean {
 			add(MANDATORY_PROPERTY);
 			add(EDITABLE_PROPERTY);
 			add(SEARCHABLE_PROPERTY);
-			add(COLLECTION_PROPERTY);
-			add(ELEMENT_VALUE_TYPE_PROPERTY);
+			add(VALUE_TYPE_PROPERTY);
 			add(TABLE_WIDTH_PROPERTY);
 		}
 	};
@@ -120,15 +118,10 @@ public interface IPropertyModel extends IBean {
 	void setSearchable(Boolean searchable);
 
 	@NotNull
-	Boolean getCollection();
-
-	void setCollection(Boolean collection);
-
-	@NotNull
 	@Size(min = 1, max = 500)
-	String getElementValueType();
+	String getValueType();
 
-	void setElementValueType(String type);
+	void setValueType(String type);
 
 	@Min(0)
 	@Max(500)

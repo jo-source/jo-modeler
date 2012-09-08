@@ -46,6 +46,11 @@ public final class ModelerAuthKeys {
 	public static final String UPDATE_PROPERTY_MODEL = "UPDATE_PROPERTY_MODEL";
 	public static final String DELETE_PROPERTY_MODEL = "DELETE_PROPERTY_MODEL";
 
+	public static final String CREATE_ENTITY_MODEL_PROPERTY_MODEL_LINK = "CREATE_ENTITY_MODEL_PROPERTY_MODEL_LINK";
+	public static final String READ_ENTITY_MODEL_PROPERTY_MODEL_LINK = "READ_ENTITY_MODEL_PROPERTY_MODEL_LINK";
+	public static final String UPDATE_ENTITY_MODEL_PROPERTY_MODEL_LINK = "UPDATE_ENTITY_MODEL_PROPERTY_MODEL_LINK";
+	public static final String DELETE_ENTITY_MODEL_PROPERTY_MODEL_LINK = "DELETE_ENTITY_MODEL_PROPERTY_MODEL_LINK";
+
 	//Authorizations collection
 	public static final Collection<String> ALL_AUTHORIZATIONS = createAuthorizations();
 

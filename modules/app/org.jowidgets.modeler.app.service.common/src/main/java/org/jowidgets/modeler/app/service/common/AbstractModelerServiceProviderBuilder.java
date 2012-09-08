@@ -29,6 +29,7 @@
 package org.jowidgets.modeler.app.service.common;
 
 import org.jowidgets.cap.common.api.service.IEntityService;
+import org.jowidgets.cap.common.api.service.ILookUpService;
 import org.jowidgets.cap.common.api.service.IPasswordChangeService;
 import org.jowidgets.cap.security.service.tools.DefaultAuthorizationProviderService;
 import org.jowidgets.cap.service.api.entity.EntityServiceComposite;
@@ -69,6 +70,7 @@ public abstract class AbstractModelerServiceProviderBuilder extends CapServicePr
 
 	private IServicesDecoratorProvider createJpaServiceDecoratorProvider() {
 		final IJpaServicesDecoratorProviderBuilder builder = JpaServiceToolkit.serviceDecoratorProviderBuilder(UseradminPersistenceUnitNames.USER_ADMIN);
+		builder.addEntityManagerServices(ILookUpService.class);
 		builder.addExceptionDecorator(HibernateServiceToolkit.exceptionDecorator());
 		onCreateJpaServiceDecoratorProvider(builder);
 		return builder.build();
