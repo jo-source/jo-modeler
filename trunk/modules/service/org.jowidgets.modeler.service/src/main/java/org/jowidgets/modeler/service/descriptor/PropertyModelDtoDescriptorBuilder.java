@@ -67,18 +67,12 @@ public final class PropertyModelDtoDescriptorBuilder extends AbstractDtoDescript
 		propertyBp.setLabel(getMessage("description.label"));
 		propertyBp.setDescription(getMessage("description.description"));
 
-		propertyBp = addProperty(IPropertyModel.ELEMENT_VALUE_TYPE_PROPERTY);
+		propertyBp = addProperty(IPropertyModel.VALUE_TYPE_PROPERTY);
 		propertyBp.setLabel(getMessage("elementValueType.label"));
 		propertyBp.setDescription(getMessage("elementValueType.description"));
 		propertyBp.setMandatory(true);
 		propertyBp.setLookUpValueRange(LookUpIds.VALUE_TYPES);
 		propertyBp.setDefaultValue(ValueTypeLookUpService.STRING_KEY);
-
-		propertyBp = addProperty(IPropertyModel.COLLECTION_PROPERTY);
-		propertyBp.setLabel(getMessage("collection.label"));
-		propertyBp.setDescription(getMessage("collection.description"));
-		propertyBp.setMandatory(true);
-		propertyBp.setDefaultValue(Boolean.FALSE);
 
 		propertyBp = addProperty(IPropertyModel.MANDATORY_PROPERTY);
 		propertyBp.setLabel(getMessage("mandatory.label"));

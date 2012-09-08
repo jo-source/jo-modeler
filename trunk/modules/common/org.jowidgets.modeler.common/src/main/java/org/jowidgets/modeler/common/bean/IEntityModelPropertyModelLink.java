@@ -30,9 +30,6 @@ package org.jowidgets.modeler.common.bean;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import org.jowidgets.cap.common.api.bean.IBean;
 import org.jowidgets.cap.security.common.api.annotation.CreateAuthorization;
 import org.jowidgets.cap.security.common.api.annotation.DeleteAuthorization;
@@ -40,47 +37,30 @@ import org.jowidgets.cap.security.common.api.annotation.ReadAuthorization;
 import org.jowidgets.cap.security.common.api.annotation.UpdateAuthorization;
 import org.jowidgets.modeler.common.security.ModelerAuthKeys;
 
-@CreateAuthorization(ModelerAuthKeys.CREATE_ENTITY_MODEL)
-@ReadAuthorization(ModelerAuthKeys.READ_ENTITY_MODEL)
-@UpdateAuthorization(ModelerAuthKeys.UPDATE_ENTITY_MODEL)
-@DeleteAuthorization(ModelerAuthKeys.DELETE_ENTITY_MODEL)
-public interface IEntityModel extends IBean {
+@CreateAuthorization(ModelerAuthKeys.CREATE_ENTITY_MODEL_PROPERTY_MODEL_LINK)
+@ReadAuthorization(ModelerAuthKeys.READ_ENTITY_MODEL_PROPERTY_MODEL_LINK)
+@UpdateAuthorization(ModelerAuthKeys.UPDATE_ENTITY_MODEL_PROPERTY_MODEL_LINK)
+@DeleteAuthorization(ModelerAuthKeys.DELETE_ENTITY_MODEL_PROPERTY_MODEL_LINK)
+public interface IEntityModelPropertyModelLink extends IBean {
 
-	String NAME_PROPERTY = "name";
-	String LABEL_SINGULAR_PROPERTY = "labelSingular";
-	String LABEL_PLURAL_PROPERTY = "labelPlural";
-	String RENDERING_PATTERN_PROPERTY = "renderingPattern";
+	String ENTITY_MODEL_ID_PROPERTY = "entityModelId";
+	String PROPERTY_MODEL_ID_PROPERTY = "propertyModelId";
 
 	List<String> ALL_PROPERTIES = new LinkedList<String>() {
 		private static final long serialVersionUID = 1L;
 		{
-			add(NAME_PROPERTY);
-			add(LABEL_SINGULAR_PROPERTY);
-			add(LABEL_PLURAL_PROPERTY);
-			add(RENDERING_PATTERN_PROPERTY);
+			add(ENTITY_MODEL_ID_PROPERTY);
+			add(PROPERTY_MODEL_ID_PROPERTY);
+			add(IBean.ID_PROPERTY);
+			add(IBean.VERSION_PROPERTY);
 		}
 	};
 
-	@NotNull
-	@Size(min = 2, max = 25)
-	String getName();
+	Long getEntityModelId();
 
-	void setName(String name);
+	void setEntityModelId(Long id);
 
-	@NotNull
-	@Size(min = 2, max = 25)
-	String getLabelSingular();
+	Long getPropertyModelId();
 
-	void setLabelSingular(String label);
-
-	@NotNull
-	@Size(min = 2, max = 25)
-	String getLabelPlural();
-
-	void setLabelPlural(String label);
-
-	@Size(min = 2, max = 100)
-	String getRenderingPattern();
-
-	void setRenderingPattern(String pattern);
+	void setPropertyModelId(final Long id);
 }

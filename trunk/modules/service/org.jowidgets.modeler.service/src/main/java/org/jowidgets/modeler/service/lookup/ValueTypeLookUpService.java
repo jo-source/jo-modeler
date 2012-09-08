@@ -33,11 +33,16 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaQuery;
+
 import org.jowidgets.cap.common.api.CapCommonToolkit;
 import org.jowidgets.cap.common.api.execution.IExecutionCallback;
 import org.jowidgets.cap.common.api.lookup.ILookUpEntry;
 import org.jowidgets.cap.common.api.lookup.ILookUpToolkit;
 import org.jowidgets.cap.service.api.adapter.ISyncLookUpService;
+import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
+import org.jowidgets.modeler.service.persistence.bean.EntityModel;
 
 public final class ValueTypeLookUpService implements ISyncLookUpService {
 
@@ -66,6 +71,15 @@ public final class ValueTypeLookUpService implements ISyncLookUpService {
 		result.add(lookUpToolkit.lookUpEntry(LONG_KEY, "Long"));
 		result.add(lookUpToolkit.lookUpEntry(DOUBLE_KEY, "Double"));
 		result.add(lookUpToolkit.lookUpEntry(DATE_KEY, "Date"));
+
+		final EntityManager em = EntityManagerProvider.get();
+
+		final CriteriaQuery<EntityModel> criteriaQuery = em.getCriteriaBuilder().createQuery(EntityModel.class);
+		criteriaQuery.from(EntityModel.class);
+
+		for (final EntityModel entity : em.createQuery(criteriaQuery).getResultList()) {
+			result.add(lookUpToolkit.lookUpEntry(entity.getId(), entity.getLabelSingular()));
+		}
 
 		return Collections.unmodifiableList(result);
 	}

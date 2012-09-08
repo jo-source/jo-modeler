@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2011, H.Westphal
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,80 +27,51 @@
  */
 package org.jowidgets.modeler.service.persistence.bean;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.Index;
-import org.jowidgets.modeler.common.bean.IEntityModel;
+import org.jowidgets.modeler.common.bean.IEntityModelPropertyModelLink;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
-public class EntityModel extends Bean implements IEntityModel {
+@Table(name = "ENTITY_MODEL_PROPERTY_MODEL_LINK")
+public class EntityModelPropertyModelLink extends Bean implements IEntityModelPropertyModelLink {
 
-	@Basic
-	@Index(name = "NameIndex")
-	private String name;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ENTITY_MODEL_ID", nullable = false, insertable = false, updatable = false)
+	private EntityModel entityModel;
 
-	@Basic
-	private String labelSingular;
+	@Column(name = "ENTITY_MODEL_ID", nullable = false)
+	private Long entityModelId;
 
-	@Basic
-	private String labelPlural;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PROPERTY_MODEL_ID", nullable = false, insertable = false, updatable = false)
+	private PropertyModel propertyModel;
 
-	@Basic
-	private String renderingPattern;
-
-	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "entityModel")
-	@BatchSize(size = 1000)
-	private final Set<EntityModelPropertyModelLink> entityModelPropertyModelLinks = new HashSet<EntityModelPropertyModelLink>();
+	@Column(name = "PROPERTY_MODEL_ID", nullable = false)
+	private Long propertyModelId;
 
 	@Override
-	public String getName() {
-		return name;
+	public Long getEntityModelId() {
+		return entityModelId;
 	}
 
 	@Override
-	public void setName(final String name) {
-		this.name = name;
+	public void setEntityModelId(final Long id) {
+		this.entityModelId = id;
 	}
 
 	@Override
-	public String getLabelSingular() {
-		return labelSingular;
+	public Long getPropertyModelId() {
+		return propertyModelId;
 	}
 
 	@Override
-	public void setLabelSingular(final String labelSingular) {
-		this.labelSingular = labelSingular;
-	}
-
-	@Override
-	public String getLabelPlural() {
-		return labelPlural;
-	}
-
-	@Override
-	public void setLabelPlural(final String labelPlural) {
-		this.labelPlural = labelPlural;
-	}
-
-	@Override
-	public String getRenderingPattern() {
-		return renderingPattern;
-	}
-
-	@Override
-	public void setRenderingPattern(final String renderingPattern) {
-		this.renderingPattern = renderingPattern;
+	public void setPropertyModelId(final Long id) {
+		this.propertyModelId = id;
 	}
 
 }

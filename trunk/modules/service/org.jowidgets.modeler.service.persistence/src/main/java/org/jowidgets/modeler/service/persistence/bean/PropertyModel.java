@@ -27,11 +27,18 @@
  */
 package org.jowidgets.modeler.service.persistence.bean;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Index;
 import org.jowidgets.modeler.common.bean.IPropertyModel;
 
@@ -65,13 +72,14 @@ public class PropertyModel extends Bean implements IPropertyModel {
 	private Boolean searchable;
 
 	@Basic
-	private Boolean collection;
-
-	@Basic
-	private String elementValueType;
+	private String valueType;
 
 	@Basic
 	private Integer tableWidth;
+
+	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "propertyModel")
+	@BatchSize(size = 1000)
+	private final Set<EntityModelPropertyModelLink> entityModelPropertyModelLinks = new HashSet<EntityModelPropertyModelLink>();
 
 	@Override
 	public String getName() {
@@ -154,23 +162,13 @@ public class PropertyModel extends Bean implements IPropertyModel {
 	}
 
 	@Override
-	public Boolean getCollection() {
-		return collection;
+	public String getValueType() {
+		return valueType;
 	}
 
 	@Override
-	public void setCollection(final Boolean collection) {
-		this.collection = collection;
-	}
-
-	@Override
-	public String getElementValueType() {
-		return elementValueType;
-	}
-
-	@Override
-	public void setElementValueType(final String elementValueType) {
-		this.elementValueType = elementValueType;
+	public void setValueType(final String valueType) {
+		this.valueType = valueType;
 	}
 
 	@Override
