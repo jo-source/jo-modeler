@@ -8,6 +8,7 @@ package org.jowidgets.modeler.common.lookup;
 
 public enum LookUpIds {
 
-	VALUE_TYPES
+	VALUE_TYPES,
+	ENTITY_MODELS;
 
 }
