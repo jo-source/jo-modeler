@@ -48,7 +48,13 @@ public class RelationModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuil
 
 		setLabelSingular(getMessage(labelSingularKey));
 		setLabelPlural(getMessage(labelPluralKey));
-		setRenderingPattern("$" + IRelationModel.NAME_PROPERTY + "$");
+		setRenderingPattern("$"
+			+ IRelationModel.SOURCE_ENTITY_MODEL_ID_PROPERTY
+			+ "$ $"
+			+ IRelationModel.LABEL_PROPERTY
+			+ "$ $"
+			+ IRelationModel.DESTINATION_ENTITY_MODEL_ID_PROPERTY
+			+ "$");
 		setDefaultSorting(Sort.create(IRelationModel.NAME_PROPERTY));
 
 		addIdProperty();
