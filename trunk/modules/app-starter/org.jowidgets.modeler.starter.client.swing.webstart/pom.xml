@@ -49,7 +49,7 @@
                     </sign>
 					<jnlp>
 						<outputFile>modeler_client_swing.jnlp</outputFile>
-						<mainClass>org.jowidgets.modeler.starter.client.swing.UserAdminStarterClientSwing</mainClass>
+						<mainClass>org.jowidgets.modeler.starter.client.swing.ModelerStarterClientSwing</mainClass>
 					</jnlp>
 				</configuration>
 			</plugin>
