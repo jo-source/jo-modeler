@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -42,17 +42,17 @@ import org.jowidgets.modeler.common.lookup.LookUpIds;
 import org.jowidgets.modeler.service.entity.ModelerEntityServiceBuilder;
 import org.jowidgets.modeler.service.lookup.EntityModelsLookUpService;
 import org.jowidgets.modeler.service.lookup.ValueTypeLookUpService;
+import org.jowidgets.modeler.service.persistence.ModelerPersistenceUnitNames;
 import org.jowidgets.service.api.IServicesDecoratorProvider;
 import org.jowidgets.useradmin.common.security.AuthorizationProviderServiceId;
 import org.jowidgets.useradmin.service.entity.UserAdminEntityServiceBuilder;
 import org.jowidgets.useradmin.service.password.PasswordChangeServiceImpl;
-import org.jowidgets.useradmin.service.persistence.UseradminPersistenceUnitNames;
 
 public abstract class AbstractModelerServiceProviderBuilder extends CapServiceProviderBuilder {
 
 	public AbstractModelerServiceProviderBuilder() {
 		addService(AuthorizationProviderServiceId.ID, new DefaultAuthorizationProviderService<String>());
-		addService(IPasswordChangeService.ID, new PasswordChangeServiceImpl());
+		addService(IPasswordChangeService.ID, new PasswordChangeServiceImpl(ModelerPersistenceUnitNames.MODELER));
 
 		addService(IEntityService.ID, createEntityService());
 
@@ -71,7 +71,7 @@ public abstract class AbstractModelerServiceProviderBuilder extends CapServicePr
 	}
 
 	private IServicesDecoratorProvider createJpaServiceDecoratorProvider() {
-		final IJpaServicesDecoratorProviderBuilder builder = JpaServiceToolkit.serviceDecoratorProviderBuilder(UseradminPersistenceUnitNames.USER_ADMIN);
+		final IJpaServicesDecoratorProviderBuilder builder = JpaServiceToolkit.serviceDecoratorProviderBuilder(ModelerPersistenceUnitNames.MODELER);
 		builder.addEntityManagerServices(ILookUpService.class);
 		builder.addExceptionDecorator(HibernateServiceToolkit.exceptionDecorator());
 		onCreateJpaServiceDecoratorProvider(builder);
@@ -79,7 +79,7 @@ public abstract class AbstractModelerServiceProviderBuilder extends CapServicePr
 	}
 
 	private IServicesDecoratorProvider createCancelServiceDecoratorProvider() {
-		return HibernateServiceToolkit.serviceDecoratorProviderBuilder(UseradminPersistenceUnitNames.USER_ADMIN).build();
+		return HibernateServiceToolkit.serviceDecoratorProviderBuilder(ModelerPersistenceUnitNames.MODELER).build();
 	}
 
 	protected void onCreateJpaServiceDecoratorProvider(final IJpaServicesDecoratorProviderBuilder builder) {}
