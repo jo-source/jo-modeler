@@ -9,6 +9,7 @@ package org.jowidgets.modeler.common.lookup;
 public enum LookUpIds {
 
 	VALUE_TYPES,
-	ENTITY_MODELS;
+	ENTITY_MODELS,
+	CARDINALITY
 
 }

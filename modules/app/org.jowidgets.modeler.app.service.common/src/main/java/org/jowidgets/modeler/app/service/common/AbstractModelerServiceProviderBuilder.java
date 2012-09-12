@@ -40,6 +40,7 @@ import org.jowidgets.cap.service.jpa.api.JpaServiceToolkit;
 import org.jowidgets.cap.service.tools.CapServiceProviderBuilder;
 import org.jowidgets.modeler.common.lookup.LookUpIds;
 import org.jowidgets.modeler.service.entity.ModelerEntityServiceBuilder;
+import org.jowidgets.modeler.service.lookup.CardinalityLookUpService;
 import org.jowidgets.modeler.service.lookup.EntityModelsLookUpService;
 import org.jowidgets.modeler.service.lookup.ValueTypeLookUpService;
 import org.jowidgets.modeler.service.persistence.ModelerPersistenceUnitNames;
@@ -58,6 +59,7 @@ public abstract class AbstractModelerServiceProviderBuilder extends CapServicePr
 
 		addLookUpService(LookUpIds.VALUE_TYPES, new ValueTypeLookUpService());
 		addLookUpService(LookUpIds.ENTITY_MODELS, new EntityModelsLookUpService());
+		addLookUpService(LookUpIds.CARDINALITY, new CardinalityLookUpService());
 
 		addServiceDecorator(createJpaServiceDecoratorProvider());
 		addServiceDecorator(createCancelServiceDecoratorProvider());
