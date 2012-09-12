@@ -35,6 +35,7 @@ import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.modeler.common.bean.IRelationModel;
 import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
 import org.jowidgets.modeler.common.lookup.LookUpIds;
+import org.jowidgets.modeler.service.lookup.CardinalityLookUpService;
 import org.jowidgets.util.Assert;
 
 public class RelationModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
@@ -89,6 +90,7 @@ public class RelationModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuil
 		propertyBp.setLabel(getMessage("sourceCardinality.label"));
 		propertyBp.setDescription(getMessage("sourceCardinality.description"));
 		propertyBp.setMandatory(true);
+		propertyBp.setValueRange(CardinalityLookUpService.valueRange());
 		propertyBp.setDefaultValue(Cardinality.GREATER_OR_EQUAL_ZERO);
 
 		propertyBp = addProperty(IRelationModel.DESTINATION_ENTITY_MODEL_ID_PROPERTY);
@@ -101,6 +103,7 @@ public class RelationModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuil
 		propertyBp.setLabel(getMessage("destinationCardinality.label"));
 		propertyBp.setDescription(getMessage("destinationCardinality.description"));
 		propertyBp.setMandatory(true);
+		propertyBp.setValueRange(CardinalityLookUpService.valueRange());
 		propertyBp.setDefaultValue(Cardinality.GREATER_OR_EQUAL_ZERO);
 
 		addVersionProperty();

@@ -33,6 +33,7 @@ import org.jowidgets.modeler.ui.application.ModelerApplicationFactory;
 import org.jowidgets.modeler.ui.defaults.ModelerDefaultsInitializer;
 import org.jowidgets.modeler.ui.defaults.ModelerSilkIconsInitializer;
 import org.jowidgets.modeler.ui.icons.ModelerIcons;
+import org.jowidgets.modeler.ui.lookup.LookupInitializer;
 import org.jowidgets.modeler.ui.messages.ModelerMessages;
 import org.jowidgets.modeler.ui.workbench.WorkbenchSettingsMenu;
 import org.jowidgets.useradmin.ui.action.UserAdminPasswordChangeAction;
@@ -56,6 +57,8 @@ public class ModelerWorkbench implements IWorkbenchFactory {
 
 		ModelerSilkIconsInitializer.initialize();
 		ModelerDefaultsInitializer.initialize();
+
+		LookupInitializer.initializeLookupsAsync();
 
 		final IWorkbenchModelBuilder builder = new CapWorkbenchModelBuilder();
 
