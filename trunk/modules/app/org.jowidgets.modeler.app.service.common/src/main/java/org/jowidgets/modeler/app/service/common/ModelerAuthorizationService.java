@@ -26,21 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.app.service.h2.util;
+package org.jowidgets.modeler.app.service.common;
 
-import org.jowidgets.modeler.common.security.ModelerAuthKeys;
 import org.jowidgets.modeler.service.persistence.ModelerPersistenceUnitNames;
-import org.jowidgets.useradmin.service.data.UserAdminDataGenerator;
+import org.jowidgets.security.api.IPrincipal;
+import org.jowidgets.security.tools.AuthorizationServiceWrapper;
+import org.jowidgets.useradmin.service.authorization.AuthorizationService;
 
-public final class ModelerDataGeneratorH2 {
+public final class ModelerAuthorizationService extends AuthorizationServiceWrapper<IPrincipal<String>> {
 
-	private ModelerDataGeneratorH2() {}
-
-	public static void main(final String[] args) {
-		new UserAdminDataGenerator().dropAndCreateData(
-				ModelerPersistenceUnitNames.MODELER,
-				"MODELER_ADMIN",
-				ModelerAuthKeys.ALL_AUTHORIZATIONS);
+	public ModelerAuthorizationService() {
+		super(new AuthorizationService(ModelerPersistenceUnitNames.MODELER));
 	}
-
 }

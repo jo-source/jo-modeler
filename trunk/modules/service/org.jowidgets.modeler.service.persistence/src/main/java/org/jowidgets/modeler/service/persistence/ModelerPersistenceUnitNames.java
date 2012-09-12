@@ -26,21 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.app.service.h2.util;
+package org.jowidgets.modeler.service.persistence;
 
-import org.jowidgets.modeler.common.security.ModelerAuthKeys;
-import org.jowidgets.modeler.service.persistence.ModelerPersistenceUnitNames;
-import org.jowidgets.useradmin.service.data.UserAdminDataGenerator;
+public final class ModelerPersistenceUnitNames {
 
-public final class ModelerDataGeneratorH2 {
+	public static final String MODELER = "modelerPersistenceUnit";
 
-	private ModelerDataGeneratorH2() {}
-
-	public static void main(final String[] args) {
-		new UserAdminDataGenerator().dropAndCreateData(
-				ModelerPersistenceUnitNames.MODELER,
-				"MODELER_ADMIN",
-				ModelerAuthKeys.ALL_AUTHORIZATIONS);
-	}
+	private ModelerPersistenceUnitNames() {}
 
 }
