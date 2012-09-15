@@ -71,6 +71,18 @@ public class EntityModel extends Bean implements IEntityModel {
 	@BatchSize(size = 1000)
 	private final Set<RelationModel> sourceEntityOfDestinationEntityRelation = new HashSet<RelationModel>();;
 
+	public Set<EntityModelPropertyModelLink> getEntityModelPropertyModelLinks() {
+		return entityModelPropertyModelLinks;
+	}
+
+	public Set<RelationModel> getSourceEntityOfDestinationEntityRelation() {
+		return sourceEntityOfDestinationEntityRelation;
+	}
+
+	public Set<RelationModel> getDestinationEntityOfSourceEntityRelation() {
+		return destinationEntityOfSourceEntityRelation;
+	}
+
 	@Override
 	public String getName() {
 		return name;

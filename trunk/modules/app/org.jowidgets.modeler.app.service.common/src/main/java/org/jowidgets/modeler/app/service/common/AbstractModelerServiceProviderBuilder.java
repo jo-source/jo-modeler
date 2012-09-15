@@ -28,12 +28,12 @@
 
 package org.jowidgets.modeler.app.service.common;
 
+import org.jowidgets.cap.common.api.service.EntityServiceComposite;
 import org.jowidgets.cap.common.api.service.IEntityService;
+import org.jowidgets.cap.common.api.service.IEntityServiceCompositeBuilder;
 import org.jowidgets.cap.common.api.service.ILookUpService;
 import org.jowidgets.cap.common.api.service.IPasswordChangeService;
 import org.jowidgets.cap.security.service.tools.DefaultAuthorizationProviderService;
-import org.jowidgets.cap.service.api.entity.EntityServiceComposite;
-import org.jowidgets.cap.service.api.entity.IEntityServiceCompositeBuilder;
 import org.jowidgets.cap.service.hibernate.api.HibernateServiceToolkit;
 import org.jowidgets.cap.service.jpa.api.IJpaServicesDecoratorProviderBuilder;
 import org.jowidgets.cap.service.jpa.api.JpaServiceToolkit;

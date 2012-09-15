@@ -29,6 +29,7 @@
 package org.jowidgets.modeler.app.ui.workbench;
 
 import org.jowidgets.cap.ui.tools.workbench.CapWorkbenchModelBuilder;
+import org.jowidgets.modeler.ui.application.ModelApplicationFactory;
 import org.jowidgets.modeler.ui.application.ModelerApplicationFactory;
 import org.jowidgets.modeler.ui.defaults.ModelerDefaultsInitializer;
 import org.jowidgets.modeler.ui.defaults.ModelerSilkIconsInitializer;
@@ -41,6 +42,7 @@ import org.jowidgets.useradmin.ui.application.UserAdminApplicationFactory;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.api.IWorkbenchFactory;
+import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchInitializeCallback;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModelBuilder;
@@ -71,6 +73,11 @@ public class ModelerWorkbench implements IWorkbenchFactory {
 				model.getMenuBar().addMenu(new WorkbenchSettingsMenu());
 				model.getToolBar().addSeparator();
 				model.getToolBar().addAction(new UserAdminPasswordChangeAction());
+
+				final IWorkbenchApplicationModel application = ModelApplicationFactory.create();
+				if (application != null) {
+					model.addApplication(application);
+				}
 				model.addApplication(ModelerApplicationFactory.create());
 				model.addApplication(UserAdminApplicationFactory.create());
 			}
