@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, H.Westphal
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,61 +25,30 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.modeler.service.persistence.bean;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+package org.jowidgets.modeler.implementor.neo4j.service;
 
-import org.jowidgets.modeler.common.bean.IEntityModelPropertyModelLink;
+import org.jowidgets.cap.common.api.service.IEntityApplicationService;
+import org.jowidgets.cap.common.api.service.IEntityService;
+import org.jowidgets.cap.service.neo4j.api.Neo4JServiceToolkit;
+import org.jowidgets.cap.service.tools.CapServiceProviderBuilder;
+import org.jowidgets.modeler.service.persistence.ModelerPersistenceUnitNames;
+import org.jowidgets.service.tools.DefaultServiceProviderHolder;
 
-@Entity
-@Table(name = "ENTITY_MODEL_PROPERTY_MODEL_LINK")
-public class EntityModelPropertyModelLink extends Bean implements IEntityModelPropertyModelLink {
+public final class Neo4JImplementorServiceProviderHolder extends DefaultServiceProviderHolder {
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ENTITY_MODEL_ID", nullable = false, insertable = false, updatable = false)
-	private EntityModel entityModel;
-
-	@Column(name = "ENTITY_MODEL_ID", nullable = false)
-	private Long entityModelId;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PROPERTY_MODEL_ID", nullable = false, insertable = false, updatable = false)
-	private PropertyModel propertyModel;
-
-	@Column(name = "PROPERTY_MODEL_ID", nullable = false)
-	private Long propertyModelId;
-
-	public EntityModel getEntityModel() {
-		return entityModel;
+	public Neo4JImplementorServiceProviderHolder() {
+		super(new Neo4JImplementorServiceProviderBuilder());
 	}
 
-	public PropertyModel getPropertyModel() {
-		return propertyModel;
+	static class Neo4JImplementorServiceProviderBuilder extends CapServiceProviderBuilder {
+		public Neo4JImplementorServiceProviderBuilder() {
+			final String persistenceUnitName = ModelerPersistenceUnitNames.MODELER;
+			addService(IEntityService.ID, new Neo4JImplementorEntityServiceBuilder(this, persistenceUnitName).build());
+			addService(
+					IEntityApplicationService.ID,
+					new Neo4JImplementorEntityApplicationServiceBuilder(persistenceUnitName).build());
+			addServiceDecorator(Neo4JServiceToolkit.serviceDecoratorProviderBuilder().build());
+		}
 	}
-
-	@Override
-	public Long getEntityModelId() {
-		return entityModelId;
-	}
-
-	@Override
-	public void setEntityModelId(final Long id) {
-		this.entityModelId = id;
-	}
-
-	@Override
-	public Long getPropertyModelId() {
-		return propertyModelId;
-	}
-
-	@Override
-	public void setPropertyModelId(final Long id) {
-		this.propertyModelId = id;
-	}
-
 }

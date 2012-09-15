@@ -81,6 +81,10 @@ public class PropertyModel extends Bean implements IPropertyModel {
 	@BatchSize(size = 1000)
 	private final Set<EntityModelPropertyModelLink> entityModelPropertyModelLinks = new HashSet<EntityModelPropertyModelLink>();
 
+	public Set<EntityModelPropertyModelLink> getEntityModelPropertyModelLinks() {
+		return entityModelPropertyModelLinks;
+	}
+
 	@Override
 	public String getName() {
 		return name;

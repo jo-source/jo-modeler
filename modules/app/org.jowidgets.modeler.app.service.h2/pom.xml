@@ -18,7 +18,13 @@
 			<artifactId>org.jowidgets.modeler.app.service.common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-
+		
+		<dependency>
+			<groupId>org.jowidgets.modeler</groupId>
+			<artifactId>org.jowidgets.modeler.implementor.neo4j.service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>  
+		
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
