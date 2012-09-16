@@ -37,7 +37,7 @@ import org.jowidgets.cap.service.jpa.api.EntityManagerContextTemplate;
 import org.jowidgets.cap.service.jpa.api.EntityManagerFactoryProvider;
 import org.jowidgets.cap.service.jpa.api.IEntityManagerContextTemplate;
 import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
-import org.jowidgets.cap.service.neo4j.api.INodeBean;
+import org.jowidgets.cap.service.neo4j.tools.BeanPropertyMapNodeBean;
 import org.jowidgets.cap.service.neo4j.tools.Neo4JEntityServiceBuilderWrapper;
 import org.jowidgets.modeler.service.persistence.bean.EntityModel;
 import org.jowidgets.service.api.IServiceRegistry;
@@ -70,7 +70,7 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 	private void addEntityModel(final EntityModel entityModel) {
 		final IBeanEntityBluePrint bp = addEntity();
 		bp.setEntityId(entityModel.getName());
-		bp.setBeanType(INodeBean.class);
+		bp.setBeanType(BeanPropertyMapNodeBean.class);
 		bp.setBeanTypeId(entityModel.getName());
 		bp.setDtoDescriptor(EntityModelDtoDescriptorBuilder.create(entityModel));
 	}
