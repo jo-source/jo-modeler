@@ -89,6 +89,7 @@ final class EntityModelDtoDescriptorBuilder {
 		builder.setEditable(propertyModel.getEditable());
 		builder.setReadonly(!propertyModel.getEditable());
 		builder.setSearchable(propertyModel.getSearchable());
+		builder.setMandatory(propertyModel.getMandatory());
 		builder.setFilterable(true);
 		builder.setSortable(true);
 		return builder.build();
@@ -125,7 +126,7 @@ final class EntityModelDtoDescriptorBuilder {
 	}
 
 	private static IProperty createVersionProperty() {
-		final IBeanPropertyBuilder builder = CapCommonToolkit.beanPropertyBuilder(IBean.class, IBean.ID_PROPERTY);
+		final IBeanPropertyBuilder builder = CapCommonToolkit.beanPropertyBuilder(IBean.class, IBean.VERSION_PROPERTY);
 		builder.setLabel(getMessage("version.label"));
 		builder.setDescription(getMessage("version.description"));
 		builder.setVisible(false);
