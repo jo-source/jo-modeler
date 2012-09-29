@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,35 +25,39 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.modeler.common.bean;
 
-import java.util.LinkedList;
-import java.util.List;
+package org.jowidgets.modeler.service.descriptor;
 
-import org.jowidgets.cap.security.common.api.annotation.CreateAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.DeleteAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.ReadAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.UpdateAuthorization;
-import org.jowidgets.modeler.common.security.ModelerAuthKeys;
+import org.jowidgets.cap.common.api.bean.IBeanPropertyBluePrint;
+import org.jowidgets.cap.common.api.sort.Sort;
+import org.jowidgets.i18n.api.IMessage;
+import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
+import org.jowidgets.modeler.common.bean.IPropertyModel;
+import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
+import org.jowidgets.modeler.common.lookup.LookUpIds;
+import org.jowidgets.util.Assert;
 
-@CreateAuthorization(ModelerAuthKeys.CREATE_ENTITY_PROPERTY_MODEL)
-@ReadAuthorization(ModelerAuthKeys.READ_ENTITY_PROPERTY_MODEL)
-@UpdateAuthorization(ModelerAuthKeys.UPDATE_ENTITY_PROPERTY_MODEL)
-@DeleteAuthorization(ModelerAuthKeys.DELETE_ENTITY_PROPERTY_MODEL)
-public interface IEntityPropertyModel extends IPropertyModel {
+public final class EntityPropertyModelDtoDescriptorBuilder extends AbstractPropertyModelDtoDescriptorBuilder {
 
-	String ENTITY_MODEL_ID_PROPERTY = "entityModelId";
+	public EntityPropertyModelDtoDescriptorBuilder() {
+		super(IEntityPropertyModel.class);
 
-	List<String> ALL_PROPERTIES = new LinkedList<String>() {
-		private static final long serialVersionUID = 1L;
-		{
-			addAll(ALL_COMMON_PROPERTIES);
-			add(ENTITY_MODEL_ID_PROPERTY);
-		}
-	};
+		setDefaultSorting(Sort.create(IEntityPropertyModel.ENTITY_MODEL_ID_PROPERTY), Sort.create(IPropertyModel.ORDER_PROPERTY));
 
-	Long getEntityModelId();
+		addIdProperty();
 
-	void setEntityModelId(Long id);
+		final IBeanPropertyBluePrint propertyBp = addProperty(IEntityPropertyModel.ENTITY_MODEL_ID_PROPERTY);
+		propertyBp.setLabel(getMessage("entityModelName.label"));
+		propertyBp.setDescription(getMessage("entityModelName.description"));
+		propertyBp.setLookUpValueRange(LookUpIds.ENTITY_MODELS);
+		propertyBp.setMandatory(true);
 
+		addCommonProperties();
+		addVersionProperty();
+	}
+
+	private static IMessage getMessage(final String keySuffix) {
+		Assert.paramNotEmpty(keySuffix, "keySuffix");
+		return ModelerEntityMessages.getMessage("EntityPropertyModelDtoDescriptorBuilder." + keySuffix);
+	}
 }

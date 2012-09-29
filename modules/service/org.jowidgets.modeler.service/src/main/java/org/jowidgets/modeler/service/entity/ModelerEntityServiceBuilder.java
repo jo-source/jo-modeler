@@ -40,7 +40,7 @@ import org.jowidgets.modeler.common.bean.IRelationModel;
 import org.jowidgets.modeler.common.entity.EntityIds;
 import org.jowidgets.modeler.service.descriptor.DestinationEntityModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.EntityModelDtoDescriptorBuilder;
-import org.jowidgets.modeler.service.descriptor.PropertyModelDtoDescriptorBuilder;
+import org.jowidgets.modeler.service.descriptor.EntityPropertyModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.RelationModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.SourceEntityModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.persistence.bean.EntityModel;
@@ -60,7 +60,7 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 
 		//IEntityPropertyModel
 		bp = addEntity().setEntityId(EntityIds.ENTITY_PROPERTY_MODEL).setBeanType(EntityPropertyModel.class);
-		bp.setDtoDescriptor(new PropertyModelDtoDescriptorBuilder());
+		bp.setDtoDescriptor(new EntityPropertyModelDtoDescriptorBuilder());
 
 		//IRelationModel
 		bp = addEntity().setEntityId(EntityIds.RELATION_MODEL).setBeanType(RelationModel.class);
@@ -70,7 +70,7 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 		//Linked property models of entity models
 		bp = addEntity().setEntityId(EntityIds.LINKED_ENTITY_PROPERTY_MODEL_OF_ENTITY_MODEL);
 		bp.setBeanType(EntityPropertyModel.class);
-		bp.setDtoDescriptor(new PropertyModelDtoDescriptorBuilder());
+		bp.setDtoDescriptor(new EntityPropertyModelDtoDescriptorBuilder());
 		bp.setReaderService(createEntityPropertyModelOfEntityModelReader());
 		bp.setProperties(IEntityPropertyModel.ALL_PROPERTIES);
 

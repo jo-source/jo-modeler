@@ -39,6 +39,7 @@ import org.jowidgets.cap.common.api.bean.IBean;
 
 public interface IPropertyModel extends IBean {
 
+	String ORDER_PROPERTY = "order";
 	String NAME_PROPERTY = "name";
 	String LABEL_PROPERTY = "label";
 	String LABEL_LONG_PROPERTY = "labelLong";
@@ -53,6 +54,7 @@ public interface IPropertyModel extends IBean {
 	List<String> ALL_COMMON_PROPERTIES = new LinkedList<String>() {
 		private static final long serialVersionUID = 1L;
 		{
+			add(ORDER_PROPERTY);
 			add(NAME_PROPERTY);
 			add(LABEL_PROPERTY);
 			add(LABEL_LONG_PROPERTY);
@@ -65,6 +67,10 @@ public interface IPropertyModel extends IBean {
 			add(TABLE_WIDTH_PROPERTY);
 		}
 	};
+
+	Integer getOrder();
+
+	void setOrder(Integer order);
 
 	@NotNull
 	@Size(min = 2, max = 25)

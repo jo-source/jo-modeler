@@ -28,13 +28,18 @@
 package org.jowidgets.modeler.service.persistence.bean;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 import org.hibernate.annotations.Index;
 import org.jowidgets.modeler.common.bean.IPropertyModel;
 
 @MappedSuperclass
-public class PropertyModel extends Bean implements IPropertyModel {
+public class PropertyModel extends Bean implements IPropertyModel, Comparable<PropertyModel> {
+
+	@Basic
+	@Column(name = "ORDINAL")
+	private Integer order;
 
 	@Basic
 	@Index(name = "NameIndex")
@@ -66,6 +71,16 @@ public class PropertyModel extends Bean implements IPropertyModel {
 
 	@Basic
 	private Integer tableWidth;
+
+	@Override
+	public Integer getOrder() {
+		return order;
+	}
+
+	@Override
+	public void setOrder(final Integer order) {
+		this.order = order;
+	}
 
 	@Override
 	public String getName() {
@@ -165,6 +180,22 @@ public class PropertyModel extends Bean implements IPropertyModel {
 	@Override
 	public void setTableWidth(final Integer width) {
 		this.tableWidth = width;
+	}
+
+	@Override
+	public int compareTo(final PropertyModel propertyModel) {
+		if (order != null && propertyModel.order != null) {
+			return order.intValue() - propertyModel.order.intValue();
+		}
+		else if (order == null && propertyModel.order == null) {
+			return 0;
+		}
+		else if (order == null) {
+			return -1;
+		}
+		else {// propertyModel.order == null
+			return 1;
+		}
 	}
 
 }

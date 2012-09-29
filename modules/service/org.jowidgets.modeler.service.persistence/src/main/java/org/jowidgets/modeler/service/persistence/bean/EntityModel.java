@@ -28,6 +28,8 @@
 package org.jowidgets.modeler.service.persistence.bean;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -40,6 +42,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Index;
+import org.jowidgets.cap.service.jpa.api.query.QueryPath;
 import org.jowidgets.modeler.common.bean.IEntityModel;
 
 @Entity
@@ -121,6 +124,16 @@ public class EntityModel extends Bean implements IEntityModel {
 	@Override
 	public void setRenderingPattern(final String renderingPattern) {
 		this.renderingPattern = renderingPattern;
+	}
+
+	@Override
+	@QueryPath(path = {"entityPropertyModels", "name"})
+	public List<String> getPropertiesNames() {
+		final List<String> result = new LinkedList<String>();
+		for (final EntityPropertyModel property : entityPropertyModels) {
+			result.add(property.getName());
+		}
+		return result;
 	}
 
 }

@@ -50,6 +50,7 @@ public interface IEntityModel extends IBean {
 	String LABEL_SINGULAR_PROPERTY = "labelSingular";
 	String LABEL_PLURAL_PROPERTY = "labelPlural";
 	String RENDERING_PATTERN_PROPERTY = "renderingPattern";
+	String PROPERTIES_NAMES_PROPERTY = "propertiesNames";
 
 	List<String> ALL_PROPERTIES = new LinkedList<String>() {
 		private static final long serialVersionUID = 1L;
@@ -58,6 +59,7 @@ public interface IEntityModel extends IBean {
 			add(LABEL_SINGULAR_PROPERTY);
 			add(LABEL_PLURAL_PROPERTY);
 			add(RENDERING_PATTERN_PROPERTY);
+			add(PROPERTIES_NAMES_PROPERTY);
 		}
 	};
 
@@ -83,4 +85,6 @@ public interface IEntityModel extends IBean {
 	String getRenderingPattern();
 
 	void setRenderingPattern(String pattern);
+
+	List<String> getPropertiesNames();
 }

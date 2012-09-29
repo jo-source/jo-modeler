@@ -29,7 +29,6 @@
 package org.jowidgets.modeler.service.descriptor;
 
 import org.jowidgets.cap.common.api.bean.IBeanPropertyBluePrint;
-import org.jowidgets.cap.common.api.sort.Sort;
 import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.modeler.common.bean.IPropertyModel;
 import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
@@ -37,19 +36,23 @@ import org.jowidgets.modeler.common.lookup.LookUpIds;
 import org.jowidgets.modeler.service.lookup.ValueTypeLookUpService;
 import org.jowidgets.util.Assert;
 
-public final class PropertyModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
+public abstract class AbstractPropertyModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
 
-	public PropertyModelDtoDescriptorBuilder() {
-		super(IPropertyModel.class);
+	public AbstractPropertyModelDtoDescriptorBuilder(final Class<? extends IPropertyModel> beanType) {
+		super(beanType);
 
 		setLabelSingular(getMessage("label.singular"));
 		setLabelPlural(getMessage("label.plural"));
 		setRenderingPattern("$" + IPropertyModel.NAME_PROPERTY + "$");
-		setDefaultSorting(Sort.create(IPropertyModel.NAME_PROPERTY));
+	}
 
-		addIdProperty();
+	void addCommonProperties() {
+		IBeanPropertyBluePrint propertyBp = addProperty(IPropertyModel.ORDER_PROPERTY);
+		propertyBp.setLabel(getMessage("order.label"));
+		propertyBp.setDescription(getMessage("order.description"));
+		propertyBp.setMandatory(true);
 
-		IBeanPropertyBluePrint propertyBp = addProperty(IPropertyModel.NAME_PROPERTY);
+		propertyBp = addProperty(IPropertyModel.NAME_PROPERTY);
 		propertyBp.setLabel(getMessage("name.label"));
 		propertyBp.setDescription(getMessage("name.description"));
 		propertyBp.setMandatory(true);
@@ -101,8 +104,6 @@ public final class PropertyModelDtoDescriptorBuilder extends AbstractDtoDescript
 		propertyBp = addProperty(IPropertyModel.TABLE_WIDTH_PROPERTY);
 		propertyBp.setLabel(getMessage("tableWidth.label"));
 		propertyBp.setDescription(getMessage("tableWidth.description"));
-
-		addVersionProperty();
 	}
 
 	private static IMessage getMessage(final String keySuffix) {
