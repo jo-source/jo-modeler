@@ -28,22 +28,33 @@
 
 package org.jowidgets.modeler.app.service.common;
 
+import org.jowidgets.cap.common.api.bean.IBean;
+import org.jowidgets.cap.common.api.execution.IExecutableChecker;
 import org.jowidgets.cap.common.api.service.EntityServiceComposite;
 import org.jowidgets.cap.common.api.service.IEntityService;
 import org.jowidgets.cap.common.api.service.IEntityServiceCompositeBuilder;
+import org.jowidgets.cap.common.api.service.IExecutorService;
 import org.jowidgets.cap.common.api.service.ILookUpService;
 import org.jowidgets.cap.common.api.service.IPasswordChangeService;
 import org.jowidgets.cap.security.service.tools.DefaultAuthorizationProviderService;
+import org.jowidgets.cap.service.api.bean.IBeanAccess;
+import org.jowidgets.cap.service.api.executor.IBeanListExecutor;
 import org.jowidgets.cap.service.hibernate.api.HibernateServiceToolkit;
 import org.jowidgets.cap.service.jpa.api.IJpaServicesDecoratorProviderBuilder;
 import org.jowidgets.cap.service.jpa.api.JpaServiceToolkit;
 import org.jowidgets.cap.service.tools.CapServiceProviderBuilder;
+import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
+import org.jowidgets.modeler.common.executor.ModelerExecutorServices;
 import org.jowidgets.modeler.common.lookup.LookUpIds;
 import org.jowidgets.modeler.service.entity.ModelerEntityServiceBuilder;
+import org.jowidgets.modeler.service.executor.MovePropertiesDownExecutor;
+import org.jowidgets.modeler.service.executor.MovePropertiesUpExecutor;
 import org.jowidgets.modeler.service.lookup.CardinalityLookUpService;
 import org.jowidgets.modeler.service.lookup.EntityModelsLookUpService;
 import org.jowidgets.modeler.service.lookup.ValueTypeLookUpService;
 import org.jowidgets.modeler.service.persistence.ModelerPersistenceUnitNames;
+import org.jowidgets.modeler.service.persistence.bean.EntityPropertyModel;
+import org.jowidgets.service.api.IServiceId;
 import org.jowidgets.service.api.IServicesDecoratorProvider;
 import org.jowidgets.useradmin.common.security.AuthorizationProviderServiceId;
 import org.jowidgets.useradmin.service.entity.UserAdminEntityServiceBuilder;
@@ -60,6 +71,9 @@ public abstract class AbstractModelerServiceProviderBuilder extends CapServicePr
 		addLookUpService(LookUpIds.VALUE_TYPES, new ValueTypeLookUpService());
 		addLookUpService(LookUpIds.ENTITY_MODELS, new EntityModelsLookUpService());
 		addLookUpService(LookUpIds.CARDINALITY, new CardinalityLookUpService());
+
+		addEntityPropertyExecutorService(ModelerExecutorServices.MOVE_ENTITY_PROPERTIES_UP, new MovePropertiesUpExecutor());
+		addEntityPropertyExecutorService(ModelerExecutorServices.MOVE_ENTITY_PROPERTIES_DOWN, new MovePropertiesDownExecutor());
 
 		addServiceDecorator(createJpaServiceDecoratorProvider());
 		addServiceDecorator(createCancelServiceDecoratorProvider());
@@ -85,4 +99,19 @@ public abstract class AbstractModelerServiceProviderBuilder extends CapServicePr
 	}
 
 	protected void onCreateJpaServiceDecoratorProvider(final IJpaServicesDecoratorProviderBuilder builder) {}
+
+	private <BEAN_TYPE extends IBean, PARAM_TYPE> void addEntityPropertyExecutorService(
+		final IServiceId<? extends IExecutorService<PARAM_TYPE>> id,
+		final IBeanListExecutor<? extends BEAN_TYPE, PARAM_TYPE> beanExecutor) {
+		addEntityPropertyExecutorService(id, beanExecutor, null);
+	}
+
+	private <BEAN_TYPE extends IBean, PARAM_TYPE> void addEntityPropertyExecutorService(
+		final IServiceId<? extends IExecutorService<PARAM_TYPE>> id,
+		final IBeanListExecutor<? extends BEAN_TYPE, PARAM_TYPE> beanExecutor,
+		final IExecutableChecker<? extends BEAN_TYPE> executableChecker) {
+		final IBeanAccess<EntityPropertyModel> beanAccess = JpaServiceToolkit.serviceFactory().beanAccess(
+				EntityPropertyModel.class);
+		addExecutorService(id, beanExecutor, executableChecker, beanAccess, IEntityPropertyModel.ALL_PROPERTIES);
+	}
 }

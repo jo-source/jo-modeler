@@ -35,6 +35,10 @@ import java.util.List;
 
 public final class ModelerAuthKeys {
 
+	//Executor services
+	public static final String EXECUTOR_MOVE_PROPERTIES_UP = "EXECUTOR_MOVE_PROPERTIES_UP";
+	public static final String EXECUTOR_MOVE_PROPERTIES_DOWN = "EXECUTOR_MOVE_PROPERTIES_DOWN";
+
 	//CRUD services
 	public static final String CREATE_ENTITY_MODEL = "CREATE_ENTITY_MODEL";
 	public static final String READ_ENTITY_MODEL = "READ_ENTITY_MODEL";

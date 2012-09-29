@@ -35,6 +35,9 @@ public enum ModelerIcons implements IImageConstant {
 
 	ENTITY_MODEL,
 	PROPERTY_MODEL,
-	RELATION_MODEL;
+	RELATION_MODEL,
+
+	ARROW_UP,
+	ARROW_DOWN;
 
 }

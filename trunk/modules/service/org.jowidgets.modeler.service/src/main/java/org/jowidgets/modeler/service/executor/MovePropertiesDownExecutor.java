@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,34 +26,27 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.ui.plugins;
+package org.jowidgets.modeler.service.executor;
 
-import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuContributionPlugin;
-import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
-import org.jowidgets.modeler.ui.plugins.table.PropertyModelMenuContributionPlugin;
-import org.jowidgets.plugin.tools.PluginProviderBuilder;
-import org.jowidgets.plugin.tools.PluginProviderHolder;
+import java.util.List;
 
-public final class ModelerPluginProviderHolder extends PluginProviderHolder {
+import org.jowidgets.cap.common.api.execution.IExecutionCallback;
+import org.jowidgets.cap.service.api.executor.IBeanListExecutor;
+import org.jowidgets.modeler.service.persistence.bean.PropertyModel;
 
-	public ModelerPluginProviderHolder() {
-		super(new ModelerPluginProviderBuilder(), 2);
+public final class MovePropertiesDownExecutor implements IBeanListExecutor<PropertyModel, Void> {
+
+	@Override
+	public List<PropertyModel> execute(
+		final List<PropertyModel> properties,
+		final Void parameter,
+		final IExecutionCallback executionCallback) {
+		for (final PropertyModel property : properties) {
+			//CHECKSTYLE:OFF
+			System.out.println(property.getOrder());
+			//CHECKSTYLE:ON
+		}
+		return properties;
 	}
 
-	private static final class ModelerPluginProviderBuilder extends PluginProviderBuilder {
-
-		public ModelerPluginProviderBuilder() {
-			addBeanTableMenuContributionPlugin(new PropertyModelMenuContributionPlugin(), IEntityPropertyModel.class);
-		}
-
-		private void addBeanTableMenuContributionPlugin(
-			final IBeanTableMenuContributionPlugin<?> plugin,
-			final Class<?>... beanTypes) {
-			addPlugin(
-					IBeanTableMenuContributionPlugin.ID,
-					plugin,
-					IBeanTableMenuContributionPlugin.BEAN_TYPE_PROPERTY_KEY,
-					beanTypes);
-		}
-	}
 }
