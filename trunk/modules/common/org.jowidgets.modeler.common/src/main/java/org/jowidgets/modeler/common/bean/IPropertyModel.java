@@ -70,8 +70,6 @@ public interface IPropertyModel extends IBean {
 
 	Integer getOrder();
 
-	void setOrder(Integer order);
-
 	@NotNull
 	@Size(min = 2, max = 25)
 	String getName();

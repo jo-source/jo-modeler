@@ -43,14 +43,13 @@ public abstract class AbstractPropertyModelDtoDescriptorBuilder extends Abstract
 
 		setLabelSingular(getMessage("label.singular"));
 		setLabelPlural(getMessage("label.plural"));
-		setRenderingPattern("$" + IPropertyModel.NAME_PROPERTY + "$");
+		setRenderingPattern("$" + IPropertyModel.LABEL_PROPERTY + "$<$" + IPropertyModel.VALUE_TYPE_PROPERTY + "$>");
 	}
 
 	void addCommonProperties() {
 		IBeanPropertyBluePrint propertyBp = addProperty(IPropertyModel.ORDER_PROPERTY);
 		propertyBp.setLabel(getMessage("order.label"));
 		propertyBp.setDescription(getMessage("order.description"));
-		propertyBp.setMandatory(true);
 
 		propertyBp = addProperty(IPropertyModel.NAME_PROPERTY);
 		propertyBp.setLabel(getMessage("name.label"));
