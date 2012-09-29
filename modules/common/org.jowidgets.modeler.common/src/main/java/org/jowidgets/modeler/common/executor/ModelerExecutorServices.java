@@ -26,14 +26,22 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.ui.plugins;
+package org.jowidgets.modeler.common.executor;
 
-import org.jowidgets.plugin.tools.PluginProviderBuilder;
+import org.jowidgets.cap.common.api.service.IExecutorService;
+import org.jowidgets.cap.security.common.tools.SecureServiceId;
+import org.jowidgets.modeler.common.security.ModelerAuthKeys;
+import org.jowidgets.service.api.IServiceId;
 
-public final class ModelerPluginProviderBuilder extends PluginProviderBuilder {
+public final class ModelerExecutorServices {
 
-	public ModelerPluginProviderBuilder() {
+	public static final IServiceId<IExecutorService<Void>> MOVE_ENTITY_PROPERTIES_UP = createId(ModelerAuthKeys.EXECUTOR_MOVE_PROPERTIES_UP);
+	public static final IServiceId<IExecutorService<Void>> MOVE_ENTITY_PROPERTIES_DOWN = createId(ModelerAuthKeys.EXECUTOR_MOVE_PROPERTIES_DOWN);
 
+	private ModelerExecutorServices() {};
+
+	private static <PARAMETER_TYPE> IServiceId<IExecutorService<PARAMETER_TYPE>> createId(final String id) {
+		return new SecureServiceId<IExecutorService<PARAMETER_TYPE>, String>(id, IExecutorService.class, id);
 	}
 
 }

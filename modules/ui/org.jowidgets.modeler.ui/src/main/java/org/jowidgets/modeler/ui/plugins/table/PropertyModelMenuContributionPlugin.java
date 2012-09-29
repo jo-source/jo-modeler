@@ -26,34 +26,26 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.ui.plugins;
+package org.jowidgets.modeler.ui.plugins.table;
 
-import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuContributionPlugin;
-import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
-import org.jowidgets.modeler.ui.plugins.table.PropertyModelMenuContributionPlugin;
-import org.jowidgets.plugin.tools.PluginProviderBuilder;
-import org.jowidgets.plugin.tools.PluginProviderHolder;
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.cap.ui.api.widgets.IBeanTable;
+import org.jowidgets.cap.ui.tools.plugin.BeanTableMenuContributionPluginAdapter;
+import org.jowidgets.modeler.common.bean.IPropertyModel;
+import org.jowidgets.modeler.common.executor.ModelerExecutorServices;
+import org.jowidgets.modeler.ui.action.PropertyModelMoveDownAction;
+import org.jowidgets.modeler.ui.action.PropertyModelMoveUpAction;
+import org.jowidgets.plugin.api.IPluginProperties;
+import org.jowidgets.tools.model.item.MenuModel;
 
-public final class ModelerPluginProviderHolder extends PluginProviderHolder {
+public final class PropertyModelMenuContributionPlugin extends BeanTableMenuContributionPluginAdapter<IPropertyModel> {
 
-	public ModelerPluginProviderHolder() {
-		super(new ModelerPluginProviderBuilder(), 2);
+	@Override
+	public IMenuModel getCellMenu(final IPluginProperties properties, final IBeanTable<IPropertyModel> table) {
+		final MenuModel result = new MenuModel();
+		result.addAction(new PropertyModelMoveUpAction(table.getModel(), ModelerExecutorServices.MOVE_ENTITY_PROPERTIES_UP));
+		result.addAction(new PropertyModelMoveDownAction(table.getModel(), ModelerExecutorServices.MOVE_ENTITY_PROPERTIES_DOWN));
+		return result;
 	}
 
-	private static final class ModelerPluginProviderBuilder extends PluginProviderBuilder {
-
-		public ModelerPluginProviderBuilder() {
-			addBeanTableMenuContributionPlugin(new PropertyModelMenuContributionPlugin(), IEntityPropertyModel.class);
-		}
-
-		private void addBeanTableMenuContributionPlugin(
-			final IBeanTableMenuContributionPlugin<?> plugin,
-			final Class<?>... beanTypes) {
-			addPlugin(
-					IBeanTableMenuContributionPlugin.ID,
-					plugin,
-					IBeanTableMenuContributionPlugin.BEAN_TYPE_PROPERTY_KEY,
-					beanTypes);
-		}
-	}
 }

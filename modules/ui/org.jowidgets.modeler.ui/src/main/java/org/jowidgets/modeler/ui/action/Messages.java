@@ -26,34 +26,25 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.ui.plugins;
+package org.jowidgets.modeler.ui.action;
 
-import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuContributionPlugin;
-import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
-import org.jowidgets.modeler.ui.plugins.table.PropertyModelMenuContributionPlugin;
-import org.jowidgets.plugin.tools.PluginProviderBuilder;
-import org.jowidgets.plugin.tools.PluginProviderHolder;
+import org.jowidgets.i18n.api.IMessage;
+import org.jowidgets.i18n.api.IMessageProvider;
+import org.jowidgets.i18n.api.MessageProvider;
 
-public final class ModelerPluginProviderHolder extends PluginProviderHolder {
+final class Messages {
 
-	public ModelerPluginProviderHolder() {
-		super(new ModelerPluginProviderBuilder(), 2);
+	private static final IMessageProvider MESSAGE_PROVIDER = MessageProvider.create(
+			"org.jowidgets.modeler.ui.action.messages",
+			Messages.class);
+
+	private Messages() {}
+
+	public static String getString(final String key) {
+		return MESSAGE_PROVIDER.getString(key);
 	}
 
-	private static final class ModelerPluginProviderBuilder extends PluginProviderBuilder {
-
-		public ModelerPluginProviderBuilder() {
-			addBeanTableMenuContributionPlugin(new PropertyModelMenuContributionPlugin(), IEntityPropertyModel.class);
-		}
-
-		private void addBeanTableMenuContributionPlugin(
-			final IBeanTableMenuContributionPlugin<?> plugin,
-			final Class<?>... beanTypes) {
-			addPlugin(
-					IBeanTableMenuContributionPlugin.ID,
-					plugin,
-					IBeanTableMenuContributionPlugin.BEAN_TYPE_PROPERTY_KEY,
-					beanTypes);
-		}
+	public static IMessage getMessage(final String key) {
+		return MESSAGE_PROVIDER.getMessage(key);
 	}
 }
