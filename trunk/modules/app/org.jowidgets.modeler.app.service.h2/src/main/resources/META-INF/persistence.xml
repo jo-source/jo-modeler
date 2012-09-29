@@ -15,7 +15,7 @@
 		<class>org.jowidgets.useradmin.service.persistence.bean.RoleAuthorizationLink</class>
 		
 		<class>org.jowidgets.modeler.service.persistence.bean.EntityModel</class>
-		<class>org.jowidgets.modeler.service.persistence.bean.PropertyModel</class>
+		<class>org.jowidgets.modeler.service.persistence.bean.AbstractPropertyModel</class>
 		<class>org.jowidgets.modeler.service.persistence.bean.EntityPropertyModel</class>
 		<class>org.jowidgets.modeler.service.persistence.bean.RelationModel</class>
 			

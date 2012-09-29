@@ -29,42 +29,45 @@
 package org.jowidgets.modeler.service.executor;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import javax.persistence.EntityManager;
-
-import org.jowidgets.cap.common.api.exception.ExecutableCheckException;
-import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
+import org.jowidgets.cap.common.api.execution.IExecutionCallback;
+import org.jowidgets.cap.service.api.executor.IBeanListExecutor;
 import org.jowidgets.modeler.service.persistence.bean.AbstractPropertyModel;
+import org.jowidgets.modeler.service.persistence.bean.Bean;
 
-public final class MovePropertiesDownExecutor extends AbstractMovePropertiesExecutor {
+abstract class AbstractMovePropertiesExecutor implements IBeanListExecutor<AbstractPropertyModel, Void> {
 
 	@Override
-	protected void moveForParentGroup(final ArrayList<AbstractPropertyModel> properties) {
-		Collections.sort(properties);
-		final AbstractPropertyModel lastProperty = properties.get(properties.size() - 1);
-		final ArrayList<AbstractPropertyModel> allProperties = lastProperty.getAllPropertiesOfParent();
+	public final List<AbstractPropertyModel> execute(
+		final List<AbstractPropertyModel> properties,
+		final Void parameter,
+		final IExecutionCallback executionCallback) {
 
-		if (lastProperty.getOrder().intValue() >= allProperties.get(allProperties.size() - 1).getOrder().intValue()) {
-			//TODO MG i18n
-			final String userMessage = "Is already at last position";
-			throw new ExecutableCheckException(lastProperty.getId(), "Is already at last position", userMessage);
+		final Map<Bean, ArrayList<AbstractPropertyModel>> propertiesByParent = new HashMap<Bean, ArrayList<AbstractPropertyModel>>();
+
+		for (final AbstractPropertyModel property : properties) {
+			final Bean parent = property.getParent();
+			if (parent != null) {
+				ArrayList<AbstractPropertyModel> propertiesForParent = propertiesByParent.get(parent);
+				if (propertiesForParent == null) {
+					propertiesForParent = new ArrayList<AbstractPropertyModel>();
+					propertiesByParent.put(parent, propertiesForParent);
+				}
+				propertiesForParent.add(property);
+			}
 		}
 
-		final EntityManager em = EntityManagerProvider.get();
-
-		for (int i = properties.size() - 1; i >= 0; i--) {
-			final AbstractPropertyModel property = properties.get(i);
-			final int order = property.getOrder().intValue();
-			property.setOrder(Integer.valueOf(order + 1));
-			em.persist(property);
-
-			final AbstractPropertyModel swapProperty = allProperties.get(order + 1);
-			swapProperty.setOrder(Integer.valueOf(order));
-			em.persist(swapProperty);
-
-			Collections.sort(allProperties);
+		for (final Entry<Bean, ArrayList<AbstractPropertyModel>> entry : propertiesByParent.entrySet()) {
+			moveForParentGroup(entry.getValue());
 		}
+
+		return properties;
 	}
+
+	protected abstract void moveForParentGroup(final ArrayList<AbstractPropertyModel> properties);
 
 }

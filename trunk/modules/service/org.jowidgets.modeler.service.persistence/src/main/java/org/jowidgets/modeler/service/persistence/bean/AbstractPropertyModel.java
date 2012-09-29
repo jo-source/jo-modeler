@@ -27,6 +27,8 @@
  */
 package org.jowidgets.modeler.service.persistence.bean;
 
+import java.util.ArrayList;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -35,7 +37,7 @@ import org.hibernate.annotations.Index;
 import org.jowidgets.modeler.common.bean.IPropertyModel;
 
 @MappedSuperclass
-public class PropertyModel extends Bean implements IPropertyModel, Comparable<PropertyModel> {
+public abstract class AbstractPropertyModel extends Bean implements IPropertyModel, Comparable<AbstractPropertyModel> {
 
 	@Basic
 	@Column(name = "ORDINAL")
@@ -71,6 +73,10 @@ public class PropertyModel extends Bean implements IPropertyModel, Comparable<Pr
 
 	@Basic
 	private Integer tableWidth;
+
+	public abstract Bean getParent();
+
+	public abstract ArrayList<AbstractPropertyModel> getAllPropertiesOfParent();
 
 	@Override
 	public Integer getOrder() {
@@ -182,7 +188,7 @@ public class PropertyModel extends Bean implements IPropertyModel, Comparable<Pr
 	}
 
 	@Override
-	public int compareTo(final PropertyModel propertyModel) {
+	public int compareTo(final AbstractPropertyModel propertyModel) {
 		if (order != null && propertyModel.order != null) {
 			return order.intValue() - propertyModel.order.intValue();
 		}
@@ -195,6 +201,11 @@ public class PropertyModel extends Bean implements IPropertyModel, Comparable<Pr
 		else {// propertyModel.order == null
 			return 1;
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "AbstractPropertyModel [order=" + order + ", name=" + name + "]";
 	}
 
 }

@@ -28,25 +28,43 @@
 
 package org.jowidgets.modeler.service.executor;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
-import org.jowidgets.cap.common.api.execution.IExecutionCallback;
-import org.jowidgets.cap.service.api.executor.IBeanListExecutor;
-import org.jowidgets.modeler.service.persistence.bean.PropertyModel;
+import javax.persistence.EntityManager;
 
-public final class MovePropertiesUpExecutor implements IBeanListExecutor<PropertyModel, Void> {
+import org.jowidgets.cap.common.api.exception.ExecutableCheckException;
+import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
+import org.jowidgets.modeler.service.persistence.bean.AbstractPropertyModel;
+
+public final class MovePropertiesUpExecutor extends AbstractMovePropertiesExecutor {
 
 	@Override
-	public List<PropertyModel> execute(
-		final List<PropertyModel> properties,
-		final Void parameter,
-		final IExecutionCallback executionCallback) {
-		for (final PropertyModel property : properties) {
-			//CHECKSTYLE:OFF
-			System.out.println(property.getOrder());
-			//CHECKSTYLE:ON
+	protected void moveForParentGroup(final ArrayList<AbstractPropertyModel> properties) {
+		Collections.sort(properties);
+		final AbstractPropertyModel firstProperty = properties.iterator().next();
+		final ArrayList<AbstractPropertyModel> allProperties = firstProperty.getAllPropertiesOfParent();
+
+		if (firstProperty.getOrder().intValue() <= allProperties.get(0).getOrder().intValue()) {
+			//TODO MG i18n
+			final String userMessage = "Is already at first position";
+			throw new ExecutableCheckException(firstProperty.getId(), "Is already at first position", userMessage);
 		}
-		return properties;
+
+		final EntityManager em = EntityManagerProvider.get();
+
+		for (int i = 0; i < properties.size(); i++) {
+			final AbstractPropertyModel property = properties.get(i);
+			final int order = property.getOrder().intValue();
+			property.setOrder(Integer.valueOf(order - 1));
+			em.persist(property);
+
+			final AbstractPropertyModel swapProperty = allProperties.get(order - 1);
+			swapProperty.setOrder(Integer.valueOf(order));
+			em.persist(swapProperty);
+
+			Collections.sort(allProperties);
+		}
 	}
 
 }

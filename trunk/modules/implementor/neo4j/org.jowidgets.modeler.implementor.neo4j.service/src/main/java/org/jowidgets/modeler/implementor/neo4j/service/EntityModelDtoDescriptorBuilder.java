@@ -46,7 +46,7 @@ import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
 import org.jowidgets.modeler.service.persistence.bean.EntityModel;
 import org.jowidgets.modeler.service.persistence.bean.EntityPropertyModel;
-import org.jowidgets.modeler.service.persistence.bean.PropertyModel;
+import org.jowidgets.modeler.service.persistence.bean.AbstractPropertyModel;
 import org.jowidgets.util.Assert;
 
 final class EntityModelDtoDescriptorBuilder {
@@ -82,7 +82,7 @@ final class EntityModelDtoDescriptorBuilder {
 		return result;
 	}
 
-	private static IProperty createProperty(final PropertyModel propertyModel) {
+	private static IProperty createProperty(final AbstractPropertyModel propertyModel) {
 		final IPropertyBuilder builder = CapCommonToolkit.propertyBuilder();
 		builder.setName(propertyModel.getName());
 		builder.setValueType(getValueType(propertyModel.getValueType()));
