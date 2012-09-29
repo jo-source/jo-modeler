@@ -61,7 +61,7 @@ public class EntityModel extends Bean implements IEntityModel {
 
 	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "entityModel")
 	@BatchSize(size = 1000)
-	private final Set<EntityModelPropertyModelLink> entityModelPropertyModelLinks = new HashSet<EntityModelPropertyModelLink>();
+	private final Set<EntityPropertyModel> entityPropertyModels = new HashSet<EntityPropertyModel>();
 
 	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "destinationEntityModel")
 	@BatchSize(size = 1000)
@@ -71,8 +71,8 @@ public class EntityModel extends Bean implements IEntityModel {
 	@BatchSize(size = 1000)
 	private final Set<RelationModel> sourceEntityOfDestinationEntityRelation = new HashSet<RelationModel>();;
 
-	public Set<EntityModelPropertyModelLink> getEntityModelPropertyModelLinks() {
-		return entityModelPropertyModelLinks;
+	public Set<EntityPropertyModel> getEntityPropertyModels() {
+		return entityPropertyModels;
 	}
 
 	public Set<RelationModel> getSourceEntityOfDestinationEntityRelation() {

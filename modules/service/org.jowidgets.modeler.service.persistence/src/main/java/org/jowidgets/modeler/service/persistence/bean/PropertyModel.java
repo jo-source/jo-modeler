@@ -27,23 +27,13 @@
  */
 package org.jowidgets.modeler.service.persistence.bean;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.MappedSuperclass;
 
-import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Index;
 import org.jowidgets.modeler.common.bean.IPropertyModel;
 
-@Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
+@MappedSuperclass
 public class PropertyModel extends Bean implements IPropertyModel {
 
 	@Basic
@@ -76,14 +66,6 @@ public class PropertyModel extends Bean implements IPropertyModel {
 
 	@Basic
 	private Integer tableWidth;
-
-	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "propertyModel")
-	@BatchSize(size = 1000)
-	private final Set<EntityModelPropertyModelLink> entityModelPropertyModelLinks = new HashSet<EntityModelPropertyModelLink>();
-
-	public Set<EntityModelPropertyModelLink> getEntityModelPropertyModelLinks() {
-		return entityModelPropertyModelLinks;
-	}
 
 	@Override
 	public String getName() {

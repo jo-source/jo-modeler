@@ -44,7 +44,7 @@ import org.jowidgets.cap.common.api.validation.IBeanValidator;
 import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
 import org.jowidgets.modeler.service.persistence.bean.EntityModel;
-import org.jowidgets.modeler.service.persistence.bean.EntityModelPropertyModelLink;
+import org.jowidgets.modeler.service.persistence.bean.EntityPropertyModel;
 import org.jowidgets.modeler.service.persistence.bean.PropertyModel;
 import org.jowidgets.util.Assert;
 
@@ -72,8 +72,8 @@ final class EntityModelDtoDescriptorBuilder {
 		final Collection<IProperty> result = new LinkedList<IProperty>();
 
 		result.add(createIdProperty());
-		for (final EntityModelPropertyModelLink link : entityModel.getEntityModelPropertyModelLinks()) {
-			result.add(createProperty(link.getPropertyModel()));
+		for (final EntityPropertyModel property : entityModel.getEntityPropertyModels()) {
+			result.add(createProperty(property));
 		}
 		result.add(createVersionProperty());
 		return result;

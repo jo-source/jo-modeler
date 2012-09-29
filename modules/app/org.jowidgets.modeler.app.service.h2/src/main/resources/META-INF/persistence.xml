@@ -16,7 +16,7 @@
 		
 		<class>org.jowidgets.modeler.service.persistence.bean.EntityModel</class>
 		<class>org.jowidgets.modeler.service.persistence.bean.PropertyModel</class>
-		<class>org.jowidgets.modeler.service.persistence.bean.EntityModelPropertyModelLink</class>
+		<class>org.jowidgets.modeler.service.persistence.bean.EntityPropertyModel</class>
 		<class>org.jowidgets.modeler.service.persistence.bean.RelationModel</class>
 			
 		<properties>	
