@@ -35,8 +35,7 @@ import org.jowidgets.cap.service.jpa.api.query.ICriteriaQueryCreatorBuilder;
 import org.jowidgets.cap.service.jpa.api.query.JpaQueryToolkit;
 import org.jowidgets.cap.service.jpa.tools.entity.JpaEntityServiceBuilderWrapper;
 import org.jowidgets.modeler.common.bean.IEntityModel;
-import org.jowidgets.modeler.common.bean.IEntityModelPropertyModelLink;
-import org.jowidgets.modeler.common.bean.IPropertyModel;
+import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
 import org.jowidgets.modeler.common.bean.IRelationModel;
 import org.jowidgets.modeler.common.entity.EntityIds;
 import org.jowidgets.modeler.service.descriptor.DestinationEntityModelDtoDescriptorBuilder;
@@ -45,8 +44,7 @@ import org.jowidgets.modeler.service.descriptor.PropertyModelDtoDescriptorBuilde
 import org.jowidgets.modeler.service.descriptor.RelationModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.SourceEntityModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.persistence.bean.EntityModel;
-import org.jowidgets.modeler.service.persistence.bean.EntityModelPropertyModelLink;
-import org.jowidgets.modeler.service.persistence.bean.PropertyModel;
+import org.jowidgets.modeler.service.persistence.bean.EntityPropertyModel;
 import org.jowidgets.modeler.service.persistence.bean.RelationModel;
 import org.jowidgets.service.api.IServiceRegistry;
 
@@ -60,39 +58,21 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 		bp.setDtoDescriptor(new EntityModelDtoDescriptorBuilder());
 		addEntityModelLinkDescriptors(bp);
 
-		//IPropertyModel
-		bp = addEntity().setEntityId(EntityIds.PROPERTY_MODEL).setBeanType(PropertyModel.class);
+		//IEntityPropertyModel
+		bp = addEntity().setEntityId(EntityIds.ENTITY_PROPERTY_MODEL).setBeanType(EntityPropertyModel.class);
 		bp.setDtoDescriptor(new PropertyModelDtoDescriptorBuilder());
-		addPropertyModelLinkDescriptors(bp);
 
 		//IRelationModel
 		bp = addEntity().setEntityId(EntityIds.RELATION_MODEL).setBeanType(RelationModel.class);
 		bp.setDtoDescriptor(new RelationModelDtoDescriptorBuilder());
 		addRelationModelLinkDescriptors(bp);
 
-		//Linked entity models of property models
-		bp = addEntity().setEntityId(EntityIds.LINKED_ENTITY_MODEL_OF_PROPERTY_MODEL).setBeanType(EntityModel.class);
-		bp.setDtoDescriptor(new EntityModelDtoDescriptorBuilder());
-		bp.setReaderService(createEntityModelOfPropertyModelReader(true));
-		addEntityModelLinkDescriptors(bp);
-
-		//Linkable entity models of property models
-		bp = addEntity().setEntityId(EntityIds.LINKABLE_ENTITY_MODEL_OF_PROPERTY_MODEL).setBeanType(EntityModel.class);
-		bp.setDtoDescriptor(new EntityModelDtoDescriptorBuilder());
-		bp.setReaderService(createEntityModelOfPropertyModelReader(false));
-		bp.setReadonly();
-
 		//Linked property models of entity models
-		bp = addEntity().setEntityId(EntityIds.LINKED_PROPERTY_MODEL_OF_ENTITY_MODEL).setBeanType(PropertyModel.class);
+		bp = addEntity().setEntityId(EntityIds.LINKED_ENTITY_PROPERTY_MODEL_OF_ENTITY_MODEL);
+		bp.setBeanType(EntityPropertyModel.class);
 		bp.setDtoDescriptor(new PropertyModelDtoDescriptorBuilder());
-		bp.setReaderService(createPropertyModelOfEntityModelReader(true));
-		addPropertyModelLinkDescriptors(bp);
-
-		//Linkable property models of entity models
-		bp = addEntity().setEntityId(EntityIds.LINKABLE_PROPERTY_MODEL_OF_ENTITY_MODEL).setBeanType(PropertyModel.class);
-		bp.setDtoDescriptor(new PropertyModelDtoDescriptorBuilder());
-		bp.setReaderService(createPropertyModelOfEntityModelReader(false));
-		bp.setReadonly();
+		bp.setReaderService(createEntityPropertyModelOfEntityModelReader());
+		bp.setProperties(IEntityPropertyModel.ALL_PROPERTIES);
 
 		//Linked relation model of entity model
 		bp = addEntity().setEntityId(EntityIds.LINKED_RELATION_MODEL_OF_ENTITY_MODEL).setBeanType(RelationModel.class);
@@ -119,12 +99,8 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 	}
 
 	private void addEntityModelLinkDescriptors(final IBeanEntityBluePrint bp) {
-		addEntityModelPropertyModelLinkDescriptor(bp);
+		addEntityPropertyModelLinkDescriptor(bp);
 		addEntityModelRelationModelLinkDescriptor(bp);
-	}
-
-	private void addPropertyModelLinkDescriptors(final IBeanEntityBluePrint bp) {
-		addPropertyModelEntityModelLinkDescriptor(bp);
 	}
 
 	private void addRelationModelLinkDescriptors(final IBeanEntityBluePrint bp) {
@@ -132,24 +108,13 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 		addDestinationEntityModelOfRelationModelLinkDescriptor(bp);
 	}
 
-	private void addEntityModelPropertyModelLinkDescriptor(final IBeanEntityBluePrint entityBp) {
+	private void addEntityPropertyModelLinkDescriptor(final IBeanEntityBluePrint entityBp) {
 		final IBeanEntityLinkBluePrint bp = entityBp.addLink();
-		bp.setLinkEntityId(EntityIds.ENTITY_MODEL_PROPERTY_MODEL_LINK);
-		bp.setLinkBeanType(EntityModelPropertyModelLink.class);
-		bp.setLinkedEntityId(EntityIds.LINKED_PROPERTY_MODEL_OF_ENTITY_MODEL);
-		bp.setLinkableEntityId(EntityIds.LINKABLE_PROPERTY_MODEL_OF_ENTITY_MODEL);
-		bp.setSourceProperties(IEntityModelPropertyModelLink.ENTITY_MODEL_ID_PROPERTY);
-		bp.setDestinationProperties(IEntityModelPropertyModelLink.PROPERTY_MODEL_ID_PROPERTY);
-	}
-
-	private void addPropertyModelEntityModelLinkDescriptor(final IBeanEntityBluePrint entityBp) {
-		final IBeanEntityLinkBluePrint bp = entityBp.addLink();
-		bp.setLinkEntityId(EntityIds.ENTITY_MODEL_PROPERTY_MODEL_LINK);
-		bp.setLinkBeanType(EntityModelPropertyModelLink.class);
-		bp.setLinkedEntityId(EntityIds.LINKED_ENTITY_MODEL_OF_PROPERTY_MODEL);
-		bp.setLinkableEntityId(EntityIds.LINKABLE_ENTITY_MODEL_OF_PROPERTY_MODEL);
-		bp.setSourceProperties(IEntityModelPropertyModelLink.PROPERTY_MODEL_ID_PROPERTY);
-		bp.setDestinationProperties(IEntityModelPropertyModelLink.ENTITY_MODEL_ID_PROPERTY);
+		bp.setLinkEntityId(EntityIds.LINKED_ENTITY_PROPERTY_MODEL_OF_ENTITY_MODEL);
+		bp.setLinkBeanType(EntityPropertyModel.class);
+		bp.setLinkedEntityId(EntityIds.LINKED_ENTITY_PROPERTY_MODEL_OF_ENTITY_MODEL);
+		bp.setSourceProperties(EntityPropertyModel.ENTITY_MODEL_ID_PROPERTY);
+		bp.setLinkDeleterService(null);
 	}
 
 	private void addEntityModelRelationModelLinkDescriptor(final IBeanEntityBluePrint entityBp) {
@@ -173,16 +138,13 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 		bp.setLinkedEntityId(EntityIds.DESTINATION_ENTITY_MODEL_OF_RELATION_MODEL);
 	}
 
-	private IReaderService<Void> createPropertyModelOfEntityModelReader(final boolean linked) {
-		final ICriteriaQueryCreatorBuilder<Void> queryBuilder = JpaQueryToolkit.criteriaQueryCreatorBuilder(PropertyModel.class);
-		queryBuilder.setParentPropertyPath(linked, "entityModelPropertyModelLinks", "entityModel");
-		return getServiceFactory().readerService(PropertyModel.class, queryBuilder.build(), IPropertyModel.ALL_PROPERTIES);
-	}
-
-	private IReaderService<Void> createEntityModelOfPropertyModelReader(final boolean linked) {
-		final ICriteriaQueryCreatorBuilder<Void> queryBuilder = JpaQueryToolkit.criteriaQueryCreatorBuilder(EntityModel.class);
-		queryBuilder.setParentPropertyPath(linked, "entityModelPropertyModelLinks", "propertyModel");
-		return getServiceFactory().readerService(EntityModel.class, queryBuilder.build(), IEntityModel.ALL_PROPERTIES);
+	private IReaderService<Void> createEntityPropertyModelOfEntityModelReader() {
+		final ICriteriaQueryCreatorBuilder<Void> queryBuilder = JpaQueryToolkit.criteriaQueryCreatorBuilder(EntityPropertyModel.class);
+		queryBuilder.setParentPropertyPath("entityModel");
+		return getServiceFactory().readerService(
+				EntityPropertyModel.class,
+				queryBuilder.build(),
+				IEntityPropertyModel.ALL_PROPERTIES);
 	}
 
 	private IReaderService<Void> createLinkedRelationModelOfEntityModelReader() {

@@ -25,21 +25,34 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+package org.jowidgets.modeler.common.bean;
 
-package org.jowidgets.modeler.common.entity;
+import java.util.LinkedList;
+import java.util.List;
 
-public enum EntityIds {
+import org.jowidgets.cap.security.common.api.annotation.CreateAuthorization;
+import org.jowidgets.cap.security.common.api.annotation.DeleteAuthorization;
+import org.jowidgets.cap.security.common.api.annotation.ReadAuthorization;
+import org.jowidgets.cap.security.common.api.annotation.UpdateAuthorization;
+import org.jowidgets.modeler.common.security.ModelerAuthKeys;
 
-	ENTITY_MODEL,
-	ENTITY_PROPERTY_MODEL,
-	RELATION_MODEL,
+@CreateAuthorization(ModelerAuthKeys.CREATE_ENTITY_PROPERTY_MODEL)
+@ReadAuthorization(ModelerAuthKeys.READ_ENTITY_PROPERTY_MODEL)
+@UpdateAuthorization(ModelerAuthKeys.UPDATE_ENTITY_PROPERTY_MODEL)
+@DeleteAuthorization(ModelerAuthKeys.DELETE_ENTITY_PROPERTY_MODEL)
+public interface IEntityPropertyModel extends IPropertyModel {
 
-	LINKED_ENTITY_PROPERTY_MODEL_OF_ENTITY_MODEL,
+	String ENTITY_MODEL_ID_PROPERTY = "entityModelId";
 
-	LINKED_RELATION_MODEL_OF_ENTITY_MODEL,
-	LINKABLE_ENTITY_MODEL_OF_ENTITY_MODEL,
+	List<String> ALL_PROPERTIES = new LinkedList<String>() {
+		private static final long serialVersionUID = 1L;
+		{
+			addAll(ALL_COMMON_PROPERTIES);
+			add(ENTITY_MODEL_ID_PROPERTY);
+		}
+	};
 
-	SOURCE_ENTITY_MODEL_OF_RELATION_MODEL,
-	DESTINATION_ENTITY_MODEL_OF_RELATION_MODEL;
+	Long getEntityModelId();
 
+	void setEntityModelId(Long id);
 }

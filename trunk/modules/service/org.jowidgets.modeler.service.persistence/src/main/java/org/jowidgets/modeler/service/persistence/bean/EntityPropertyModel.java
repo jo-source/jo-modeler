@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,42 +25,37 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.modeler.common.bean;
+package org.jowidgets.modeler.service.persistence.bean;
 
-import java.util.LinkedList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
-import org.jowidgets.cap.common.api.bean.IBean;
-import org.jowidgets.cap.security.common.api.annotation.CreateAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.DeleteAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.ReadAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.UpdateAuthorization;
-import org.jowidgets.modeler.common.security.ModelerAuthKeys;
+import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
 
-@CreateAuthorization(ModelerAuthKeys.CREATE_ENTITY_MODEL_PROPERTY_MODEL_LINK)
-@ReadAuthorization(ModelerAuthKeys.READ_ENTITY_MODEL_PROPERTY_MODEL_LINK)
-@UpdateAuthorization(ModelerAuthKeys.UPDATE_ENTITY_MODEL_PROPERTY_MODEL_LINK)
-@DeleteAuthorization(ModelerAuthKeys.DELETE_ENTITY_MODEL_PROPERTY_MODEL_LINK)
-public interface IEntityModelPropertyModelLink extends IBean {
+@Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"entityModelId, name"}))
+public class EntityPropertyModel extends PropertyModel implements IEntityPropertyModel {
 
-	String ENTITY_MODEL_ID_PROPERTY = "entityModelId";
-	String PROPERTY_MODEL_ID_PROPERTY = "propertyModelId";
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ENTITY_MODEL_ID", nullable = false, insertable = false, updatable = false)
+	private EntityModel entityModel;
 
-	List<String> ALL_PROPERTIES = new LinkedList<String>() {
-		private static final long serialVersionUID = 1L;
-		{
-			add(ENTITY_MODEL_ID_PROPERTY);
-			add(PROPERTY_MODEL_ID_PROPERTY);
-			add(IBean.ID_PROPERTY);
-			add(IBean.VERSION_PROPERTY);
-		}
-	};
+	@Column(name = "ENTITY_MODEL_ID", nullable = false)
+	private Long entityModelId;
 
-	Long getEntityModelId();
+	@Override
+	public Long getEntityModelId() {
+		return entityModelId;
+	}
 
-	void setEntityModelId(Long id);
+	@Override
+	public void setEntityModelId(final Long id) {
+		this.entityModelId = id;
+	}
 
-	Long getPropertyModelId();
-
-	void setPropertyModelId(final Long id);
 }

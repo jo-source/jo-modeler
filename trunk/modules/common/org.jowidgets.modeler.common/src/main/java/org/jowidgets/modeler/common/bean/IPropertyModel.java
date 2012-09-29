@@ -36,16 +36,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.jowidgets.cap.common.api.bean.IBean;
-import org.jowidgets.cap.security.common.api.annotation.CreateAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.DeleteAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.ReadAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.UpdateAuthorization;
-import org.jowidgets.modeler.common.security.ModelerAuthKeys;
 
-@CreateAuthorization(ModelerAuthKeys.CREATE_PROPERTY_MODEL)
-@ReadAuthorization(ModelerAuthKeys.READ_PROPERTY_MODEL)
-@UpdateAuthorization(ModelerAuthKeys.UPDATE_PROPERTY_MODEL)
-@DeleteAuthorization(ModelerAuthKeys.DELETE_PROPERTY_MODEL)
 public interface IPropertyModel extends IBean {
 
 	String NAME_PROPERTY = "name";
@@ -59,7 +50,7 @@ public interface IPropertyModel extends IBean {
 	String VALUE_TYPE_PROPERTY = "valueType";
 	String TABLE_WIDTH_PROPERTY = "tableWidth";
 
-	List<String> ALL_PROPERTIES = new LinkedList<String>() {
+	List<String> ALL_COMMON_PROPERTIES = new LinkedList<String>() {
 		private static final long serialVersionUID = 1L;
 		{
 			add(NAME_PROPERTY);
