@@ -77,7 +77,6 @@ public class PropertyModel extends Bean implements IPropertyModel, Comparable<Pr
 		return order;
 	}
 
-	@Override
 	public void setOrder(final Integer order) {
 		this.order = order;
 	}

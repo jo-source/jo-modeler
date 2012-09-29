@@ -46,7 +46,7 @@ public class EntityModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuilde
 
 		setLabelSingular(getMessage(labelSingularKey));
 		setLabelPlural(getMessage(labelPluralKey));
-		setRenderingPattern("$" + IEntityModel.NAME_PROPERTY + "$");
+		setRenderingPattern("$" + IEntityModel.LABEL_SINGULAR_PROPERTY + "$");
 		setDefaultSorting(Sort.create(IEntityModel.NAME_PROPERTY));
 
 		addIdProperty();

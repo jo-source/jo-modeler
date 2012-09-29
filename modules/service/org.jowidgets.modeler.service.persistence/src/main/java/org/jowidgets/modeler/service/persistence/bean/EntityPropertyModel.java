@@ -32,9 +32,11 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
 import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
 
 @Entity
@@ -56,6 +58,27 @@ public class EntityPropertyModel extends PropertyModel implements IEntityPropert
 	@Override
 	public void setEntityModelId(final Long id) {
 		this.entityModelId = id;
+	}
+
+	@PrePersist
+	private void generateOrder() {
+		if (getOrder() == null) {
+			if (entityModel != null) {
+				setOrder(getNextOrdinal(entityModel));
+			}
+			else if (entityModelId != null) {
+				setOrder(getNextOrdinal(EntityManagerProvider.get().find(EntityModel.class, entityModelId)));
+			}
+		}
+	}
+
+	private static Integer getNextOrdinal(final EntityModel entityModel) {
+		if (entityModel != null) {
+			return entityModel.getEntityPropertyModels().size();
+		}
+		else {
+			return null;
+		}
 	}
 
 }
