@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -52,6 +52,7 @@ public final class ValueTypeLookUpService implements ISyncLookUpService {
 	public static final String INTEGER_KEY = Integer.class.getName();
 	public static final String DOUBLE_KEY = Double.class.getName();
 	public static final String DATE_KEY = Date.class.getName();
+	public static final String BOOLEAN_KEY = Boolean.class.getName();
 
 	@Override
 	public List<ILookUpEntry> readValues(final IExecutionCallback executionCallback) {
@@ -62,6 +63,7 @@ public final class ValueTypeLookUpService implements ISyncLookUpService {
 		result.add(lookUpToolkit.lookUpEntry(INTEGER_KEY, "Integer"));
 		result.add(lookUpToolkit.lookUpEntry(LONG_KEY, "Long"));
 		result.add(lookUpToolkit.lookUpEntry(DOUBLE_KEY, "Double"));
+		result.add(lookUpToolkit.lookUpEntry(BOOLEAN_KEY, "Boolean"));
 		result.add(lookUpToolkit.lookUpEntry(DATE_KEY, "Date"));
 
 		final EntityManager em = EntityManagerProvider.get();

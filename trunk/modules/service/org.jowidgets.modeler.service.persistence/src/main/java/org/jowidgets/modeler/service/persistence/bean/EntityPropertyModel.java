@@ -38,7 +38,7 @@ import javax.persistence.UniqueConstraint;
 import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"entityModelId, name"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"ENTITY_MODEL_ID", "NAME"}))
 public class EntityPropertyModel extends PropertyModel implements IEntityPropertyModel {
 
 	@ManyToOne(fetch = FetchType.LAZY)

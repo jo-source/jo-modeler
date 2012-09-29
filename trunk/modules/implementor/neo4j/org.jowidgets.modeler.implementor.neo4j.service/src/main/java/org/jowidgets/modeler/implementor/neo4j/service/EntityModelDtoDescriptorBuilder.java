@@ -32,6 +32,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.jowidgets.cap.common.api.CapCommonToolkit;
 import org.jowidgets.cap.common.api.bean.IBean;
@@ -72,7 +73,9 @@ final class EntityModelDtoDescriptorBuilder {
 		final Collection<IProperty> result = new LinkedList<IProperty>();
 
 		result.add(createIdProperty());
-		for (final EntityPropertyModel property : entityModel.getEntityPropertyModels()) {
+		final List<EntityPropertyModel> properties = new LinkedList<EntityPropertyModel>(entityModel.getEntityPropertyModels());
+		Collections.sort(properties);
+		for (final EntityPropertyModel property : properties) {
 			result.add(createProperty(property));
 		}
 		result.add(createVersionProperty());
@@ -110,6 +113,9 @@ final class EntityModelDtoDescriptorBuilder {
 		}
 		else if (Date.class.getName().equals(valueType)) {
 			return Date.class;
+		}
+		else if (Boolean.class.getName().equals(valueType)) {
+			return Boolean.class;
 		}
 		else {
 			throw new IllegalArgumentException("Value type '" + valueType + "' is not yet supoorted.");
