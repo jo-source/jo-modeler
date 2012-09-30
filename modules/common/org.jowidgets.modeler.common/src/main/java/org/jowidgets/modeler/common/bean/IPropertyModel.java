@@ -82,12 +82,12 @@ public interface IPropertyModel extends IBean {
 
 	void setLabel(String label);
 
-	@Size(min = 1, max = 40)
+	@Size(max = 40)
 	String getLabelLong();
 
 	void setLabelLong(String labelLong);
 
-	@Size(min = 1, max = 100)
+	@Size(max = 100)
 	String getDescription();
 
 	void setDescription(String description);

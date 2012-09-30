@@ -36,6 +36,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -102,9 +103,25 @@ public class EntityPropertyModel extends AbstractPropertyModel implements IEntit
 	}
 
 	@PrePersist
-	private void generateOrder() {
+	private void prePersist() {
 		if (getOrder() == null) {
 			setOrder(getNextOrdinal(getEntityModel()));
+		}
+	}
+
+	@PreRemove
+	private void preRemove() {
+		reorderProperties();
+	}
+
+	private void reorderProperties() {
+		final EntityManager em = EntityManagerProvider.get();
+		final ArrayList<AbstractPropertyModel> allProperties = getAllPropertiesOfParent();
+		allProperties.remove(this);
+		for (int i = 0; i < allProperties.size(); i++) {
+			final AbstractPropertyModel property = allProperties.get(i);
+			property.setOrder(Integer.valueOf(i));
+			em.persist(property);
 		}
 	}
 
