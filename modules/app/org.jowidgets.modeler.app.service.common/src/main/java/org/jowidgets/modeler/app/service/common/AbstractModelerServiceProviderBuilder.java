@@ -44,6 +44,7 @@ import org.jowidgets.cap.service.jpa.api.IJpaServicesDecoratorProviderBuilder;
 import org.jowidgets.cap.service.jpa.api.JpaServiceToolkit;
 import org.jowidgets.cap.service.tools.CapServiceProviderBuilder;
 import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
+import org.jowidgets.modeler.common.checker.MovePropertiesUpExecutableChecker;
 import org.jowidgets.modeler.common.executor.ModelerExecutorServices;
 import org.jowidgets.modeler.common.lookup.LookUpIds;
 import org.jowidgets.modeler.service.entity.ModelerEntityServiceBuilder;
@@ -72,7 +73,10 @@ public abstract class AbstractModelerServiceProviderBuilder extends CapServicePr
 		addLookUpService(LookUpIds.ENTITY_MODELS, new EntityModelsLookUpService());
 		addLookUpService(LookUpIds.CARDINALITY, new CardinalityLookUpService());
 
-		addEntityPropertyExecutorService(ModelerExecutorServices.MOVE_ENTITY_PROPERTIES_UP, new MovePropertiesUpExecutor());
+		addEntityPropertyExecutorService(
+				ModelerExecutorServices.MOVE_ENTITY_PROPERTIES_UP,
+				new MovePropertiesUpExecutor(),
+				new MovePropertiesUpExecutableChecker());
 		addEntityPropertyExecutorService(ModelerExecutorServices.MOVE_ENTITY_PROPERTIES_DOWN, new MovePropertiesDownExecutor());
 
 		addServiceDecorator(createJpaServiceDecoratorProvider());
