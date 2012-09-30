@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,37 +26,30 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.service.executor;
+package org.jowidgets.modeler.common.checker;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Set;
 
-import javax.persistence.EntityManager;
+import org.jowidgets.cap.common.api.execution.ExecutableState;
+import org.jowidgets.cap.common.api.execution.IExecutableChecker;
+import org.jowidgets.cap.common.api.execution.IExecutableState;
+import org.jowidgets.modeler.common.bean.IPropertyModel;
 
-import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
-import org.jowidgets.modeler.service.persistence.bean.AbstractPropertyModel;
-
-public final class MovePropertiesUpExecutor extends AbstractMovePropertiesExecutor {
+public final class MovePropertiesUpExecutableChecker implements IExecutableChecker<IPropertyModel> {
 
 	@Override
-	protected void moveForParentGroup(final ArrayList<AbstractPropertyModel> properties) {
-		Collections.sort(properties);
-		final AbstractPropertyModel firstProperty = properties.iterator().next();
-		final ArrayList<AbstractPropertyModel> allProperties = firstProperty.getAllPropertiesOfParent();
+	public Set<String> getPropertyDependencies() {
+		return Collections.singleton(IPropertyModel.ORDER_PROPERTY);
+	}
 
-		final EntityManager em = EntityManagerProvider.get();
-
-		for (int i = 0; i < properties.size(); i++) {
-			final AbstractPropertyModel property = properties.get(i);
-			final int order = property.getOrder().intValue();
-			property.setOrder(Integer.valueOf(order - 1));
-			em.persist(property);
-
-			final AbstractPropertyModel swapProperty = allProperties.get(order - 1);
-			swapProperty.setOrder(Integer.valueOf(order));
-			em.persist(swapProperty);
-
-			Collections.sort(allProperties);
+	@Override
+	public IExecutableState getExecutableState(final IPropertyModel bean) {
+		if (bean.getOrder() != null && bean.getOrder().intValue() == 0) {
+			return ExecutableState.notExecutable("Is already at first position");
+		}
+		else {
+			return ExecutableState.EXECUTABLE;
 		}
 	}
 

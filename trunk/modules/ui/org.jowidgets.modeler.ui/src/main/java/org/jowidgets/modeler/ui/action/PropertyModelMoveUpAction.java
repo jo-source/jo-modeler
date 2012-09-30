@@ -64,6 +64,7 @@ public final class PropertyModelMoveUpAction extends ActionWrapper {
 		builder.setSelectionPolicy(BeanSelectionPolicy.MULTI_SELECTION);
 		builder.setExecutor(excecuterServiceId);
 		builder.addExecutionInterceptor(new ReloadDataModelExecutionInterceptor<List<IBeanDto>>(model));
+		//builder.addExecutableChecker(new MovePropertiesUpExecutableChecker());
 		return builder.build();
 	}
 }
