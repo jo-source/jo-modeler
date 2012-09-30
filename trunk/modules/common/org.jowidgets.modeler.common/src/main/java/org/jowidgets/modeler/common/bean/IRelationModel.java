@@ -94,7 +94,7 @@ public interface IRelationModel extends IBean {
 
 	void setLabel(String label);
 
-	@Size(min = 1, max = 25)
+	@Size(max = 25)
 	String getInverseLabel();
 
 	void setInverseLabel(String inverseLabel);

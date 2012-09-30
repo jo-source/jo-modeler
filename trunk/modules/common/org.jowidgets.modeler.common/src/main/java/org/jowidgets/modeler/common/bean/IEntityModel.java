@@ -81,7 +81,7 @@ public interface IEntityModel extends IBean {
 
 	void setLabelPlural(String label);
 
-	@Size(min = 2, max = 100)
+	@Size(max = 100)
 	String getRenderingPattern();
 
 	void setRenderingPattern(String pattern);

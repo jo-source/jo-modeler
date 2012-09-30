@@ -28,7 +28,10 @@
 
 package org.jowidgets.modeler.ui.action;
 
+import java.util.List;
+
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.cap.common.api.bean.IBeanDto;
 import org.jowidgets.cap.common.api.service.IExecutorService;
 import org.jowidgets.cap.ui.api.CapUiToolkit;
 import org.jowidgets.cap.ui.api.command.IExecutorActionBuilder;
@@ -60,7 +63,7 @@ public final class PropertyModelMoveDownAction extends ActionWrapper {
 		builder.setAccelerator(VirtualKey.D, Modifier.SHIFT);
 		builder.setSelectionPolicy(BeanSelectionPolicy.MULTI_SELECTION);
 		builder.setExecutor(excecuterServiceId);
-		builder.addExecutionInterceptor(new ReloadDataModelExecutionInterceptor(model));
+		builder.addExecutionInterceptor(new ReloadDataModelExecutionInterceptor<List<IBeanDto>>(model));
 		return builder.build();
 	}
 }
