@@ -26,38 +26,25 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.service.descriptor;
+package org.jowidgets.modeler.service.executor;
 
-import org.jowidgets.cap.common.api.bean.IBeanPropertyBluePrint;
-import org.jowidgets.cap.common.api.sort.Sort;
 import org.jowidgets.i18n.api.IMessage;
-import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
-import org.jowidgets.modeler.common.bean.IPropertyModel;
-import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
-import org.jowidgets.modeler.common.lookup.LookUpIds;
-import org.jowidgets.util.Assert;
+import org.jowidgets.i18n.api.IMessageProvider;
+import org.jowidgets.i18n.api.MessageProvider;
 
-public final class EntityPropertyModelDtoDescriptorBuilder extends AbstractPropertyModelDtoDescriptorBuilder {
+final class Messages {
 
-	public EntityPropertyModelDtoDescriptorBuilder() {
-		super(IEntityPropertyModel.class);
+	private static final IMessageProvider MESSAGE_PROVIDER = MessageProvider.create(
+			"org.jowidgets.modeler.service.executor.messages",
+			Messages.class);
 
-		setDefaultSorting(Sort.create(IEntityPropertyModel.PARENT_MODEL_ID_PROPERTY), Sort.create(IPropertyModel.ORDER_PROPERTY));
+	private Messages() {}
 
-		addIdProperty();
-
-		final IBeanPropertyBluePrint propertyBp = addProperty(IEntityPropertyModel.PARENT_MODEL_ID_PROPERTY);
-		propertyBp.setLabel(getMessage("entityModelName.label"));
-		propertyBp.setDescription(getMessage("entityModelName.description"));
-		propertyBp.setLookUpValueRange(LookUpIds.ENTITY_MODELS);
-		propertyBp.setMandatory(true);
-
-		addCommonProperties();
-		addVersionProperty();
+	public static String getString(final String key) {
+		return MESSAGE_PROVIDER.getString(key);
 	}
 
-	private static IMessage getMessage(final String keySuffix) {
-		Assert.paramNotEmpty(keySuffix, "keySuffix");
-		return ModelerEntityMessages.getMessage("EntityPropertyModelDtoDescriptorBuilder." + keySuffix);
+	public static IMessage getMessage(final String key) {
+		return MESSAGE_PROVIDER.getMessage(key);
 	}
 }

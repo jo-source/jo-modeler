@@ -113,7 +113,7 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 		bp.setLinkEntityId(EntityIds.LINKED_ENTITY_PROPERTY_MODEL_OF_ENTITY_MODEL);
 		bp.setLinkBeanType(EntityPropertyModel.class);
 		bp.setLinkedEntityId(EntityIds.LINKED_ENTITY_PROPERTY_MODEL_OF_ENTITY_MODEL);
-		bp.setSourceProperties(EntityPropertyModel.ENTITY_MODEL_ID_PROPERTY);
+		bp.setSourceProperties(EntityPropertyModel.PARENT_MODEL_ID_PROPERTY);
 		bp.setLinkDeleterService(null);
 	}
 
@@ -140,7 +140,7 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 
 	private IReaderService<Void> createEntityPropertyModelOfEntityModelReader() {
 		final ICriteriaQueryCreatorBuilder<Void> queryBuilder = JpaQueryToolkit.criteriaQueryCreatorBuilder(EntityPropertyModel.class);
-		queryBuilder.setParentPropertyPath("entityModel");
+		queryBuilder.setParentPropertyPath("parentModel");
 		return getServiceFactory().readerService(
 				EntityPropertyModel.class,
 				queryBuilder.build(),

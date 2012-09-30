@@ -35,8 +35,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -53,21 +51,21 @@ public class EntityPropertyModel extends AbstractPropertyModel implements IEntit
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ENTITY_MODEL_ID", nullable = false, insertable = false, updatable = false)
-	private EntityModel entityModel;
+	private EntityModel parentModel;
 
 	@Column(name = "ENTITY_MODEL_ID", nullable = false)
-	private Long entityModelId;
+	private Long parentModelId;
 
 	@Override
-	public Long getEntityModelId() {
-		return entityModelId;
+	public Long getParentModelId() {
+		return parentModelId;
 	}
 
 	@Override
-	public void setEntityModelId(final Long id) {
-		this.entityModelId = id;
-		if (this.entityModel != null && !NullCompatibleEquivalence.equals(this.entityModel.getId(), entityModelId)) {
-			entityModel = null;
+	public void setParentModelId(final Long id) {
+		this.parentModelId = id;
+		if (this.parentModel != null && !NullCompatibleEquivalence.equals(this.parentModel.getId(), parentModelId)) {
+			parentModel = null;
 		}
 	}
 
@@ -85,7 +83,7 @@ public class EntityPropertyModel extends AbstractPropertyModel implements IEntit
 			final CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 			final CriteriaQuery<EntityPropertyModel> query = criteriaBuilder.createQuery(EntityPropertyModel.class);
 			final Root<EntityPropertyModel> root = query.from(EntityPropertyModel.class);
-			query.where(criteriaBuilder.equal(root.get(IEntityPropertyModel.ENTITY_MODEL_ID_PROPERTY), parent.getId()));
+			query.where(criteriaBuilder.equal(root.get(IEntityPropertyModel.PARENT_MODEL_ID_PROPERTY), parent.getId()));
 			query.orderBy(criteriaBuilder.asc(root.get(IEntityPropertyModel.ORDER_PROPERTY)));
 			result.addAll(em.createQuery(query).getResultList());
 		}
@@ -93,45 +91,13 @@ public class EntityPropertyModel extends AbstractPropertyModel implements IEntit
 	}
 
 	public EntityModel getEntityModel() {
-		if (entityModel != null) {
-			return entityModel;
+		if (parentModel != null) {
+			return parentModel;
 		}
-		else if (entityModelId != null) {
-			entityModel = EntityManagerProvider.get().find(EntityModel.class, entityModelId);
+		else if (parentModelId != null) {
+			parentModel = EntityManagerProvider.get().find(EntityModel.class, parentModelId);
 		}
-		return entityModel;
-	}
-
-	@PrePersist
-	private void prePersist() {
-		if (getOrder() == null) {
-			setOrder(getNextOrdinal(getEntityModel()));
-		}
-	}
-
-	@PreRemove
-	private void preRemove() {
-		reorderProperties();
-	}
-
-	private void reorderProperties() {
-		final EntityManager em = EntityManagerProvider.get();
-		final ArrayList<AbstractPropertyModel> allProperties = getAllPropertiesOfParent();
-		allProperties.remove(this);
-		for (int i = 0; i < allProperties.size(); i++) {
-			final AbstractPropertyModel property = allProperties.get(i);
-			property.setOrder(Integer.valueOf(i));
-			em.persist(property);
-		}
-	}
-
-	private static Integer getNextOrdinal(final EntityModel entityModel) {
-		if (entityModel != null) {
-			return entityModel.getEntityPropertyModels().size();
-		}
-		else {
-			return null;
-		}
+		return parentModel;
 	}
 
 }

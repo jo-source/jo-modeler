@@ -62,7 +62,7 @@ public class EntityModel extends Bean implements IEntityModel {
 	@Basic
 	private String renderingPattern;
 
-	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "entityModel")
+	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "parentModel")
 	@BatchSize(size = 1000)
 	private final Set<EntityPropertyModel> entityPropertyModels = new HashSet<EntityPropertyModel>();
 
