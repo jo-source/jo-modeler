@@ -35,14 +35,17 @@ import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Index;
 import org.jowidgets.cap.service.jpa.api.query.QueryPath;
+import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
 import org.jowidgets.modeler.common.bean.IEntityModel;
 
 @Entity
@@ -62,7 +65,7 @@ public class EntityModel extends Bean implements IEntityModel {
 	@Basic
 	private String renderingPattern;
 
-	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "parentModel")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parentModel")
 	@BatchSize(size = 1000)
 	private final Set<EntityPropertyModel> entityPropertyModels = new HashSet<EntityPropertyModel>();
 
@@ -134,6 +137,14 @@ public class EntityModel extends Bean implements IEntityModel {
 			result.add(property.getName());
 		}
 		return result;
+	}
+
+	@PreRemove
+	private void preRemove() {
+		final EntityManager em = EntityManagerProvider.get();
+		for (final EntityPropertyModel property : entityPropertyModels) {
+			em.remove(property);
+		}
 	}
 
 }
