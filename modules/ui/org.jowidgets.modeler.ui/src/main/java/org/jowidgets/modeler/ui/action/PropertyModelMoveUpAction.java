@@ -41,6 +41,7 @@ import org.jowidgets.cap.ui.tools.execution.ReloadDataModelExecutionInterceptor;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.modeler.common.bean.IPropertyModel;
+import org.jowidgets.modeler.common.checker.MovePropertiesUpExecutableChecker;
 import org.jowidgets.modeler.ui.icons.ModelerIcons;
 import org.jowidgets.service.api.IServiceId;
 import org.jowidgets.tools.command.ActionWrapper;
@@ -64,7 +65,7 @@ public final class PropertyModelMoveUpAction extends ActionWrapper {
 		builder.setSelectionPolicy(BeanSelectionPolicy.MULTI_SELECTION);
 		builder.setExecutor(excecuterServiceId);
 		builder.addExecutionInterceptor(new ReloadDataModelExecutionInterceptor<List<IBeanDto>>(model));
-		//builder.addExecutableChecker(new MovePropertiesUpExecutableChecker());
+		builder.addExecutableChecker(new MovePropertiesUpExecutableChecker());
 		return builder.build();
 	}
 }

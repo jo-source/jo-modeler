@@ -31,9 +31,13 @@ import java.util.ArrayList;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.EntityManager;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreRemove;
 
 import org.hibernate.annotations.Index;
+import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
 import org.jowidgets.modeler.common.bean.IPropertyModel;
 
 @MappedSuperclass
@@ -185,6 +189,27 @@ public abstract class AbstractPropertyModel extends Bean implements IPropertyMod
 	@Override
 	public void setTableWidth(final Integer width) {
 		this.tableWidth = width;
+	}
+
+	@PrePersist
+	private void prePersist() {
+		setOrder(getAllPropertiesOfParent().size());
+	}
+
+	@PreRemove
+	private void preRemove() {
+		reorderPropertiesAfterThisDeleted();
+	}
+
+	private void reorderPropertiesAfterThisDeleted() {
+		final EntityManager em = EntityManagerProvider.get();
+		final ArrayList<AbstractPropertyModel> allProperties = getAllPropertiesOfParent();
+		allProperties.remove(this);
+		for (int i = 0; i < allProperties.size(); i++) {
+			final AbstractPropertyModel property = allProperties.get(i);
+			property.setOrder(Integer.valueOf(i));
+			em.persist(property);
+		}
 	}
 
 	@Override

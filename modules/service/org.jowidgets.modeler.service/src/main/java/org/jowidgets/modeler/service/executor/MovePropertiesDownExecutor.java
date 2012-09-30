@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -35,9 +35,12 @@ import javax.persistence.EntityManager;
 
 import org.jowidgets.cap.common.api.exception.ExecutableCheckException;
 import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
+import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.modeler.service.persistence.bean.AbstractPropertyModel;
 
 public final class MovePropertiesDownExecutor extends AbstractMovePropertiesExecutor {
+
+	private static final IMessage AT_LAST_POSITION = Messages.getMessage("MovePropertiesDownExecutor.alreadyAtLastPosition");
 
 	@Override
 	protected void moveForParentGroup(final ArrayList<AbstractPropertyModel> properties) {
@@ -46,9 +49,7 @@ public final class MovePropertiesDownExecutor extends AbstractMovePropertiesExec
 		final ArrayList<AbstractPropertyModel> allProperties = lastProperty.getAllPropertiesOfParent();
 
 		if (lastProperty.getOrder().intValue() >= allProperties.get(allProperties.size() - 1).getOrder().intValue()) {
-			//TODO MG i18n
-			final String userMessage = "Is already at last position";
-			throw new ExecutableCheckException(lastProperty.getId(), "Is already at last position", userMessage);
+			throw new ExecutableCheckException(lastProperty.getId(), "Already at last position", AT_LAST_POSITION.get());
 		}
 
 		final EntityManager em = EntityManagerProvider.get();

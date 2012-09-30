@@ -34,9 +34,12 @@ import java.util.Set;
 import org.jowidgets.cap.common.api.execution.ExecutableState;
 import org.jowidgets.cap.common.api.execution.IExecutableChecker;
 import org.jowidgets.cap.common.api.execution.IExecutableState;
+import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.modeler.common.bean.IPropertyModel;
 
 public final class MovePropertiesUpExecutableChecker implements IExecutableChecker<IPropertyModel> {
+
+	private static final IMessage AT_FIRST_POSITION = Messages.getMessage("MovePropertiesUpExecutableChecker.alreadyAtFirstPosition");
 
 	@Override
 	public Set<String> getPropertyDependencies() {
@@ -46,7 +49,7 @@ public final class MovePropertiesUpExecutableChecker implements IExecutableCheck
 	@Override
 	public IExecutableState getExecutableState(final IPropertyModel bean) {
 		if (bean.getOrder() != null && bean.getOrder().intValue() == 0) {
-			return ExecutableState.notExecutable("Is already at first position");
+			return ExecutableState.notExecutable(AT_FIRST_POSITION.get());
 		}
 		else {
 			return ExecutableState.EXECUTABLE;

@@ -27,9 +27,6 @@
  */
 package org.jowidgets.modeler.common.bean;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.jowidgets.cap.security.common.api.annotation.CreateAuthorization;
 import org.jowidgets.cap.security.common.api.annotation.DeleteAuthorization;
 import org.jowidgets.cap.security.common.api.annotation.ReadAuthorization;
@@ -41,19 +38,5 @@ import org.jowidgets.modeler.common.security.ModelerAuthKeys;
 @UpdateAuthorization(ModelerAuthKeys.UPDATE_ENTITY_PROPERTY_MODEL)
 @DeleteAuthorization(ModelerAuthKeys.DELETE_ENTITY_PROPERTY_MODEL)
 public interface IEntityPropertyModel extends IPropertyModel {
-
-	String ENTITY_MODEL_ID_PROPERTY = "entityModelId";
-
-	List<String> ALL_PROPERTIES = new LinkedList<String>() {
-		private static final long serialVersionUID = 1L;
-		{
-			addAll(ALL_COMMON_PROPERTIES);
-			add(ENTITY_MODEL_ID_PROPERTY);
-		}
-	};
-
-	Long getEntityModelId();
-
-	void setEntityModelId(Long id);
 
 }
