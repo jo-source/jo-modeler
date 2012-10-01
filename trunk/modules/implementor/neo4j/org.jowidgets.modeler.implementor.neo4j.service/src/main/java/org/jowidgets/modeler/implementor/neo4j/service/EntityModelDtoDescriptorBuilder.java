@@ -42,7 +42,6 @@ import org.jowidgets.cap.common.api.bean.IProperty;
 import org.jowidgets.cap.common.api.bean.IPropertyBuilder;
 import org.jowidgets.cap.common.api.sort.ISort;
 import org.jowidgets.cap.common.api.validation.IBeanValidator;
-import org.jowidgets.cap.service.neo4j.api.GraphDBConfig;
 import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
 import org.jowidgets.modeler.service.persistence.bean.AbstractPropertyModel;
@@ -80,7 +79,6 @@ final class EntityModelDtoDescriptorBuilder {
 			result.add(createProperty(property));
 		}
 		result.add(createVersionProperty());
-		result.add(createBeanTypeProperty());
 		return result;
 	}
 
@@ -137,17 +135,6 @@ final class EntityModelDtoDescriptorBuilder {
 		final IBeanPropertyBuilder builder = CapCommonToolkit.beanPropertyBuilder(IBean.class, IBean.VERSION_PROPERTY);
 		builder.setLabel(getMessage("version.label"));
 		builder.setDescription(getMessage("version.description"));
-		builder.setVisible(false);
-		return builder.build();
-	}
-
-	private static IProperty createBeanTypeProperty() {
-		final IPropertyBuilder builder = CapCommonToolkit.propertyBuilder();
-		builder.setName(GraphDBConfig.getBeanTypePropertyName());
-		builder.setValueType(String.class);
-		//TODO MG i18n
-		builder.setLabel("Type");
-		builder.setDescription("The type of the dataset");
 		builder.setVisible(false);
 		return builder.build();
 	}
