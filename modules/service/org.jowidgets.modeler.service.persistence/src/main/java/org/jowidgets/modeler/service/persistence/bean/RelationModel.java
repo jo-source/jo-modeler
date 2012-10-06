@@ -162,13 +162,4 @@ public class RelationModel extends Bean implements IRelationModel {
 		this.destinationCardinality = destinationCardinality;
 	}
 
-	public EntityModel getOtherEntity(final EntityModel entityModel) {
-		if (entityModel.equals(sourceEntityModel)) {
-			return destinationEntityModel;
-		}
-		else {
-			return sourceEntityModel;
-		}
-	}
-
 }
