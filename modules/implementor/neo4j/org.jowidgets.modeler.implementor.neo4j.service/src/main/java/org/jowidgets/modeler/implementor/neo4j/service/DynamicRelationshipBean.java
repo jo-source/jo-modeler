@@ -45,11 +45,11 @@ public class DynamicRelationshipBean extends BeanPropertyMapRelationshipBean {
 	public void setProperty(final String propertyName, final Object value) {
 		if (propertyName.startsWith(SOURCE_ID_PROPERTY_PREFIX + ":")) {
 			final String[] split = propertyName.split(":");
-			setStartNodeId(split[1], new RelationshipTypeImpl(split[2]), value);
+			setStartNodeId(split[1], new RelationshipTypeImpl(split[2]), split[2], value);
 		}
 		else if (propertyName.startsWith(DESTINATION_ID_PROPERTY_PREFIX + ":")) {
 			final String[] split = propertyName.split(":");
-			setEndNodeId(split[1], new RelationshipTypeImpl(split[2]), value);
+			setEndNodeId(split[1], new RelationshipTypeImpl(split[2]), split[2], value);
 		}
 		else {
 			super.setProperty(propertyName, value);

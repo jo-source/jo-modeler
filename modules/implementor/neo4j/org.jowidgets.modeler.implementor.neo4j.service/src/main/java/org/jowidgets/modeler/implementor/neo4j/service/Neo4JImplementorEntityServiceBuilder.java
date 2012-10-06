@@ -134,6 +134,7 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 		final IBeanEntityLinkBluePrint link = bp.addLink();
 		link.setLinkEntityId(linkEntityId);
 		link.setLinkBeanType(DynamicRelationshipBean.class);
+		link.setLinkBeanTypeId(relationship.getName());
 		link.setLinkedEntityId(linkedEntityId);
 		link.setLinkableEntityId(linkableEntityId);
 		link.setSymmetric(relation.getSymmetric().booleanValue());
