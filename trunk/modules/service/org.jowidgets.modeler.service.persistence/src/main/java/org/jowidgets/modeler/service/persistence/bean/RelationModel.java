@@ -74,6 +74,14 @@ public class RelationModel extends Bean implements IRelationModel {
 	@Column(name = "DESTINATION_ENTITY_MODEL_ID", nullable = false)
 	private Long destinationEntityModelId;
 
+	public EntityModel getSourceEntityModel() {
+		return sourceEntityModel;
+	}
+
+	public EntityModel getDestinationEntityModel() {
+		return destinationEntityModel;
+	}
+
 	@Override
 	public Long getSourceEntityModelId() {
 		return sourceEntityModelId;
@@ -152,6 +160,15 @@ public class RelationModel extends Bean implements IRelationModel {
 	@Override
 	public void setDestinationCardinality(final Cardinality destinationCardinality) {
 		this.destinationCardinality = destinationCardinality;
+	}
+
+	public EntityModel getOtherEntity(final EntityModel entityModel) {
+		if (entityModel.equals(sourceEntityModel)) {
+			return destinationEntityModel;
+		}
+		else {
+			return sourceEntityModel;
+		}
 	}
 
 }
