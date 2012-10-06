@@ -54,7 +54,10 @@ final class EntityModelDtoDescriptorBuilder {
 	private EntityModelDtoDescriptorBuilder() {}
 
 	static IBeanDtoDescriptor create(final EntityModel entityModel) {
+		return create(entityModel, entityModel.getLabelSingular(), entityModel.getLabelSingular());
+	}
 
+	static IBeanDtoDescriptor create(final EntityModel entityModel, final String labelSingular, final String labelPlural) {
 		final Collection<IProperty> properties = createProperties(entityModel);
 		final Collection<ISort> defaultSorting = Collections.emptyList();
 		final Collection<IBeanValidator<?>> beanValidators = Collections.emptyList();
@@ -62,8 +65,8 @@ final class EntityModelDtoDescriptorBuilder {
 		return CapCommonToolkit.dtoDescriptor(
 				properties,
 				defaultSorting,
-				entityModel.getLabelSingular(),
-				entityModel.getLabelPlural(),
+				labelSingular,
+				labelPlural,
 				null,
 				entityModel.getRenderingPattern(),
 				beanValidators);

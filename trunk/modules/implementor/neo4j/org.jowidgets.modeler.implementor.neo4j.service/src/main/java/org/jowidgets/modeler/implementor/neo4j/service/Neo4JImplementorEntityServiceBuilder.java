@@ -51,6 +51,7 @@ import org.jowidgets.modeler.service.persistence.bean.EntityModel;
 import org.jowidgets.modeler.service.persistence.bean.RelationModel;
 import org.jowidgets.service.api.IServiceRegistry;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.EmptyCheck;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.RelationshipType;
 
@@ -88,30 +89,45 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 	}
 
 	private void addLinkedEntities(final IBeanEntityBluePrint bp, final EntityModel entityModel, final boolean createEntities) {
-		for (final RelationModel relation : entityModel.getDestinationEntityOfSourceEntityRelation()) {
-			addLinkedEntity(bp, entityModel, relation, createEntities);
-		}
 		for (final RelationModel relation : entityModel.getSourceEntityOfDestinationEntityRelation()) {
-			addLinkedEntity(bp, entityModel, relation, createEntities);
+			addLinkedEntity(bp, entityModel, relation.getDestinationEntityModel(), relation, createEntities, false);
+		}
+		for (final RelationModel relation : entityModel.getDestinationEntityOfSourceEntityRelation()) {
+			if (!relation.getSymmetric().booleanValue() && !EmptyCheck.isEmpty(relation.getInverseLabel())) {
+				addLinkedEntity(bp, entityModel, relation.getSourceEntityModel(), relation, createEntities, true);
+			}
 		}
 	}
 
 	private void addLinkedEntity(
 		final IBeanEntityBluePrint bp,
 		final EntityModel entity,
+		final EntityModel linkedEntity,
 		final RelationModel relation,
-		final boolean createEntities) {
-		final EntityModel linkedEntity = relation.getOtherEntity(entity);
+		final boolean createEntities,
+		final boolean inverse) {
 
 		final String entityIdSuffix = entity.getName() + relation.getName() + linkedEntity.getName();
-		final String linkEntityId = "Link" + entityIdSuffix;
-		final String linkedEntityId = "Linked" + entityIdSuffix;
-		final String linkableEntityId = "Linkable" + entityIdSuffix;
+		final String inverseSuffix = inverse ? "INVERSE" : "";
+
+		final String linkEntityId = "Link" + entityIdSuffix + inverseSuffix;
+		final String linkedEntityId = "Linked" + entityIdSuffix + inverseSuffix;
+		final String linkableEntityId = "Linkable" + entityIdSuffix + inverseSuffix;
 
 		final DynamicRelationshipType relationship = new DynamicRelationshipType(relation);
-		final Direction direction = relationship.getDirection(entity);
 
-		final IBeanDtoDescriptor linkedDtoDescriptor = EntityModelDtoDescriptorBuilder.create(linkedEntity);
+		String linkedLabel;
+		if (!inverse) {
+			linkedLabel = relation.getLabel();
+		}
+		else {
+			linkedLabel = relation.getInverseLabel();
+		}
+
+		final IBeanDtoDescriptor linkedDtoDescriptor = EntityModelDtoDescriptorBuilder.create(
+				linkedEntity,
+				linkedLabel,
+				linkedLabel);
 		final IBeanDtoDescriptor linkableDtoDescriptor = EntityModelDtoDescriptorBuilder.create(linkedEntity);
 		final Collection<String> linkedProperties = getProperties(linkedDtoDescriptor);
 
@@ -120,8 +136,9 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 		link.setLinkBeanType(DynamicRelationshipBean.class);
 		link.setLinkedEntityId(linkedEntityId);
 		link.setLinkableEntityId(linkableEntityId);
+		link.setSymmetric(relation.getSymmetric().booleanValue());
 
-		if (Direction.OUTGOING == direction) {
+		if (!inverse) {
 			link.setSourceProperties(DynamicRelationshipBean.SOURCE_ID_PROPERTY_PREFIX
 				+ ":"
 				+ entity.getName()
@@ -149,6 +166,15 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 		}
 
 		if (createEntities) {
+			final Direction direction;
+			if (relation.getSymmetric().booleanValue()) {
+				direction = Direction.BOTH;
+			}
+			else {
+				direction = inverse ? Direction.INCOMING : Direction.OUTGOING;
+			}
+
+			//create linked
 			final IBeanEntityBluePrint linkedBp = addEntity();
 			linkedBp.setEntityId(linkedEntityId);
 			linkedBp.setBeanType(BeanPropertyMapNodeBean.class);
@@ -165,6 +191,7 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 			linkedBp.setReaderService(linkedReaderService);
 			addLinkedEntities(linkedBp, linkedEntity, false);
 
+			//create linkable
 			final IBeanEntityBluePrint linkableBp = addEntity();
 			linkableBp.setEntityId(linkableEntityId);
 			linkableBp.setBeanType(BeanPropertyMapNodeBean.class);
@@ -211,13 +238,5 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 			return name;
 		}
 
-		private Direction getDirection(final EntityModel sourceModel) {
-			if (sourceEntityName.equals(sourceModel.getName())) {
-				return Direction.OUTGOING;
-			}
-			else {
-				return Direction.INCOMING;
-			}
-		}
 	}
 }
