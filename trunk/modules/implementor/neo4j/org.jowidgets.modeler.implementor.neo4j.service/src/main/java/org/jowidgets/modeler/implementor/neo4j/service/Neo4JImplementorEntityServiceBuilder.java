@@ -29,6 +29,7 @@
 package org.jowidgets.modeler.implementor.neo4j.service;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -89,26 +90,30 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 	}
 
 	private void addLinkedEntities(final IBeanEntityBluePrint bp, final EntityModel entityModel, final boolean createEntities) {
+		final List<RelationDescriptor> descriptors = new LinkedList<RelationDescriptor>();
 		for (final RelationModel relation : entityModel.getSourceEntityOfDestinationEntityRelation()) {
-			addLinkedEntity(bp, entityModel, relation.getDestinationEntityModel(), relation, createEntities, false);
+			descriptors.add(new RelationDescriptor(entityModel, relation.getDestinationEntityModel(), relation, false));
 		}
 		for (final RelationModel relation : entityModel.getDestinationEntityOfSourceEntityRelation()) {
 			if (!relation.getSymmetric().booleanValue() && !EmptyCheck.isEmpty(relation.getInverseLabel())) {
-				addLinkedEntity(bp, entityModel, relation.getSourceEntityModel(), relation, createEntities, true);
+				descriptors.add(new RelationDescriptor(entityModel, relation.getSourceEntityModel(), relation, true));
 			}
+		}
+		Collections.sort(descriptors);
+		for (final RelationDescriptor descriptor : descriptors) {
+			addLinkedEntity(bp, createEntities, descriptor);
 		}
 	}
 
-	private void addLinkedEntity(
-		final IBeanEntityBluePrint bp,
-		final EntityModel entity,
-		final EntityModel linkedEntity,
-		final RelationModel relation,
-		final boolean createEntities,
-		final boolean inverse) {
+	private void addLinkedEntity(final IBeanEntityBluePrint bp, final boolean createEntities, final RelationDescriptor descriptor) {
+
+		final EntityModel entity = descriptor.getEntity();
+		final EntityModel linkedEntity = descriptor.getLinkedEntity();
+		final RelationModel relation = descriptor.getRelation();
+		final boolean inverse = descriptor.isInverse();
 
 		final String entityIdSuffix = entity.getName() + relation.getName() + linkedEntity.getName();
-		final String inverseSuffix = inverse ? "INVERSE" : "";
+		final String inverseSuffix = inverse ? "Inverse" : "";
 
 		final String linkEntityId = "Link" + entityIdSuffix + inverseSuffix;
 		final String linkedEntityId = "Linked" + entityIdSuffix + inverseSuffix;
@@ -237,6 +242,48 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 
 		private String getName() {
 			return name;
+		}
+
+	}
+
+	private static final class RelationDescriptor implements Comparable<RelationDescriptor> {
+
+		private final EntityModel entity;
+		private final EntityModel linkedEntity;
+		private final RelationModel relation;
+		private final boolean inverse;
+
+		private RelationDescriptor(
+			final EntityModel entity,
+			final EntityModel linkedEntity,
+			final RelationModel relation,
+			final boolean inverse) {
+
+			this.entity = entity;
+			this.linkedEntity = linkedEntity;
+			this.relation = relation;
+			this.inverse = inverse;
+		}
+
+		private EntityModel getEntity() {
+			return entity;
+		}
+
+		private EntityModel getLinkedEntity() {
+			return linkedEntity;
+		}
+
+		private RelationModel getRelation() {
+			return relation;
+		}
+
+		private boolean isInverse() {
+			return inverse;
+		}
+
+		@Override
+		public int compareTo(final RelationDescriptor relationDescriptor) {
+			return getRelation().getName().compareTo(relationDescriptor.getRelation().getName());
 		}
 
 	}
