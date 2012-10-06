@@ -121,17 +121,32 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 		link.setLinkedEntityId(linkedEntityId);
 		link.setLinkableEntityId(linkableEntityId);
 
-		link.setSourceProperties(DynamicRelationshipBean.SOURCE_ID_PROPERTY_PREFIX
-			+ ":"
-			+ entity.getName()
-			+ ":"
-			+ relationship.getName());
+		if (Direction.OUTGOING == direction) {
+			link.setSourceProperties(DynamicRelationshipBean.SOURCE_ID_PROPERTY_PREFIX
+				+ ":"
+				+ entity.getName()
+				+ ":"
+				+ relationship.getName());
 
-		link.setDestinationProperties(DynamicRelationshipBean.DESTINATION_ID_PROPERTY_PREFIX
-			+ ":"
-			+ linkedEntity.getName()
-			+ ":"
-			+ relationship.getName());
+			link.setDestinationProperties(DynamicRelationshipBean.DESTINATION_ID_PROPERTY_PREFIX
+				+ ":"
+				+ linkedEntity.getName()
+				+ ":"
+				+ relationship.getName());
+		}
+		else {
+			link.setSourceProperties(DynamicRelationshipBean.DESTINATION_ID_PROPERTY_PREFIX
+				+ ":"
+				+ entity.getName()
+				+ ":"
+				+ relationship.getName());
+
+			link.setDestinationProperties(DynamicRelationshipBean.SOURCE_ID_PROPERTY_PREFIX
+				+ ":"
+				+ linkedEntity.getName()
+				+ ":"
+				+ relationship.getName());
+		}
 
 		if (createEntities) {
 			final IBeanEntityBluePrint linkedBp = addEntity();
@@ -163,7 +178,7 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 					direction,
 					false,
 					linkedProperties);
-			linkedBp.setReaderService(linkableReaderService);
+			linkableBp.setReaderService(linkableReaderService);
 		}
 	}
 
