@@ -47,7 +47,7 @@ public final class ModelerSilkIconsInitializer {
 		registry.registerImageConstant(ModelerIcons.ENTITY_MODEL, SilkIcons.TABLE);
 		registry.registerImageConstant(ModelerIcons.PROPERTY_MODEL, SilkIcons.TEXTFIELD);
 		registry.registerImageConstant(ModelerIcons.RELATION_MODEL, SilkIcons.LINK);
-		registry.registerImageConstant(ModelerIcons.LOOK_UP, SilkIcons.TABLE_RELATIONSHIP);
+		registry.registerImageConstant(ModelerIcons.LOOK_UP, SilkIcons.FIND);
 		registry.registerImageConstant(ModelerIcons.ARROW_UP, SilkIcons.ARROW_UP);
 		registry.registerImageConstant(ModelerIcons.ARROW_DOWN, SilkIcons.ARROW_DOWN);
 	}
