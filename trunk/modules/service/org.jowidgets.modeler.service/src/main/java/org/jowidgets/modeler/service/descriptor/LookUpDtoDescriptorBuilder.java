@@ -32,6 +32,7 @@ import org.jowidgets.cap.common.api.bean.IBeanPropertyBluePrint;
 import org.jowidgets.cap.common.api.sort.Sort;
 import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.modeler.common.bean.ILookUp;
+import org.jowidgets.modeler.common.dto.LookUpDisplayFormat;
 import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
 import org.jowidgets.modeler.common.lookup.LookUpIds;
 import org.jowidgets.util.Assert;
@@ -65,12 +66,14 @@ public class LookUpDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
 		propertyBp = addProperty(ILookUp.HAS_NULL_VALUE_PROPERTY);
 		propertyBp.setLabel(getMessage("hasNullValue.label"));
 		propertyBp.setDescription(getMessage("hasNullValue.description"));
+		propertyBp.setDefaultValue(Boolean.TRUE);
 		propertyBp.setMandatory(true);
 
 		propertyBp = addProperty(ILookUp.DEFAULT_PROPERTY_TYPE_PROPERTY);
 		propertyBp.setLookUpValueRange(LookUpIds.LOOK_UP_DISPLAY_FORMAT);
 		propertyBp.setLabel(getMessage("defaultDisplayFormat.label"));
 		propertyBp.setDescription(getMessage("defaultDisplayFormat.description"));
+		propertyBp.setDefaultValue(LookUpDisplayFormat.LONG);
 		propertyBp.setMandatory(true);
 
 		addVersionProperty();
