@@ -55,6 +55,11 @@ public final class ModelerAuthKeys {
 	public static final String UPDATE_RELATION_MODEL = "UPDATE_RELATION_MODEL";
 	public static final String DELETE_RELATION_MODEL = "DELETE_RELATION_MODEL";
 
+	public static final String CREATE_LOOK_UP = "CREATE_LOOK_UP";
+	public static final String READ_LOOK_UP = "READ_LOOK_UP";
+	public static final String UPDATE_LOOK_UP = "UPDATE_LOOK_UP";
+	public static final String DELETE_LOOK_UP = "DELETE_LOOK_UP";
+
 	//Authorizations collection
 	public static final Collection<String> ALL_AUTHORIZATIONS = createAuthorizations();
 

@@ -26,13 +26,11 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.common.lookup;
+package org.jowidgets.modeler.common.dto;
 
-public enum LookUpIds {
+public enum LookUpDisplayFormat {
 
-	VALUE_TYPES,
-	ENTITY_MODELS,
-	CARDINALITY,
-	LOOK_UP_DISPLAY_FORMAT
+	SHORT,
+	LONG
 
 }

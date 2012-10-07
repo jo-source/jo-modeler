@@ -41,10 +41,12 @@ import org.jowidgets.modeler.common.entity.EntityIds;
 import org.jowidgets.modeler.service.descriptor.DestinationEntityModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.EntityModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.EntityPropertyModelDtoDescriptorBuilder;
+import org.jowidgets.modeler.service.descriptor.LookUpDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.RelationModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.SourceEntityModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.persistence.bean.EntityModel;
 import org.jowidgets.modeler.service.persistence.bean.EntityPropertyModel;
+import org.jowidgets.modeler.service.persistence.bean.LookUp;
 import org.jowidgets.modeler.service.persistence.bean.RelationModel;
 import org.jowidgets.service.api.IServiceRegistry;
 
@@ -66,6 +68,10 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 		bp = addEntity().setEntityId(EntityIds.RELATION_MODEL).setBeanType(RelationModel.class);
 		bp.setDtoDescriptor(new RelationModelDtoDescriptorBuilder());
 		addRelationModelLinkDescriptors(bp);
+
+		//ILookUp
+		bp = addEntity().setEntityId(EntityIds.LOOK_UP).setBeanType(LookUp.class);
+		bp.setDtoDescriptor(new LookUpDtoDescriptorBuilder());
 
 		//Linked property models of entity models
 		bp = addEntity().setEntityId(EntityIds.LINKED_ENTITY_PROPERTY_MODEL_OF_ENTITY_MODEL);

@@ -25,14 +25,72 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+package org.jowidgets.modeler.service.persistence.bean;
 
-package org.jowidgets.modeler.common.lookup;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
-public enum LookUpIds {
+import org.hibernate.annotations.Index;
+import org.jowidgets.modeler.common.bean.ILookUp;
+import org.jowidgets.modeler.common.dto.LookUpDisplayFormat;
 
-	VALUE_TYPES,
-	ENTITY_MODELS,
-	CARDINALITY,
-	LOOK_UP_DISPLAY_FORMAT
+@Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
+public class LookUp extends Bean implements ILookUp {
+
+	@Basic
+	@Index(name = "NameIndex")
+	private String name;
+
+	@Basic
+	private String label;
+
+	@Basic
+	private Boolean hasNullValue;
+
+	@Basic
+	private LookUpDisplayFormat defaultDisplayFormat;
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String getLabel() {
+		return label;
+	}
+
+	@Override
+	public void setLabel(final String label) {
+		this.label = label;
+	}
+
+	@Override
+	public Boolean getHasNullValue() {
+		return hasNullValue;
+	}
+
+	@Override
+	public void setHasNullValue(final Boolean hasNullValue) {
+		this.hasNullValue = hasNullValue;
+	}
+
+	@Override
+	public LookUpDisplayFormat getDefaultDisplayFormat() {
+		return defaultDisplayFormat;
+	}
+
+	@Override
+	public void setDefaultDisplayFormat(final LookUpDisplayFormat defaultDisplayFormat) {
+		this.defaultDisplayFormat = defaultDisplayFormat;
+	}
 
 }
