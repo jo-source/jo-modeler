@@ -36,17 +36,20 @@ import org.jowidgets.cap.service.jpa.api.query.JpaQueryToolkit;
 import org.jowidgets.cap.service.jpa.tools.entity.JpaEntityServiceBuilderWrapper;
 import org.jowidgets.modeler.common.bean.IEntityModel;
 import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
+import org.jowidgets.modeler.common.bean.ILookUpElement;
 import org.jowidgets.modeler.common.bean.IRelationModel;
 import org.jowidgets.modeler.common.entity.EntityIds;
 import org.jowidgets.modeler.service.descriptor.DestinationEntityModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.EntityModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.EntityPropertyModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.LookUpDtoDescriptorBuilder;
+import org.jowidgets.modeler.service.descriptor.LookUpElementDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.RelationModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.SourceEntityModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.persistence.bean.EntityModel;
 import org.jowidgets.modeler.service.persistence.bean.EntityPropertyModel;
 import org.jowidgets.modeler.service.persistence.bean.LookUp;
+import org.jowidgets.modeler.service.persistence.bean.LookUpElement;
 import org.jowidgets.modeler.service.persistence.bean.RelationModel;
 import org.jowidgets.service.api.IServiceRegistry;
 
@@ -72,6 +75,7 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 		//ILookUp
 		bp = addEntity().setEntityId(EntityIds.LOOK_UP).setBeanType(LookUp.class);
 		bp.setDtoDescriptor(new LookUpDtoDescriptorBuilder());
+		addLookUpLookUpElementLinkDescriptor(bp);
 
 		//Linked property models of entity models
 		bp = addEntity().setEntityId(EntityIds.LINKED_ENTITY_PROPERTY_MODEL_OF_ENTITY_MODEL);
@@ -102,6 +106,13 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 		bp.setDtoDescriptor(new DestinationEntityModelDtoDescriptorBuilder());
 		bp.setReaderService(createDestinationEntityModelOfRelationModelReader());
 		addEntityModelLinkDescriptors(bp);
+
+		//Linked look up elements of look up
+		bp = addEntity().setEntityId(EntityIds.LINKED_LOOK_UP_ELEMENTS_OF_LOOK_UP);
+		bp.setBeanType(LookUpElement.class);
+		bp.setDtoDescriptor(new LookUpElementDtoDescriptorBuilder());
+		bp.setReaderService(createLookUpElementsOfLookUpReader());
+		bp.setProperties(ILookUpElement.ALL_PROPERTIES);
 	}
 
 	private void addEntityModelLinkDescriptors(final IBeanEntityBluePrint bp) {
@@ -144,6 +155,15 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 		bp.setLinkedEntityId(EntityIds.DESTINATION_ENTITY_MODEL_OF_RELATION_MODEL);
 	}
 
+	private void addLookUpLookUpElementLinkDescriptor(final IBeanEntityBluePrint entityBp) {
+		final IBeanEntityLinkBluePrint bp = entityBp.addLink();
+		bp.setLinkEntityId(EntityIds.LINKED_LOOK_UP_ELEMENTS_OF_LOOK_UP);
+		bp.setLinkBeanType(LookUpElement.class);
+		bp.setLinkedEntityId(EntityIds.LINKED_LOOK_UP_ELEMENTS_OF_LOOK_UP);
+		bp.setSourceProperties(LookUpElement.LOOK_UP_ID_PROPERTY);
+		bp.setLinkDeleterService(null);
+	}
+
 	private IReaderService<Void> createEntityPropertyModelOfEntityModelReader() {
 		final ICriteriaQueryCreatorBuilder<Void> queryBuilder = JpaQueryToolkit.criteriaQueryCreatorBuilder(EntityPropertyModel.class);
 		queryBuilder.setParentPropertyPath("parentModel");
@@ -151,6 +171,12 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 				EntityPropertyModel.class,
 				queryBuilder.build(),
 				IEntityPropertyModel.ALL_PROPERTIES);
+	}
+
+	private IReaderService<Void> createLookUpElementsOfLookUpReader() {
+		final ICriteriaQueryCreatorBuilder<Void> queryBuilder = JpaQueryToolkit.criteriaQueryCreatorBuilder(LookUpElement.class);
+		queryBuilder.setParentPropertyPath("lookUp");
+		return getServiceFactory().readerService(LookUpElement.class, queryBuilder.build(), ILookUpElement.ALL_PROPERTIES);
 	}
 
 	private IReaderService<Void> createLinkedRelationModelOfEntityModelReader() {

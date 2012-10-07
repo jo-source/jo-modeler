@@ -19,6 +19,7 @@
 		<class>org.jowidgets.modeler.service.persistence.bean.EntityPropertyModel</class>
 		<class>org.jowidgets.modeler.service.persistence.bean.RelationModel</class>
 		<class>org.jowidgets.modeler.service.persistence.bean.LookUp</class>
+		<class>org.jowidgets.modeler.service.persistence.bean.LookUpElement</class>
 			
 		<properties>	
 			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
