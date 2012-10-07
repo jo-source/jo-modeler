@@ -92,11 +92,21 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 	private void addLinkedEntities(final IBeanEntityBluePrint bp, final EntityModel entityModel, final boolean createEntities) {
 		final List<RelationDescriptor> descriptors = new LinkedList<RelationDescriptor>();
 		for (final RelationModel relation : entityModel.getSourceEntityOfDestinationEntityRelation()) {
-			descriptors.add(new RelationDescriptor(entityModel, relation.getDestinationEntityModel(), relation, false));
+			descriptors.add(new RelationDescriptor(
+				entityModel,
+				relation.getDestinationEntityModel(),
+				relation,
+				relation.getLabel(),
+				false));
 		}
 		for (final RelationModel relation : entityModel.getDestinationEntityOfSourceEntityRelation()) {
 			if (!relation.getSymmetric().booleanValue() && !EmptyCheck.isEmpty(relation.getInverseLabel())) {
-				descriptors.add(new RelationDescriptor(entityModel, relation.getSourceEntityModel(), relation, true));
+				descriptors.add(new RelationDescriptor(
+					entityModel,
+					relation.getSourceEntityModel(),
+					relation,
+					relation.getInverseLabel(),
+					true));
 			}
 		}
 		Collections.sort(descriptors);
@@ -110,6 +120,7 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 		final EntityModel entity = descriptor.getEntity();
 		final EntityModel linkedEntity = descriptor.getLinkedEntity();
 		final RelationModel relation = descriptor.getRelation();
+		final String linkedLabel = descriptor.getLinkedLabel();
 		final boolean inverse = descriptor.isInverse();
 
 		final String entityIdSuffix = entity.getName() + relation.getName() + linkedEntity.getName();
@@ -120,14 +131,6 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 		final String linkableEntityId = "Linkable" + entityIdSuffix + inverseSuffix;
 
 		final DynamicRelationshipType relationship = new DynamicRelationshipType(relation);
-
-		String linkedLabel;
-		if (!inverse) {
-			linkedLabel = relation.getLabel();
-		}
-		else {
-			linkedLabel = relation.getInverseLabel();
-		}
 
 		final IBeanDtoDescriptor linkedDtoDescriptor = EntityModelDtoDescriptorBuilder.create(
 				linkedEntity,
@@ -251,18 +254,25 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 		private final EntityModel entity;
 		private final EntityModel linkedEntity;
 		private final RelationModel relation;
+		private final String linkedLabel;
 		private final boolean inverse;
+
+		private final boolean isSelfReference;
 
 		private RelationDescriptor(
 			final EntityModel entity,
 			final EntityModel linkedEntity,
 			final RelationModel relation,
+			final String linkedLabel,
 			final boolean inverse) {
 
 			this.entity = entity;
 			this.linkedEntity = linkedEntity;
 			this.relation = relation;
+			this.linkedLabel = linkedLabel;
 			this.inverse = inverse;
+
+			this.isSelfReference = entity.getId().equals(linkedEntity.getId());
 		}
 
 		private EntityModel getEntity() {
@@ -271,6 +281,10 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 
 		private EntityModel getLinkedEntity() {
 			return linkedEntity;
+		}
+
+		private String getLinkedLabel() {
+			return linkedLabel;
 		}
 
 		private RelationModel getRelation() {
@@ -283,7 +297,43 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 
 		@Override
 		public int compareTo(final RelationDescriptor relationDescriptor) {
-			return getRelation().getName().compareTo(relationDescriptor.getRelation().getName());
+			final int selfReferenceResult = compareToSelfSelfReference(relationDescriptor);
+			if (selfReferenceResult != 0) {
+				return selfReferenceResult;
+			}
+			final int linkedEntityResult = linkedEntity.getLabelPlural().compareTo(
+					relationDescriptor.getLinkedEntity().getLabelPlural());
+			if (linkedEntityResult != 0) {
+				return linkedEntityResult;
+			}
+			final int relationResult = getRelation().getName().compareTo(relationDescriptor.getRelation().getName());
+			if (relationResult != 0) {
+				return relationResult;
+			}
+			return linkedLabel.compareTo(relationDescriptor.getLinkedLabel());
+		}
+
+		private int compareToSelfSelfReference(final RelationDescriptor relationDescriptor) {
+			if (isSelfReference && relationDescriptor.isSelfReference) {
+				if (relation.getSymmetric().booleanValue() == relationDescriptor.getRelation().getSymmetric().booleanValue()) {
+					return 0;
+				}
+				else if (relation.getSymmetric().booleanValue()) {
+					return 1;
+				}
+				else {
+					return -1;
+				}
+			}
+			else if (isSelfReference) {
+				return 1;
+			}
+			else if (relationDescriptor.isSelfReference) {
+				return -1;
+			}
+			else {
+				return 0;
+			}
 		}
 
 	}
