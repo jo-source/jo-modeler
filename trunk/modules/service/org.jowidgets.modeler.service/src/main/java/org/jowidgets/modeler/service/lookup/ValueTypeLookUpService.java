@@ -42,17 +42,22 @@ import org.jowidgets.cap.common.api.lookup.ILookUpEntry;
 import org.jowidgets.cap.common.api.lookup.ILookUpToolkit;
 import org.jowidgets.cap.service.api.adapter.ISyncLookUpService;
 import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
+import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.modeler.service.persistence.bean.EntityModel;
+import org.jowidgets.modeler.service.persistence.bean.LookUp;
 
 public final class ValueTypeLookUpService implements ISyncLookUpService {
 
 	public static final String ENTITY_VALUE_TYPE_KEY_PREFIX = "ENTITY_VALUE_TYPE_KEY:";
+	public static final String LOOK_UP_VALUE_TYPE_KEY_PREFIX = "LOOK_UP_VALUE_TYPE_KEY:";
 	public static final String STRING_KEY = String.class.getName();
 	public static final String LONG_KEY = Long.class.getName();
 	public static final String INTEGER_KEY = Integer.class.getName();
 	public static final String DOUBLE_KEY = Double.class.getName();
 	public static final String DATE_KEY = Date.class.getName();
 	public static final String BOOLEAN_KEY = Boolean.class.getName();
+
+	private static final IMessage LOOK_UP_LABEL = Messages.getMessage("ValueTypeLookUpService.lookUp");
 
 	@Override
 	public List<ILookUpEntry> readValues(final IExecutionCallback executionCallback) {
@@ -66,16 +71,34 @@ public final class ValueTypeLookUpService implements ISyncLookUpService {
 		result.add(lookUpToolkit.lookUpEntry(BOOLEAN_KEY, "Boolean"));
 		result.add(lookUpToolkit.lookUpEntry(DATE_KEY, "Date"));
 
+		addLookUps(result);
+		addEntityModels(result);
+
+		return Collections.unmodifiableList(result);
+	}
+
+	private void addEntityModels(final List<ILookUpEntry> result) {
+		final ILookUpToolkit lookUpToolkit = CapCommonToolkit.lookUpToolkit();
 		final EntityManager em = EntityManagerProvider.get();
 
 		final CriteriaQuery<EntityModel> criteriaQuery = em.getCriteriaBuilder().createQuery(EntityModel.class);
 		criteriaQuery.from(EntityModel.class);
-
 		for (final EntityModel entity : em.createQuery(criteriaQuery).getResultList()) {
 			result.add(lookUpToolkit.lookUpEntry(ENTITY_VALUE_TYPE_KEY_PREFIX + entity.getName(), entity.getLabelSingular()));
 		}
+	}
 
-		return Collections.unmodifiableList(result);
+	private void addLookUps(final List<ILookUpEntry> result) {
+		final ILookUpToolkit lookUpToolkit = CapCommonToolkit.lookUpToolkit();
+		final EntityManager em = EntityManagerProvider.get();
+
+		final CriteriaQuery<LookUp> criteriaQuery = em.getCriteriaBuilder().createQuery(LookUp.class);
+		criteriaQuery.from(LookUp.class);
+		for (final LookUp lookUp : em.createQuery(criteriaQuery).getResultList()) {
+			result.add(lookUpToolkit.lookUpEntry(LOOK_UP_VALUE_TYPE_KEY_PREFIX + lookUp.getName(), LOOK_UP_LABEL.get()
+				+ " - "
+				+ lookUp.getLabel()));
+		}
 	}
 
 }

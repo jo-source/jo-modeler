@@ -27,11 +27,18 @@
  */
 package org.jowidgets.modeler.service.persistence.bean;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Index;
 import org.jowidgets.modeler.common.bean.ILookUp;
 import org.jowidgets.modeler.common.dto.LookUpDisplayFormat;
@@ -52,6 +59,15 @@ public class LookUp extends Bean implements ILookUp {
 
 	@Basic
 	private LookUpDisplayFormat defaultDisplayFormat;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "lookUp")
+	@BatchSize(size = 1000)
+	@OrderBy("key")
+	private final List<LookUpElement> lookUpElements = new LinkedList<LookUpElement>();
+
+	public List<LookUpElement> getLookUpElements() {
+		return lookUpElements;
+	}
 
 	@Override
 	public String getName() {

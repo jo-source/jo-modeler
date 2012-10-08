@@ -44,10 +44,12 @@ import org.jowidgets.cap.common.api.sort.ISort;
 import org.jowidgets.cap.common.api.validation.IBeanValidator;
 import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
+import org.jowidgets.modeler.service.lookup.ValueTypeLookUpService;
 import org.jowidgets.modeler.service.persistence.bean.AbstractPropertyModel;
 import org.jowidgets.modeler.service.persistence.bean.EntityModel;
 import org.jowidgets.modeler.service.persistence.bean.EntityPropertyModel;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.EmptyCheck;
 
 final class EntityModelDtoDescriptorBuilder {
 
@@ -98,7 +100,20 @@ final class EntityModelDtoDescriptorBuilder {
 		builder.setMandatory(propertyModel.getMandatory());
 		builder.setFilterable(true);
 		builder.setSortable(true);
+		final String lookUpId = getLookUpId(propertyModel.getValueType());
+		if (!EmptyCheck.isEmpty(lookUpId)) {
+			builder.setValueRange(Neo4JImplementorLookUpServicesBuilder.getLookUpValueRange(lookUpId));
+		}
 		return builder.build();
+	}
+
+	private static String getLookUpId(final String valueType) {
+		if (valueType.startsWith(ValueTypeLookUpService.LOOK_UP_VALUE_TYPE_KEY_PREFIX)) {
+			return valueType.substring(valueType.indexOf(':') + 1);
+		}
+		else {
+			return null;
+		}
 	}
 
 	private static Class<?> getValueType(final String valueType) {
@@ -119,6 +134,9 @@ final class EntityModelDtoDescriptorBuilder {
 		}
 		else if (Boolean.class.getName().equals(valueType)) {
 			return Boolean.class;
+		}
+		else if (valueType.startsWith(ValueTypeLookUpService.LOOK_UP_VALUE_TYPE_KEY_PREFIX)) {
+			return String.class;
 		}
 		else {
 			throw new IllegalArgumentException("Value type '" + valueType + "' is not yet supoorted.");
