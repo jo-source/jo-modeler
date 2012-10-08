@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,28 +28,23 @@
 
 package org.jowidgets.modeler.implementor.neo4j.service;
 
-import org.jowidgets.cap.common.api.service.IEntityApplicationService;
-import org.jowidgets.cap.common.api.service.IEntityService;
-import org.jowidgets.cap.service.neo4j.api.Neo4JServiceToolkit;
-import org.jowidgets.cap.service.tools.CapServiceProviderBuilder;
-import org.jowidgets.modeler.service.persistence.ModelerPersistenceUnitNames;
-import org.jowidgets.service.tools.DefaultServiceProviderHolder;
+import org.jowidgets.i18n.api.IMessage;
+import org.jowidgets.i18n.api.IMessageProvider;
+import org.jowidgets.i18n.api.MessageProvider;
 
-public final class Neo4JImplementorServiceProviderHolder extends DefaultServiceProviderHolder {
+final class Messages {
 
-	public Neo4JImplementorServiceProviderHolder() {
-		super(new Neo4JImplementorServiceProviderBuilder());
+	private static final IMessageProvider MESSAGE_PROVIDER = MessageProvider.create(
+			"org.jowidgets.modeler.implementor.neo4j.service.messages",
+			Messages.class);
+
+	private Messages() {}
+
+	public static String getString(final String key) {
+		return MESSAGE_PROVIDER.getString(key);
 	}
 
-	static class Neo4JImplementorServiceProviderBuilder extends CapServiceProviderBuilder {
-		public Neo4JImplementorServiceProviderBuilder() {
-			final String persistenceUnitName = ModelerPersistenceUnitNames.MODELER;
-			Neo4JImplementorLookUpServicesBuilder.registerLookUpServices(this, persistenceUnitName);
-			addService(IEntityService.ID, new Neo4JImplementorEntityServiceBuilder(this, persistenceUnitName).build());
-			addService(
-					IEntityApplicationService.ID,
-					new Neo4JImplementorEntityApplicationServiceBuilder(persistenceUnitName).build());
-			addServiceDecorator(Neo4JServiceToolkit.serviceDecoratorProviderBuilder().build());
-		}
+	public static IMessage getMessage(final String key) {
+		return MESSAGE_PROVIDER.getMessage(key);
 	}
 }

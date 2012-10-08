@@ -15,7 +15,7 @@
 
 		<dependency>
 			<groupId>org.jowidgets.modeler</groupId>
-			<artifactId>org.jowidgets.modeler.service.persistence</artifactId>
+			<artifactId>org.jowidgets.modeler.service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 

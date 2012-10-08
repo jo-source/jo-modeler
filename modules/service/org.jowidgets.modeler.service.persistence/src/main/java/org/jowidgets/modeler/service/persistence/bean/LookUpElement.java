@@ -27,20 +27,15 @@
  */
 package org.jowidgets.modeler.service.persistence.bean;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Index;
 import org.jowidgets.modeler.common.bean.ILookUpElement;
 import org.jowidgets.util.NullCompatibleEquivalence;
@@ -71,10 +66,6 @@ public class LookUpElement extends Bean implements ILookUpElement {
 
 	@Basic
 	private Boolean isValid;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "lookUp")
-	@BatchSize(size = 1000)
-	private final Set<LookUpElement> lookUpElements = new HashSet<LookUpElement>();
 
 	@Override
 	public Long getLookUpId() {
