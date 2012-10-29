@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,26 +25,61 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+package org.jowidgets.modeler.service.persistence.bean;
 
-package org.jowidgets.modeler.common.entity;
+import java.util.LinkedList;
+import java.util.List;
 
-public enum EntityIds {
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
-	ENTITY_MODEL,
-	ENTITY_PROPERTY_MODEL,
-	RELATION_MODEL,
-	LOOK_UP,
-	ICON_SET,
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Index;
+import org.jowidgets.modeler.common.bean.IIconSet;
 
-	LINKED_ENTITY_PROPERTY_MODEL_OF_ENTITY_MODEL,
+@Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
+public class IconSet extends Bean implements IIconSet {
 
-	LINKED_RELATION_MODEL_OF_ENTITY_MODEL,
-	LINKABLE_ENTITY_MODEL_OF_ENTITY_MODEL,
+	@Basic
+	@Index(name = "NameIndex")
+	private String name;
 
-	SOURCE_ENTITY_MODEL_OF_RELATION_MODEL,
-	DESTINATION_ENTITY_MODEL_OF_RELATION_MODEL,
+	@Basic
+	private String label;
 
-	LINKED_LOOK_UP_ELEMENTS_OF_LOOK_UP,
-	LINKED_ICONS_OF_ICON_SET
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "iconSet")
+	@BatchSize(size = 1000)
+	@OrderBy("key")
+	private final List<Icon> icons = new LinkedList<Icon>();
+
+	public List<Icon> getLookUpElements() {
+		return icons;
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String getLabel() {
+		return label;
+	}
+
+	@Override
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
 }

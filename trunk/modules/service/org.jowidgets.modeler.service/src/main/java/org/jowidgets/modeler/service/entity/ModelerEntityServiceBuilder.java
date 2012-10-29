@@ -36,18 +36,23 @@ import org.jowidgets.cap.service.jpa.api.query.JpaQueryToolkit;
 import org.jowidgets.cap.service.jpa.tools.entity.JpaEntityServiceBuilderWrapper;
 import org.jowidgets.modeler.common.bean.IEntityModel;
 import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
+import org.jowidgets.modeler.common.bean.IIcon;
 import org.jowidgets.modeler.common.bean.ILookUpElement;
 import org.jowidgets.modeler.common.bean.IRelationModel;
 import org.jowidgets.modeler.common.entity.EntityIds;
 import org.jowidgets.modeler.service.descriptor.DestinationEntityModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.EntityModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.EntityPropertyModelDtoDescriptorBuilder;
+import org.jowidgets.modeler.service.descriptor.IconDtoDescriptorBuilder;
+import org.jowidgets.modeler.service.descriptor.IconSetDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.LookUpDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.LookUpElementDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.RelationModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.descriptor.SourceEntityModelDtoDescriptorBuilder;
 import org.jowidgets.modeler.service.persistence.bean.EntityModel;
 import org.jowidgets.modeler.service.persistence.bean.EntityPropertyModel;
+import org.jowidgets.modeler.service.persistence.bean.Icon;
+import org.jowidgets.modeler.service.persistence.bean.IconSet;
 import org.jowidgets.modeler.service.persistence.bean.LookUp;
 import org.jowidgets.modeler.service.persistence.bean.LookUpElement;
 import org.jowidgets.modeler.service.persistence.bean.RelationModel;
@@ -76,6 +81,11 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 		bp = addEntity().setEntityId(EntityIds.LOOK_UP).setBeanType(LookUp.class);
 		bp.setDtoDescriptor(new LookUpDtoDescriptorBuilder());
 		addLookUpLookUpElementLinkDescriptor(bp);
+
+		//IIconSet
+		bp = addEntity().setEntityId(EntityIds.ICON_SET).setBeanType(IconSet.class);
+		bp.setDtoDescriptor(new IconSetDtoDescriptorBuilder());
+		addIconSetIconsLinkDescriptor(bp);
 
 		//Linked property models of entity models
 		bp = addEntity().setEntityId(EntityIds.LINKED_ENTITY_PROPERTY_MODEL_OF_ENTITY_MODEL);
@@ -113,6 +123,13 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 		bp.setDtoDescriptor(new LookUpElementDtoDescriptorBuilder());
 		bp.setReaderService(createLookUpElementsOfLookUpReader());
 		bp.setProperties(ILookUpElement.ALL_PROPERTIES);
+
+		//Linked icons of icon set
+		bp = addEntity().setEntityId(EntityIds.LINKED_ICONS_OF_ICON_SET);
+		bp.setBeanType(Icon.class);
+		bp.setDtoDescriptor(new IconDtoDescriptorBuilder());
+		bp.setReaderService(createIconsOfIconSetReader());
+		bp.setProperties(IIcon.ALL_PROPERTIES);
 	}
 
 	private void addEntityModelLinkDescriptors(final IBeanEntityBluePrint bp) {
@@ -164,6 +181,16 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 		bp.setLinkDeleterService(null);
 	}
 
+	private void addIconSetIconsLinkDescriptor(final IBeanEntityBluePrint entityBp) {
+		final IBeanEntityLinkBluePrint bp = entityBp.addLink();
+		bp.setLinkEntityId(EntityIds.LINKED_ICONS_OF_ICON_SET);
+		bp.setLinkBeanType(LookUpElement.class);
+		bp.setLinkedEntityId(EntityIds.LINKED_ICONS_OF_ICON_SET);
+		bp.setSourceProperties(Icon.ICON_SET_ID_PROPERTY);
+		bp.setLinkCreatorService(null);
+		bp.setLinkDeleterService(null);
+	}
+
 	private IReaderService<Void> createEntityPropertyModelOfEntityModelReader() {
 		final ICriteriaQueryCreatorBuilder<Void> queryBuilder = JpaQueryToolkit.criteriaQueryCreatorBuilder(EntityPropertyModel.class);
 		queryBuilder.setParentPropertyPath("parentModel");
@@ -177,6 +204,12 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 		final ICriteriaQueryCreatorBuilder<Void> queryBuilder = JpaQueryToolkit.criteriaQueryCreatorBuilder(LookUpElement.class);
 		queryBuilder.setParentPropertyPath("lookUp");
 		return getServiceFactory().readerService(LookUpElement.class, queryBuilder.build(), ILookUpElement.ALL_PROPERTIES);
+	}
+
+	private IReaderService<Void> createIconsOfIconSetReader() {
+		final ICriteriaQueryCreatorBuilder<Void> queryBuilder = JpaQueryToolkit.criteriaQueryCreatorBuilder(Icon.class);
+		queryBuilder.setParentPropertyPath("iconSet");
+		return getServiceFactory().readerService(Icon.class, queryBuilder.build(), IIcon.ALL_PROPERTIES);
 	}
 
 	private IReaderService<Void> createLinkedRelationModelOfEntityModelReader() {

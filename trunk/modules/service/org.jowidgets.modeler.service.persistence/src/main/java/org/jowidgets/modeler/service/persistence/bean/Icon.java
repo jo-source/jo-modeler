@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,26 +25,70 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+package org.jowidgets.modeler.service.persistence.bean;
 
-package org.jowidgets.modeler.common.entity;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
-public enum EntityIds {
+import org.hibernate.annotations.Index;
+import org.jowidgets.modeler.common.bean.IIcon;
+import org.jowidgets.util.NullCompatibleEquivalence;
 
-	ENTITY_MODEL,
-	ENTITY_PROPERTY_MODEL,
-	RELATION_MODEL,
-	LOOK_UP,
-	ICON_SET,
+@Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"key"}))
+public class Icon extends Bean implements IIcon {
 
-	LINKED_ENTITY_PROPERTY_MODEL_OF_ENTITY_MODEL,
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ICON_SET_ID", nullable = false, insertable = false, updatable = false)
+	private LookUp iconSet;
 
-	LINKED_RELATION_MODEL_OF_ENTITY_MODEL,
-	LINKABLE_ENTITY_MODEL_OF_ENTITY_MODEL,
+	@Column(name = "ICON_SET_ID", nullable = false)
+	private Long iconSetId;
 
-	SOURCE_ENTITY_MODEL_OF_RELATION_MODEL,
-	DESTINATION_ENTITY_MODEL_OF_RELATION_MODEL,
+	@Basic
+	@Index(name = "KeyIndex")
+	private String key;
 
-	LINKED_LOOK_UP_ELEMENTS_OF_LOOK_UP,
-	LINKED_ICONS_OF_ICON_SET
+	@Basic
+	private String label;
+
+	@Override
+	public Long getIconSetId() {
+		return iconSetId;
+	}
+
+	@Override
+	public void setIconSetId(final Long id) {
+		this.iconSetId = id;
+		if (this.iconSet != null && !NullCompatibleEquivalence.equals(this.iconSet.getId(), iconSetId)) {
+			iconSet = null;
+		}
+	}
+
+	@Override
+	public String getKey() {
+		return key;
+	}
+
+	@Override
+	public void setKey(final String key) {
+		this.key = key;
+	}
+
+	@Override
+	public String getLabel() {
+		return label;
+	}
+
+	@Override
+	public void setLabel(final String label) {
+		this.label = label;
+	}
 
 }
