@@ -65,6 +65,16 @@ public final class ModelerAuthKeys {
 	public static final String UPDATE_LOOK_UP_ELEMENT = "UPDATE_LOOK_UP_ELEMENT";
 	public static final String DELETE_LOOK_UP_ELEMENT = "DELETE_LOOK_UP_ELEMENT";
 
+	public static final String CREATE_ICON_SET = "CREATE_ICON_SET";
+	public static final String READ_ICON_SET = "READ_ICON_SET";
+	public static final String UPDATE_ICON_SET = "UPDATE_ICON_SET";
+	public static final String DELETE_ICON_SET = "DELETE_ICON_SET";
+
+	public static final String CREATE_ICON = "CREATE_ICON";
+	public static final String READ_ICON = "READ_ICON";
+	public static final String UPDATE_ICON = "UPDATE_ICON";
+	public static final String DELETE_ICON = "DELETE_ICON";
+
 	//Authorizations collection
 	public static final Collection<String> ALL_AUTHORIZATIONS = createAuthorizations();
 

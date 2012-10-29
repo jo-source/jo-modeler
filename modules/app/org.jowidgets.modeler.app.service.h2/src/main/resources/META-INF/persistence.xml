@@ -20,6 +20,8 @@
 		<class>org.jowidgets.modeler.service.persistence.bean.RelationModel</class>
 		<class>org.jowidgets.modeler.service.persistence.bean.LookUp</class>
 		<class>org.jowidgets.modeler.service.persistence.bean.LookUpElement</class>
+		<class>org.jowidgets.modeler.service.persistence.bean.IconSet</class>
+		<class>org.jowidgets.modeler.service.persistence.bean.Icon</class>
 			
 		<properties>	
 			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />

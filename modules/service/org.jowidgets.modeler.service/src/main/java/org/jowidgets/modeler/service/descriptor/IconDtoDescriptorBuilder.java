@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,25 +26,45 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.common.entity;
+package org.jowidgets.modeler.service.descriptor;
 
-public enum EntityIds {
+import org.jowidgets.cap.common.api.bean.IBeanPropertyBluePrint;
+import org.jowidgets.cap.common.api.sort.Sort;
+import org.jowidgets.i18n.api.IMessage;
+import org.jowidgets.modeler.common.bean.IIcon;
+import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
+import org.jowidgets.util.Assert;
 
-	ENTITY_MODEL,
-	ENTITY_PROPERTY_MODEL,
-	RELATION_MODEL,
-	LOOK_UP,
-	ICON_SET,
+public class IconDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
 
-	LINKED_ENTITY_PROPERTY_MODEL_OF_ENTITY_MODEL,
+	public IconDtoDescriptorBuilder() {
+		this("label.singular", "label.plural");
+	}
 
-	LINKED_RELATION_MODEL_OF_ENTITY_MODEL,
-	LINKABLE_ENTITY_MODEL_OF_ENTITY_MODEL,
+	public IconDtoDescriptorBuilder(final String labelSingularKey, final String labelPluralKey) {
+		super(IIcon.class);
 
-	SOURCE_ENTITY_MODEL_OF_RELATION_MODEL,
-	DESTINATION_ENTITY_MODEL_OF_RELATION_MODEL,
+		setLabelSingular(getMessage(labelSingularKey));
+		setLabelPlural(getMessage(labelPluralKey));
+		setRenderingPattern("$" + IIcon.KEY_PROPERTY + "$");
+		setDefaultSorting(Sort.create(IIcon.KEY_PROPERTY));
 
-	LINKED_LOOK_UP_ELEMENTS_OF_LOOK_UP,
-	LINKED_ICONS_OF_ICON_SET
+		addIdProperty();
 
+		IBeanPropertyBluePrint propertyBp = addProperty(IIcon.KEY_PROPERTY);
+		propertyBp.setLabel(getMessage("key.label"));
+		propertyBp.setDescription(getMessage("key.description"));
+		propertyBp.setMandatory(true);
+
+		propertyBp = addProperty(IIcon.LABEL_PROPERTY);
+		propertyBp.setLabel(getMessage("label.label"));
+		propertyBp.setDescription(getMessage("label.description"));
+
+		addVersionProperty();
+	}
+
+	private static IMessage getMessage(final String keySuffix) {
+		Assert.paramNotEmpty(keySuffix, "keySuffix");
+		return ModelerEntityMessages.getMessage("IconDtoDescriptorBuilder." + keySuffix);
+	}
 }

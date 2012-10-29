@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,26 +25,48 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+package org.jowidgets.modeler.common.bean;
 
-package org.jowidgets.modeler.common.entity;
+import java.util.LinkedList;
+import java.util.List;
 
-public enum EntityIds {
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-	ENTITY_MODEL,
-	ENTITY_PROPERTY_MODEL,
-	RELATION_MODEL,
-	LOOK_UP,
-	ICON_SET,
+import org.jowidgets.cap.common.api.bean.IBean;
+import org.jowidgets.cap.security.common.api.annotation.CreateAuthorization;
+import org.jowidgets.cap.security.common.api.annotation.DeleteAuthorization;
+import org.jowidgets.cap.security.common.api.annotation.ReadAuthorization;
+import org.jowidgets.cap.security.common.api.annotation.UpdateAuthorization;
+import org.jowidgets.modeler.common.security.ModelerAuthKeys;
 
-	LINKED_ENTITY_PROPERTY_MODEL_OF_ENTITY_MODEL,
+@CreateAuthorization(ModelerAuthKeys.CREATE_ICON_SET)
+@ReadAuthorization(ModelerAuthKeys.READ_ICON_SET)
+@UpdateAuthorization(ModelerAuthKeys.UPDATE_ICON_SET)
+@DeleteAuthorization(ModelerAuthKeys.DELETE_ICON_SET)
+public interface IIconSet extends IBean {
 
-	LINKED_RELATION_MODEL_OF_ENTITY_MODEL,
-	LINKABLE_ENTITY_MODEL_OF_ENTITY_MODEL,
+	String NAME_PROPERTY = "name";
+	String LABEL_PROPERTY = "label";
 
-	SOURCE_ENTITY_MODEL_OF_RELATION_MODEL,
-	DESTINATION_ENTITY_MODEL_OF_RELATION_MODEL,
+	List<String> ALL_PROPERTIES = new LinkedList<String>() {
+		private static final long serialVersionUID = 1L;
+		{
+			add(NAME_PROPERTY);
+			add(LABEL_PROPERTY);
+		}
+	};
 
-	LINKED_LOOK_UP_ELEMENTS_OF_LOOK_UP,
-	LINKED_ICONS_OF_ICON_SET
+	@NotNull
+	@Size(min = 2, max = 25)
+	String getName();
+
+	void setName(String name);
+
+	@NotNull
+	@Size(min = 2, max = 25)
+	String getLabel();
+
+	void setLabel(String label);
 
 }

@@ -64,6 +64,7 @@ public final class ModelerApplicationFactory {
 		addEntityComponent(model, EntityIds.RELATION_MODEL, ModelerIcons.RELATION_MODEL);
 		addEntityComponent(model, EntityIds.ENTITY_PROPERTY_MODEL, ModelerIcons.PROPERTY_MODEL);
 		addEntityComponent(model, EntityIds.LOOK_UP, ModelerIcons.LOOK_UP);
+		addEntityComponent(model, EntityIds.ICON_SET, ModelerIcons.ICON_SET);
 	}
 
 	private static void addEntityComponent(
