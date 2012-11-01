@@ -38,6 +38,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jowidgets.api.command.IExecutionContext;
+import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFileChooser;
 import org.jowidgets.api.widgets.blueprint.IFileChooserBluePrint;
@@ -54,6 +55,8 @@ import org.jowidgets.cap.ui.tools.execution.AbstractSingleBeanExecutor;
 import org.jowidgets.cap.ui.tools.execution.AbstractUiResultCallback;
 import org.jowidgets.common.types.DialogResult;
 import org.jowidgets.common.types.FileChooserType;
+import org.jowidgets.i18n.api.IMessage;
+import org.jowidgets.i18n.api.MessageReplacer;
 import org.jowidgets.modeler.common.bean.IIconSet;
 import org.jowidgets.modeler.common.service.IIconCreatorService;
 import org.jowidgets.service.api.ServiceProvider;
@@ -61,6 +64,10 @@ import org.jowidgets.tools.types.FileChooserFilter;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
 final class CreateIconsExecutor extends AbstractSingleBeanExecutor<IIconSet, Void> {
+
+	private static final IMessage CAN_NOT_OPEN = Messages.getMessage("CreateIconsExecutor.canNotOpen");
+	private static final IMessage ALL_ICONS_ADDED = Messages.getMessage("CreateIconsExecutor.allIconsAdded");
+	private static final IMessage ERROR_ADDING_ICONS = Messages.getMessage("CreateIconsExecutor.errorAddingIcons");
 
 	private static final List<FileChooserFilter> FILTER_LIST = Collections.singletonList(new FileChooserFilter(
 		"png, gif",
@@ -78,6 +85,9 @@ final class CreateIconsExecutor extends AbstractSingleBeanExecutor<IIconSet, Voi
 
 	@Override
 	protected void execute(final IExecutionContext executionContext, final IBeanProxy<IIconSet> bean, final Void defaultParameter) throws Exception {
+		//this executor will create an own execution task
+		bean.setExecutionTask(null);
+
 		final IFileChooserBluePrint fileChooserBp = BPF.fileChooser(FileChooserType.OPEN_FILE_LIST);
 		fileChooserBp.setTitle(executionContext.getAction().getText());
 		fileChooserBp.setFilterList(FILTER_LIST);
@@ -118,16 +128,23 @@ final class CreateIconsExecutor extends AbstractSingleBeanExecutor<IIconSet, Voi
 				inputStreams[i] = new FileInputStream(file);
 			}
 			catch (final FileNotFoundException e) {
-				final String message = "Can not open file '" + file.getName() + "'!";
+				final String message = MessageReplacer.replace(CAN_NOT_OPEN.get(), file.getName());
 				Toolkit.getMessagePane().showError(executionContext, message);
 				return;
 			}
 		}
 
+		final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
 		executionTask.addExecutionCallbackListener(new IExecutionCallbackListener() {
 			@Override
 			public void canceled() {
-				bean.setExecutionTask(null);
+				uiThreadAccess.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						bean.setExecutionTask(null);
+					}
+				});
+
 			}
 		});
 		final ICapApiBluePrintFactory cbpf = CapUiToolkit.bluePrintFactory();
@@ -145,13 +162,13 @@ final class CreateIconsExecutor extends AbstractSingleBeanExecutor<IIconSet, Voi
 					model.setSelectedBeans(emptyList);
 					model.setSelectedBeans(selectedBeans);
 				}
-				executionTaskDialog.executionFinished("All icons added!");
+				executionTaskDialog.executionFinished(ALL_ICONS_ADDED.get());
 			}
 
 			@Override
 			protected void exceptionUi(final Throwable exception) {
 				clearExecutionTask();
-				executionTaskDialog.executionError("Error while adding icons!");
+				executionTaskDialog.executionError(ERROR_ADDING_ICONS.get());
 			}
 
 			private void clearExecutionTask() {

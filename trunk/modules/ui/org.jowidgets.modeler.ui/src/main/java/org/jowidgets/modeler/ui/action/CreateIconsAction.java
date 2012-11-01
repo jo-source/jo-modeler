@@ -45,8 +45,8 @@ public final class CreateIconsAction extends ActionWrapper {
 
 	public static IAction create(final IBeanTableModel<IIconSet> model) {
 		final IExecutorActionBuilder<IIconSet, Void> builder = CapUiToolkit.actionFactory().executorActionBuilder(model);
-		builder.setText("Add icons");
-		builder.setToolTipText(Messages.getString("PropertyModelMoveUpAction.tooltip"));
+		builder.setText(Messages.getString("CreateIconsAction.text"));
+		builder.setToolTipText(Messages.getString("CreateIconsAction.tooltip"));
 		builder.setIcon(ModelerIcons.ICON_ADD);
 		builder.setSelectionPolicy(BeanSelectionPolicy.SINGLE_SELECTION);
 		builder.setExecutor(new CreateIconsExecutor(model));
