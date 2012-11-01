@@ -38,6 +38,7 @@ import org.jowidgets.cap.common.api.execution.IResultCallback;
 import org.jowidgets.cap.service.api.CapServiceToolkit;
 import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
 import org.jowidgets.i18n.api.IMessage;
+import org.jowidgets.i18n.api.MessageReplacer;
 import org.jowidgets.modeler.common.service.IIconCreatorService;
 import org.jowidgets.modeler.service.persistence.bean.Icon;
 import org.jowidgets.modeler.service.persistence.bean.IconSet;
@@ -46,7 +47,6 @@ import org.jowidgets.util.io.IoUtils;
 
 public class IconsCreatorServiceImpl implements IIconCreatorService {
 
-	@SuppressWarnings("unused")
 	private static final IMessage ADD = Messages.getMessage("IconsCreatorServiceImpl.add");
 
 	@Override
@@ -96,7 +96,7 @@ public class IconsCreatorServiceImpl implements IIconCreatorService {
 
 		executionCallback.setTotalStepCount(keys.length);
 
-		//final String addMessage = ADD.get();
+		final String addMessage = ADD.get();
 
 		for (int i = 0; i < keys.length; i++) {
 			CapServiceToolkit.checkCanceled(executionCallback);
@@ -104,8 +104,7 @@ public class IconsCreatorServiceImpl implements IIconCreatorService {
 			final String key = keys[i];
 			Assert.paramNotEmpty(key, "keys[" + i + "]");
 
-			//TODO MG i18n
-			executionCallback.setDescription("Add " + key);
+			executionCallback.setDescription(MessageReplacer.replace(addMessage, key));
 
 			final InputStream inputStream = icons[i];
 			Assert.paramNotNull(inputStream, "icons[" + i + "]");
