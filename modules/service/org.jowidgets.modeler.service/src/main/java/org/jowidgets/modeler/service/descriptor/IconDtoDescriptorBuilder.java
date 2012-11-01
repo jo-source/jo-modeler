@@ -51,7 +51,11 @@ public class IconDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
 
 		addIdProperty();
 
-		IBeanPropertyBluePrint propertyBp = addProperty(IIcon.KEY_PROPERTY);
+		IBeanPropertyBluePrint propertyBp = addProperty(IIcon.ICON_SET_LABEL_PROPERTY);
+		propertyBp.setLabel(getMessage("iconSetLabel.label"));
+		propertyBp.setDescription(getMessage("iconSetLabel.description"));
+
+		propertyBp = addProperty(IIcon.KEY_PROPERTY);
 		propertyBp.setLabel(getMessage("key.label"));
 		propertyBp.setDescription(getMessage("key.description"));
 		propertyBp.setMandatory(true);
@@ -59,6 +63,10 @@ public class IconDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
 		propertyBp = addProperty(IIcon.LABEL_PROPERTY);
 		propertyBp.setLabel(getMessage("label.label"));
 		propertyBp.setDescription(getMessage("label.description"));
+
+		propertyBp = addProperty(IIcon.DESCRIPTOR_PROPERTY);
+		propertyBp.setLabel(getMessage("icon.label"));
+		propertyBp.setSortable(false).setFilterable(false).setSearchable(false);
 
 		propertyBp = addProperty(IIcon.SIZE_PROPERTY);
 		propertyBp.setLabel(getMessage("size.label"));

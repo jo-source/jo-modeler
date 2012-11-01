@@ -38,6 +38,7 @@ import org.jowidgets.cap.security.common.api.annotation.CreateAuthorization;
 import org.jowidgets.cap.security.common.api.annotation.DeleteAuthorization;
 import org.jowidgets.cap.security.common.api.annotation.ReadAuthorization;
 import org.jowidgets.cap.security.common.api.annotation.UpdateAuthorization;
+import org.jowidgets.modeler.common.dto.IconDescriptor;
 import org.jowidgets.modeler.common.security.ModelerAuthKeys;
 
 @CreateAuthorization(ModelerAuthKeys.CREATE_ICON)
@@ -47,19 +48,23 @@ import org.jowidgets.modeler.common.security.ModelerAuthKeys;
 public interface IIcon extends IBean {
 
 	String ICON_SET_ID_PROPERTY = "iconSetId";
+	String ICON_SET_LABEL_PROPERTY = "iconSetLabel";
 	String KEY_PROPERTY = "key";
 	String LABEL_PROPERTY = "label";
 	String BYTES_PROPERTY = "bytes";
 	String SIZE_PROPERTY = "size";
+	String DESCRIPTOR_PROPERTY = "descriptor";
 
 	List<String> ALL_PROPERTIES = new LinkedList<String>() {
 		private static final long serialVersionUID = 1L;
 		{
 			add(ICON_SET_ID_PROPERTY);
+			add(ICON_SET_LABEL_PROPERTY);
 			add(KEY_PROPERTY);
 			add(LABEL_PROPERTY);
 			add(BYTES_PROPERTY);
 			add(SIZE_PROPERTY);
+			add(DESCRIPTOR_PROPERTY);
 		}
 	};
 
@@ -78,8 +83,12 @@ public interface IIcon extends IBean {
 
 	void setIconSetId(Long id);
 
+	String getIconSetLabel();
+
 	byte[] getBytes();
 
 	int getSize();
+
+	IconDescriptor getDescriptor();
 
 }

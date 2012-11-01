@@ -28,10 +28,13 @@
 
 package org.jowidgets.modeler.ui.plugins;
 
+import org.jowidgets.cap.ui.api.plugin.IAttributePlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuContributionPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuInterceptorPlugin;
 import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
+import org.jowidgets.modeler.common.bean.IIcon;
 import org.jowidgets.modeler.common.bean.IIconSet;
+import org.jowidgets.modeler.ui.plugins.attribute.IconAttributesPlugin;
 import org.jowidgets.modeler.ui.plugins.table.IconSetMenuContributionPlugin;
 import org.jowidgets.modeler.ui.plugins.table.PropertyModelMenuContributionPlugin;
 import org.jowidgets.modeler.ui.plugins.table.PropertyModelMenuInterceptorPlugin;
@@ -51,6 +54,8 @@ public final class ModelerPluginProviderHolder extends PluginProviderHolder {
 			addBeanTableMenuContributionPlugin(new IconSetMenuContributionPlugin(), IIconSet.class);
 
 			addBeanTableMenuInterceptorPlugin(new PropertyModelMenuInterceptorPlugin(), IEntityPropertyModel.class);
+
+			addAttributesPlugin(new IconAttributesPlugin(), IIcon.class);
 		}
 
 		private void addBeanTableMenuContributionPlugin(
@@ -71,6 +76,10 @@ public final class ModelerPluginProviderHolder extends PluginProviderHolder {
 					plugin,
 					IBeanTableMenuInterceptorPlugin.BEAN_TYPE_PROPERTY_KEY,
 					beanTypes);
+		}
+
+		private void addAttributesPlugin(final IAttributePlugin plugin, final Class<?>... beanTypes) {
+			addPlugin(IAttributePlugin.ID, plugin, IAttributePlugin.BEAN_TYPE_PROPERTY_KEY, beanTypes);
 		}
 	}
 }
