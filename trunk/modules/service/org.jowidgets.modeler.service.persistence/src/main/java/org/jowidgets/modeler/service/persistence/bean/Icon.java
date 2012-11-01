@@ -38,12 +38,14 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Index;
+import org.jowidgets.cap.service.jpa.api.query.QueryPath;
 import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
 import org.jowidgets.modeler.common.bean.IIcon;
+import org.jowidgets.modeler.common.dto.IconDescriptor;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"key"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"key", "ICON_SET_ID"}))
 public class Icon extends Bean implements IIcon {
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -111,6 +113,27 @@ public class Icon extends Bean implements IIcon {
 			return bytes.length;
 		}
 		return 0;
+	}
+
+	@Override
+	@QueryPath(path = {"iconSet", "label"})
+	public String getIconSetLabel() {
+		if (iconSet != null) {
+			return iconSet.getLabel();
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
+	public IconDescriptor getDescriptor() {
+		if (iconSet != null) {
+			return new IconDescriptor(iconSet.getName(), key, bytes);
+		}
+		else {
+			return null;
+		}
 	}
 
 }
