@@ -116,7 +116,7 @@ public class Icon extends Bean implements IIcon {
 	}
 
 	@Override
-	@QueryPath(path = {"iconSet", "label"})
+	@QueryPath(path = {"iconSetId"})
 	public String getIconSetLabel() {
 		if (iconSet != null) {
 			return iconSet.getLabel();
