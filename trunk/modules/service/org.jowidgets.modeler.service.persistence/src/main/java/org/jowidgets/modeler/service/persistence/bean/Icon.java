@@ -32,11 +32,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Index;
+import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
 import org.jowidgets.modeler.common.bean.IIcon;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
@@ -46,7 +48,7 @@ public class Icon extends Bean implements IIcon {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ICON_SET_ID", nullable = false, insertable = false, updatable = false)
-	private LookUp iconSet;
+	private IconSet iconSet;
 
 	@Column(name = "ICON_SET_ID", nullable = false)
 	private Long iconSetId;
@@ -58,6 +60,9 @@ public class Icon extends Bean implements IIcon {
 	@Basic
 	private String label;
 
+	@Lob
+	private byte[] bytes;
+
 	@Override
 	public Long getIconSetId() {
 		return iconSetId;
@@ -67,7 +72,7 @@ public class Icon extends Bean implements IIcon {
 	public void setIconSetId(final Long id) {
 		this.iconSetId = id;
 		if (this.iconSet != null && !NullCompatibleEquivalence.equals(this.iconSet.getId(), iconSetId)) {
-			iconSet = null;
+			iconSet = EntityManagerProvider.get().find(IconSet.class, iconSetId);
 		}
 	}
 
@@ -89,6 +94,23 @@ public class Icon extends Bean implements IIcon {
 	@Override
 	public void setLabel(final String label) {
 		this.label = label;
+	}
+
+	@Override
+	public byte[] getBytes() {
+		return bytes;
+	}
+
+	public void setBytes(final byte[] bytes) {
+		this.bytes = bytes;
+	}
+
+	@Override
+	public int getSize() {
+		if (bytes != null) {
+			return bytes.length;
+		}
+		return 0;
 	}
 
 }

@@ -47,9 +47,11 @@ import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
 import org.jowidgets.modeler.common.checker.MovePropertiesUpExecutableChecker;
 import org.jowidgets.modeler.common.executor.ModelerExecutorServices;
 import org.jowidgets.modeler.common.lookup.LookUpIds;
+import org.jowidgets.modeler.common.service.IIconCreatorService;
 import org.jowidgets.modeler.service.entity.ModelerEntityServiceBuilder;
 import org.jowidgets.modeler.service.executor.MovePropertiesDownExecutor;
 import org.jowidgets.modeler.service.executor.MovePropertiesUpExecutor;
+import org.jowidgets.modeler.service.icons.IconsCreatorServiceImpl;
 import org.jowidgets.modeler.service.lookup.CardinalityLookUpService;
 import org.jowidgets.modeler.service.lookup.EntityModelsLookUpService;
 import org.jowidgets.modeler.service.lookup.LookUpDisplayFormatLookUpService;
@@ -69,6 +71,8 @@ public abstract class AbstractModelerServiceProviderBuilder extends CapServicePr
 		addService(IPasswordChangeService.ID, new PasswordChangeServiceImpl(ModelerPersistenceUnitNames.MODELER));
 
 		addService(IEntityService.ID, createEntityService());
+
+		addService(IIconCreatorService.ID, new IconsCreatorServiceImpl());
 
 		addLookUpService(LookUpIds.VALUE_TYPES, new ValueTypeLookUpService());
 		addLookUpService(LookUpIds.ENTITY_MODELS, new EntityModelsLookUpService());
@@ -95,6 +99,8 @@ public abstract class AbstractModelerServiceProviderBuilder extends CapServicePr
 	private IServicesDecoratorProvider createJpaServiceDecoratorProvider() {
 		final IJpaServicesDecoratorProviderBuilder builder = JpaServiceToolkit.serviceDecoratorProviderBuilder(ModelerPersistenceUnitNames.MODELER);
 		builder.addEntityManagerServices(ILookUpService.class);
+		builder.addEntityManagerServices(IIconCreatorService.class);
+		builder.addTransactionalServices(IIconCreatorService.class);
 		builder.addExceptionDecorator(HibernateServiceToolkit.exceptionDecorator());
 		onCreateJpaServiceDecoratorProvider(builder);
 		return builder.build();

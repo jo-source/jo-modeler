@@ -25,47 +25,26 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.modeler.common.bean;
 
-import java.util.LinkedList;
-import java.util.List;
+package org.jowidgets.modeler.service.icons;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import org.jowidgets.i18n.api.IMessage;
+import org.jowidgets.i18n.api.IMessageProvider;
+import org.jowidgets.i18n.api.MessageProvider;
 
-import org.jowidgets.cap.common.api.bean.IBean;
-import org.jowidgets.cap.security.common.api.annotation.CreateAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.DeleteAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.ReadAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.UpdateAuthorization;
-import org.jowidgets.modeler.common.security.ModelerAuthKeys;
+final class Messages {
 
-@CreateAuthorization(ModelerAuthKeys.CREATE_ICON_SET)
-@ReadAuthorization(ModelerAuthKeys.READ_ICON_SET)
-@UpdateAuthorization(ModelerAuthKeys.UPDATE_ICON_SET)
-@DeleteAuthorization(ModelerAuthKeys.DELETE_ICON_SET)
-public interface IIconSet extends IBean {
+	private static final IMessageProvider MESSAGE_PROVIDER = MessageProvider.create(
+			"org.jowidgets.modeler.service.icons.messages",
+			Messages.class);
 
-	String NAME_PROPERTY = "name";
-	String LABEL_PROPERTY = "label";
+	private Messages() {}
 
-	List<String> ALL_PROPERTIES = new LinkedList<String>() {
-		private static final long serialVersionUID = 1L;
-		{
-			add(NAME_PROPERTY);
-			add(LABEL_PROPERTY);
-		}
-	};
+	public static String getString(final String key) {
+		return MESSAGE_PROVIDER.getString(key);
+	}
 
-	@NotNull
-	@Size(min = 2, max = 25)
-	String getName();
-
-	void setName(String name);
-
-	@Size(min = 2, max = 25)
-	String getLabel();
-
-	void setLabel(String label);
-
+	public static IMessage getMessage(final String key) {
+		return MESSAGE_PROVIDER.getMessage(key);
+	}
 }

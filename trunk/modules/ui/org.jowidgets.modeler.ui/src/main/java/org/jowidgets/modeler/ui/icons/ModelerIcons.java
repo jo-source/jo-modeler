@@ -40,6 +40,7 @@ public enum ModelerIcons implements IImageConstant {
 	LOOK_UP,
 
 	ICON_SET,
+	ICON_ADD,
 
 	ARROW_UP,
 	ARROW_DOWN;

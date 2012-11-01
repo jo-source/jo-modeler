@@ -60,6 +60,10 @@ public class IconDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
 		propertyBp.setLabel(getMessage("label.label"));
 		propertyBp.setDescription(getMessage("label.description"));
 
+		propertyBp = addProperty(IIcon.SIZE_PROPERTY);
+		propertyBp.setLabel(getMessage("size.label"));
+		propertyBp.setDescription(getMessage("size.description"));
+
 		addVersionProperty();
 	}
 

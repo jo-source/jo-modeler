@@ -49,6 +49,8 @@ public interface IIcon extends IBean {
 	String ICON_SET_ID_PROPERTY = "iconSetId";
 	String KEY_PROPERTY = "key";
 	String LABEL_PROPERTY = "label";
+	String BYTES_PROPERTY = "bytes";
+	String SIZE_PROPERTY = "size";
 
 	List<String> ALL_PROPERTIES = new LinkedList<String>() {
 		private static final long serialVersionUID = 1L;
@@ -56,11 +58,13 @@ public interface IIcon extends IBean {
 			add(ICON_SET_ID_PROPERTY);
 			add(KEY_PROPERTY);
 			add(LABEL_PROPERTY);
+			add(BYTES_PROPERTY);
+			add(SIZE_PROPERTY);
 		}
 	};
 
 	@NotNull
-	@Size(min = 2, max = 25)
+	@Size(min = 1, max = 255)
 	String getKey();
 
 	void setKey(String key);
@@ -73,5 +77,9 @@ public interface IIcon extends IBean {
 	Long getIconSetId();
 
 	void setIconSetId(Long id);
+
+	byte[] getBytes();
+
+	int getSize();
 
 }
