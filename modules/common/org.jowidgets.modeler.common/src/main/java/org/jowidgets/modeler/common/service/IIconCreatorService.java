@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,47 +25,25 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.modeler.common.bean;
 
-import java.util.LinkedList;
-import java.util.List;
+package org.jowidgets.modeler.common.service;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.io.InputStream;
 
-import org.jowidgets.cap.common.api.bean.IBean;
-import org.jowidgets.cap.security.common.api.annotation.CreateAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.DeleteAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.ReadAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.UpdateAuthorization;
-import org.jowidgets.modeler.common.security.ModelerAuthKeys;
+import org.jowidgets.cap.common.api.execution.IExecutionCallback;
+import org.jowidgets.cap.common.api.execution.IResultCallback;
+import org.jowidgets.service.api.IServiceId;
+import org.jowidgets.service.tools.ServiceId;
 
-@CreateAuthorization(ModelerAuthKeys.CREATE_ICON_SET)
-@ReadAuthorization(ModelerAuthKeys.READ_ICON_SET)
-@UpdateAuthorization(ModelerAuthKeys.UPDATE_ICON_SET)
-@DeleteAuthorization(ModelerAuthKeys.DELETE_ICON_SET)
-public interface IIconSet extends IBean {
+public interface IIconCreatorService {
 
-	String NAME_PROPERTY = "name";
-	String LABEL_PROPERTY = "label";
+	IServiceId<IIconCreatorService> ID = new ServiceId<IIconCreatorService>(IIconCreatorService.class);
 
-	List<String> ALL_PROPERTIES = new LinkedList<String>() {
-		private static final long serialVersionUID = 1L;
-		{
-			add(NAME_PROPERTY);
-			add(LABEL_PROPERTY);
-		}
-	};
-
-	@NotNull
-	@Size(min = 2, max = 25)
-	String getName();
-
-	void setName(String name);
-
-	@Size(min = 2, max = 25)
-	String getLabel();
-
-	void setLabel(String label);
+	void create(
+		IResultCallback<Void> result,
+		Object iconsSetId,
+		String[] keys,
+		InputStream[] icons,
+		IExecutionCallback executionCallback);
 
 }

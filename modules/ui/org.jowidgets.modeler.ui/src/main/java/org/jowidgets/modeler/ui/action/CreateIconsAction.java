@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,47 +25,31 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.modeler.common.bean;
 
-import java.util.LinkedList;
-import java.util.List;
+package org.jowidgets.modeler.ui.action;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.cap.ui.api.CapUiToolkit;
+import org.jowidgets.cap.ui.api.command.IExecutorActionBuilder;
+import org.jowidgets.cap.ui.api.execution.BeanSelectionPolicy;
+import org.jowidgets.cap.ui.api.table.IBeanTableModel;
+import org.jowidgets.modeler.common.bean.IIconSet;
+import org.jowidgets.modeler.ui.icons.ModelerIcons;
+import org.jowidgets.tools.command.ActionWrapper;
 
-import org.jowidgets.cap.common.api.bean.IBean;
-import org.jowidgets.cap.security.common.api.annotation.CreateAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.DeleteAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.ReadAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.UpdateAuthorization;
-import org.jowidgets.modeler.common.security.ModelerAuthKeys;
+public final class CreateIconsAction extends ActionWrapper {
 
-@CreateAuthorization(ModelerAuthKeys.CREATE_ICON_SET)
-@ReadAuthorization(ModelerAuthKeys.READ_ICON_SET)
-@UpdateAuthorization(ModelerAuthKeys.UPDATE_ICON_SET)
-@DeleteAuthorization(ModelerAuthKeys.DELETE_ICON_SET)
-public interface IIconSet extends IBean {
+	public CreateIconsAction(final IBeanTableModel<IIconSet> model) {
+		super(create(model));
+	}
 
-	String NAME_PROPERTY = "name";
-	String LABEL_PROPERTY = "label";
-
-	List<String> ALL_PROPERTIES = new LinkedList<String>() {
-		private static final long serialVersionUID = 1L;
-		{
-			add(NAME_PROPERTY);
-			add(LABEL_PROPERTY);
-		}
-	};
-
-	@NotNull
-	@Size(min = 2, max = 25)
-	String getName();
-
-	void setName(String name);
-
-	@Size(min = 2, max = 25)
-	String getLabel();
-
-	void setLabel(String label);
-
+	public static IAction create(final IBeanTableModel<IIconSet> model) {
+		final IExecutorActionBuilder<IIconSet, Void> builder = CapUiToolkit.actionFactory().executorActionBuilder(model);
+		builder.setText("Add icons");
+		builder.setToolTipText(Messages.getString("PropertyModelMoveUpAction.tooltip"));
+		builder.setIcon(ModelerIcons.ICON_ADD);
+		builder.setSelectionPolicy(BeanSelectionPolicy.SINGLE_SELECTION);
+		builder.setExecutor(new CreateIconsExecutor(model));
+		return builder.build();
+	}
 }

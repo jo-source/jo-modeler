@@ -25,47 +25,24 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.modeler.common.bean;
 
-import java.util.LinkedList;
-import java.util.List;
+package org.jowidgets.modeler.ui.plugins.table;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.cap.ui.api.widgets.IBeanTable;
+import org.jowidgets.cap.ui.tools.plugin.BeanTableMenuContributionPluginAdapter;
+import org.jowidgets.modeler.common.bean.IIconSet;
+import org.jowidgets.modeler.ui.action.CreateIconsAction;
+import org.jowidgets.plugin.api.IPluginProperties;
+import org.jowidgets.tools.model.item.MenuModel;
 
-import org.jowidgets.cap.common.api.bean.IBean;
-import org.jowidgets.cap.security.common.api.annotation.CreateAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.DeleteAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.ReadAuthorization;
-import org.jowidgets.cap.security.common.api.annotation.UpdateAuthorization;
-import org.jowidgets.modeler.common.security.ModelerAuthKeys;
+public final class IconSetMenuContributionPlugin extends BeanTableMenuContributionPluginAdapter<IIconSet> {
 
-@CreateAuthorization(ModelerAuthKeys.CREATE_ICON_SET)
-@ReadAuthorization(ModelerAuthKeys.READ_ICON_SET)
-@UpdateAuthorization(ModelerAuthKeys.UPDATE_ICON_SET)
-@DeleteAuthorization(ModelerAuthKeys.DELETE_ICON_SET)
-public interface IIconSet extends IBean {
-
-	String NAME_PROPERTY = "name";
-	String LABEL_PROPERTY = "label";
-
-	List<String> ALL_PROPERTIES = new LinkedList<String>() {
-		private static final long serialVersionUID = 1L;
-		{
-			add(NAME_PROPERTY);
-			add(LABEL_PROPERTY);
-		}
-	};
-
-	@NotNull
-	@Size(min = 2, max = 25)
-	String getName();
-
-	void setName(String name);
-
-	@Size(min = 2, max = 25)
-	String getLabel();
-
-	void setLabel(String label);
+	@Override
+	public IMenuModel getCellMenu(final IPluginProperties properties, final IBeanTable<IIconSet> table) {
+		final MenuModel result = new MenuModel();
+		result.addAction(new CreateIconsAction(table.getModel()));
+		return result;
+	}
 
 }
