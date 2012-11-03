@@ -50,6 +50,7 @@ public interface IEntityModel extends IBean {
 	String LABEL_SINGULAR_PROPERTY = "labelSingular";
 	String LABEL_PLURAL_PROPERTY = "labelPlural";
 	String RENDERING_PATTERN_PROPERTY = "renderingPattern";
+	String ICON_ID_PROPERTY = "iconId";
 	String PROPERTIES_NAMES_PROPERTY = "propertiesNames";
 
 	List<String> ALL_PROPERTIES = new LinkedList<String>() {
@@ -59,6 +60,7 @@ public interface IEntityModel extends IBean {
 			add(LABEL_SINGULAR_PROPERTY);
 			add(LABEL_PLURAL_PROPERTY);
 			add(RENDERING_PATTERN_PROPERTY);
+			add(ICON_ID_PROPERTY);
 			add(PROPERTIES_NAMES_PROPERTY);
 		}
 	};
@@ -85,6 +87,10 @@ public interface IEntityModel extends IBean {
 	String getRenderingPattern();
 
 	void setRenderingPattern(String pattern);
+
+	Long getIconId();
+
+	void setIconId(Long id);
 
 	List<String> getPropertiesNames();
 }
