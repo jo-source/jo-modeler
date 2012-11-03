@@ -34,9 +34,12 @@ import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PreRemove;
 import javax.persistence.Table;
@@ -47,6 +50,7 @@ import org.hibernate.annotations.Index;
 import org.jowidgets.cap.service.jpa.api.query.QueryPath;
 import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
 import org.jowidgets.modeler.common.bean.IEntityModel;
+import org.jowidgets.util.NullCompatibleEquivalence;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
@@ -64,6 +68,13 @@ public class EntityModel extends Bean implements IEntityModel {
 
 	@Basic
 	private String renderingPattern;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ICON_ID", nullable = true, insertable = false, updatable = false)
+	private Icon icon;
+
+	@Column(name = "ICON_ID", nullable = true)
+	private Long iconId;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parentModel")
 	@BatchSize(size = 1000)
@@ -127,6 +138,23 @@ public class EntityModel extends Bean implements IEntityModel {
 	@Override
 	public void setRenderingPattern(final String renderingPattern) {
 		this.renderingPattern = renderingPattern;
+	}
+
+	@Override
+	public Long getIconId() {
+		return iconId;
+	}
+
+	@Override
+	public void setIconId(final Long id) {
+		this.iconId = id;
+		if (this.icon != null && !NullCompatibleEquivalence.equals(this.icon.getId(), iconId)) {
+			icon = EntityManagerProvider.get().find(Icon.class, iconId);
+		}
+	}
+
+	public Icon getIcon() {
+		return icon;
 	}
 
 	@Override
