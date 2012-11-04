@@ -42,6 +42,7 @@ import org.jowidgets.cap.service.jpa.api.query.QueryPath;
 import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
 import org.jowidgets.modeler.common.bean.IIcon;
 import org.jowidgets.modeler.common.dto.IconDescriptor;
+import org.jowidgets.util.EmptyCheck;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
 @Entity
@@ -90,7 +91,12 @@ public class Icon extends Bean implements IIcon {
 
 	@Override
 	public String getLabel() {
-		return label;
+		if (!EmptyCheck.isEmpty(label)) {
+			return label;
+		}
+		else {
+			return getKey();
+		}
 	}
 
 	@Override
@@ -129,11 +135,10 @@ public class Icon extends Bean implements IIcon {
 	@Override
 	public IconDescriptor getDescriptor() {
 		if (iconSet != null) {
-			return new IconDescriptor(getId(), bytes);
+			return new IconDescriptor(getId(), getIconSetLabel(), getLabel(), bytes);
 		}
 		else {
 			return null;
 		}
 	}
-
 }
