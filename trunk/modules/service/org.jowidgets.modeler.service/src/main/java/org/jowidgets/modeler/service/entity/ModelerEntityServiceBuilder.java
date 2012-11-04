@@ -87,6 +87,10 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 		bp.setDtoDescriptor(new IconSetDtoDescriptorBuilder());
 		addIconSetIconsLinkDescriptor(bp);
 
+		//IIcon
+		bp = addEntity().setEntityId(EntityIds.ICON).setBeanType(Icon.class);
+		bp.setDtoDescriptor(new IconDtoDescriptorBuilder());
+
 		//Linked property models of entity models
 		bp = addEntity().setEntityId(EntityIds.LINKED_ENTITY_PROPERTY_MODEL_OF_ENTITY_MODEL);
 		bp.setBeanType(EntityPropertyModel.class);
