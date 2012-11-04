@@ -26,64 +26,20 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.common.dto;
+package org.jowidgets.modeler.ui.icons;
 
-import java.io.Serializable;
+import org.jowidgets.cap.ui.api.control.IInputControlProvider;
+import org.jowidgets.cap.ui.api.control.IInputControlProviderBuilder;
+import org.jowidgets.cap.ui.api.control.InputControlProvider;
+import org.jowidgets.modeler.common.dto.IconDescriptor;
 
-import org.jowidgets.util.Assert;
+public final class IconDescriptorControlProvider {
 
-public final class IconDescriptor implements Serializable {
+	private IconDescriptorControlProvider() {}
 
-	private static final long serialVersionUID = -3991451221949813787L;
-
-	private final Long iconId;
-	private final byte[] bytes;
-
-	public IconDescriptor(final Long iconId, final byte[] bytes) {
-		Assert.paramNotNull(iconId, "iconId");
-		Assert.paramNotNull(bytes, "bytes");
-
-		this.iconId = iconId;
-		this.bytes = bytes;
+	public static IInputControlProvider<IconDescriptor> create() {
+		final IInputControlProviderBuilder<IconDescriptor> builder = InputControlProvider.builder(IconDescriptor.class);
+		builder.setObjectLabelConverter(new IconDescriptorConverter());
+		return builder.build();
 	}
-
-	public Long getIconId() {
-		return iconId;
-	}
-
-	public byte[] getBytes() {
-		return bytes;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((iconId == null) ? 0 : iconId.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof IconDescriptor)) {
-			return false;
-		}
-		final IconDescriptor other = (IconDescriptor) obj;
-		if (iconId == null) {
-			if (other.iconId != null) {
-				return false;
-			}
-		}
-		else if (!iconId.equals(other.iconId)) {
-			return false;
-		}
-		return true;
-	}
-
 }

@@ -129,7 +129,7 @@ public class Icon extends Bean implements IIcon {
 	@Override
 	public IconDescriptor getDescriptor() {
 		if (iconSet != null) {
-			return new IconDescriptor(iconSet.getName(), key, bytes);
+			return new IconDescriptor(getId(), bytes);
 		}
 		else {
 			return null;
