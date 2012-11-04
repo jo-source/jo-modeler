@@ -28,10 +28,14 @@
 
 package org.jowidgets.modeler.ui.icons;
 
+import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.cap.ui.api.control.IInputControlProvider;
 import org.jowidgets.cap.ui.api.control.IInputControlProviderBuilder;
 import org.jowidgets.cap.ui.api.control.InputControlProvider;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.modeler.common.dto.IconDescriptor;
+import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class IconDescriptorControlProvider {
 
@@ -40,6 +44,12 @@ public final class IconDescriptorControlProvider {
 	public static IInputControlProvider<IconDescriptor> create() {
 		final IInputControlProviderBuilder<IconDescriptor> builder = InputControlProvider.builder(IconDescriptor.class);
 		builder.setObjectLabelConverter(new IconDescriptorConverter());
+		builder.setControlCreator(new ICustomWidgetCreator<IInputControl<IconDescriptor>>() {
+			@Override
+			public IInputControl<IconDescriptor> create(final ICustomWidgetFactory widgetFactory) {
+				return new IconSelectionControl(widgetFactory.create(BPF.composite()));
+			}
+		});
 		return builder.build();
 	}
 }
