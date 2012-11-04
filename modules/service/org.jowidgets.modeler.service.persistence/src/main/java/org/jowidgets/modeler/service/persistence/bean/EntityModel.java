@@ -50,6 +50,7 @@ import org.hibernate.annotations.Index;
 import org.jowidgets.cap.service.jpa.api.query.QueryPath;
 import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
 import org.jowidgets.modeler.common.bean.IEntityModel;
+import org.jowidgets.modeler.common.dto.IconDescriptor;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
 @Entity
@@ -155,6 +156,24 @@ public class EntityModel extends Bean implements IEntityModel {
 
 	public Icon getIcon() {
 		return icon;
+	}
+
+	@Override
+	@QueryPath(path = "iconId")
+	public IconDescriptor getIconDescriptor() {
+		if (icon != null) {
+			return icon.getDescriptor();
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
+	public void setIconDescriptor(final IconDescriptor iconDescriptor) {
+		if (iconDescriptor != null) {
+			setIconId(iconDescriptor.getIconId());
+		}
 	}
 
 	@Override

@@ -38,6 +38,7 @@ import org.jowidgets.cap.security.common.api.annotation.CreateAuthorization;
 import org.jowidgets.cap.security.common.api.annotation.DeleteAuthorization;
 import org.jowidgets.cap.security.common.api.annotation.ReadAuthorization;
 import org.jowidgets.cap.security.common.api.annotation.UpdateAuthorization;
+import org.jowidgets.modeler.common.dto.IconDescriptor;
 import org.jowidgets.modeler.common.security.ModelerAuthKeys;
 
 @CreateAuthorization(ModelerAuthKeys.CREATE_ENTITY_MODEL)
@@ -51,6 +52,7 @@ public interface IEntityModel extends IBean {
 	String LABEL_PLURAL_PROPERTY = "labelPlural";
 	String RENDERING_PATTERN_PROPERTY = "renderingPattern";
 	String ICON_ID_PROPERTY = "iconId";
+	String ICON_DESCRIPTOR_PROPERTY = "iconDescriptor";
 	String PROPERTIES_NAMES_PROPERTY = "propertiesNames";
 
 	List<String> ALL_PROPERTIES = new LinkedList<String>() {
@@ -61,6 +63,7 @@ public interface IEntityModel extends IBean {
 			add(LABEL_PLURAL_PROPERTY);
 			add(RENDERING_PATTERN_PROPERTY);
 			add(ICON_ID_PROPERTY);
+			add(ICON_DESCRIPTOR_PROPERTY);
 			add(PROPERTIES_NAMES_PROPERTY);
 		}
 	};
@@ -91,6 +94,10 @@ public interface IEntityModel extends IBean {
 	Long getIconId();
 
 	void setIconId(Long id);
+
+	IconDescriptor getIconDescriptor();
+
+	void setIconDescriptor(IconDescriptor iconDescriptor);
 
 	List<String> getPropertiesNames();
 }

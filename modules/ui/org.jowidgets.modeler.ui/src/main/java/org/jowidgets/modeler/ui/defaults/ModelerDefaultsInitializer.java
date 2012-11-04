@@ -30,9 +30,11 @@ package org.jowidgets.modeler.ui.defaults;
 
 import org.jowidgets.api.widgets.blueprint.builder.ITableSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.cap.ui.api.control.InputControlSupportRegistry;
 import org.jowidgets.cap.ui.api.image.ImageResolver;
 import org.jowidgets.cap.ui.api.widgets.IBeanFormBluePrint;
 import org.jowidgets.modeler.common.dto.IconDescriptor;
+import org.jowidgets.modeler.ui.icons.IconDescriptorControlProvider;
 import org.jowidgets.modeler.ui.icons.IconDescriptorResolver;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
@@ -43,6 +45,8 @@ public final class ModelerDefaultsInitializer {
 	public static void initialize() {
 
 		ImageResolver.register(IconDescriptor.class, new IconDescriptorResolver());
+
+		InputControlSupportRegistry.setControl(IconDescriptor.class, IconDescriptorControlProvider.create());
 
 		BPF.addDefaultsInitializer(IBeanFormBluePrint.class, new IDefaultInitializer<IBeanFormBluePrint<?>>() {
 			@Override
