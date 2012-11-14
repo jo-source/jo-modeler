@@ -54,6 +54,7 @@ import org.jowidgets.modeler.service.executor.MovePropertiesUpExecutor;
 import org.jowidgets.modeler.service.icons.IconsCreatorServiceImpl;
 import org.jowidgets.modeler.service.lookup.CardinalityLookUpService;
 import org.jowidgets.modeler.service.lookup.EntityModelsLookUpService;
+import org.jowidgets.modeler.service.lookup.IconSetsLookUpService;
 import org.jowidgets.modeler.service.lookup.LookUpDisplayFormatLookUpService;
 import org.jowidgets.modeler.service.lookup.ValueTypeLookUpService;
 import org.jowidgets.modeler.service.persistence.ModelerPersistenceUnitNames;
@@ -76,6 +77,7 @@ public abstract class AbstractModelerServiceProviderBuilder extends CapServicePr
 
 		addLookUpService(LookUpIds.VALUE_TYPES, new ValueTypeLookUpService());
 		addLookUpService(LookUpIds.ENTITY_MODELS, new EntityModelsLookUpService());
+		addLookUpService(LookUpIds.ICONS_SETS, new IconSetsLookUpService());
 		addLookUpService(LookUpIds.CARDINALITY, new CardinalityLookUpService());
 		addLookUpService(LookUpIds.LOOK_UP_DISPLAY_FORMAT, new LookUpDisplayFormatLookUpService());
 
