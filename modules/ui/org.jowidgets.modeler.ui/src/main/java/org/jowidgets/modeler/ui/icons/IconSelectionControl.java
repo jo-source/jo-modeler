@@ -33,7 +33,9 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IIcon;
+import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.ITextControl;
+import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.modeler.common.dto.IconDescriptor;
@@ -66,9 +68,22 @@ public final class IconSelectionControl extends AbstractInputControl<IconDescrip
 		editButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
-				Toolkit.getMessagePane().showInfo("TODO: Edit icon must be implemented");
+				openEditDialog();
 			}
 		});
+	}
+
+	private void openEditDialog() {
+		final IInputDialogBluePrint<IconDescriptor> inputDialogBp = BPF.inputDialog(new IconContentCreator());
+		inputDialogBp.setValidationLabel(null);
+		//TODO MG i18n
+		inputDialogBp.setIcon(IconsSmall.EDIT).setTitle("Edit icon");
+		final IInputDialog<IconDescriptor> inputDialog = Toolkit.getActiveWindow().createChildWindow(inputDialogBp);
+		inputDialog.setValue(getValue());
+		inputDialog.setVisible(true);
+		if (inputDialog.isOkPressed()) {
+			setValue(inputDialog.getValue());
+		}
 	}
 
 	@Override

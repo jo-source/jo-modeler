@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,14 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.common.lookup;
+package org.jowidgets.modeler.service.lookup;
 
-public enum LookUpIds {
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
-	VALUE_TYPES,
-	ENTITY_MODELS,
-	CARDINALITY,
-	LOOK_UP_DISPLAY_FORMAT,
-	ICONS_SETS
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaQuery;
+
+import org.jowidgets.cap.common.api.CapCommonToolkit;
+import org.jowidgets.cap.common.api.execution.IExecutionCallback;
+import org.jowidgets.cap.common.api.lookup.ILookUpEntry;
+import org.jowidgets.cap.common.api.lookup.ILookUpToolkit;
+import org.jowidgets.cap.service.api.adapter.ISyncLookUpService;
+import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
+import org.jowidgets.modeler.service.persistence.bean.IconSet;
+
+public final class IconSetsLookUpService implements ISyncLookUpService {
+
+	@Override
+	public List<ILookUpEntry> readValues(final IExecutionCallback executionCallback) {
+		final ILookUpToolkit lookUpToolkit = CapCommonToolkit.lookUpToolkit();
+		final List<ILookUpEntry> result = new LinkedList<ILookUpEntry>();
+
+		final EntityManager em = EntityManagerProvider.get();
+
+		final CriteriaQuery<IconSet> criteriaQuery = em.getCriteriaBuilder().createQuery(IconSet.class);
+		criteriaQuery.from(IconSet.class);
+
+		for (final IconSet iconSet : em.createQuery(criteriaQuery).getResultList()) {
+			result.add(lookUpToolkit.lookUpEntry(iconSet.getId(), iconSet.getLabel()));
+		}
+
+		return Collections.unmodifiableList(result);
+	}
 
 }
