@@ -37,16 +37,24 @@ public final class IconDescriptor implements Serializable {
 	private static final long serialVersionUID = -3991451221949813787L;
 
 	private final Long iconId;
+	private final Object iconSetId;
 	private final String iconSetLabel;
 	private final String iconLabel;
 	private final byte[] bytes;
 
-	public IconDescriptor(final Long iconId, final String iconSetLabel, final String iconLabel, final byte[] bytes) {
+	public IconDescriptor(
+		final Long iconId,
+		final Object iconSetId,
+		final String iconSetLabel,
+		final String iconLabel,
+		final byte[] bytes) {
 		Assert.paramNotNull(iconId, "iconId");
+		Assert.paramNotNull(iconSetId, "iconSetId");
 		Assert.paramNotEmpty(iconSetLabel, "iconSetLabel");
 		Assert.paramNotEmpty(iconLabel, "iconLabel");
 		Assert.paramNotNull(bytes, "bytes");
 		this.iconId = iconId;
+		this.iconSetId = iconSetId;
 		this.iconSetLabel = iconSetLabel;
 		this.iconLabel = iconLabel;
 		this.bytes = bytes;
@@ -54,6 +62,10 @@ public final class IconDescriptor implements Serializable {
 
 	public Long getIconId() {
 		return iconId;
+	}
+
+	public Object getIconSetId() {
+		return iconSetId;
 	}
 
 	public String getIconSetLabel() {
