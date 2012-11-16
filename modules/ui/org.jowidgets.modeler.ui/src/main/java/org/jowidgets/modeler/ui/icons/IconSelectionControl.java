@@ -36,6 +36,7 @@ import org.jowidgets.api.widgets.IIcon;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.modeler.common.dto.IconDescriptor;
@@ -76,6 +77,7 @@ public final class IconSelectionControl extends AbstractInputControl<IconDescrip
 	private void openEditDialog() {
 		final IInputDialogBluePrint<IconDescriptor> inputDialogBp = BPF.inputDialog(new IconContentCreator());
 		inputDialogBp.setValidationLabel(null);
+		inputDialogBp.setMinPackSize(new Dimension(800, 600));
 		//TODO MG i18n
 		inputDialogBp.setIcon(IconsSmall.EDIT).setTitle("Edit icon");
 		final IInputDialog<IconDescriptor> inputDialog = Toolkit.getActiveWindow().createChildWindow(inputDialogBp);

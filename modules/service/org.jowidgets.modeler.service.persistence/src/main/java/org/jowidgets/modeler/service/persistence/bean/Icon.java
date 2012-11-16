@@ -135,7 +135,7 @@ public class Icon extends Bean implements IIcon {
 	@Override
 	public IconDescriptor getDescriptor() {
 		if (iconSet != null) {
-			return new IconDescriptor(getId(), getIconSetLabel(), getLabel(), bytes);
+			return new IconDescriptor(getId(), getIconSetId(), getIconSetLabel(), getLabel(), bytes);
 		}
 		else {
 			return null;
