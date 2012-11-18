@@ -19,11 +19,11 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
-		<!-- <dependency>
+		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.cap.addons.widgets.graph.impl.prefuse.swing</artifactId>
 			<version>${jocap.version}</version>
-		</dependency> -->
+		</dependency> 
 
 		<dependency>
 			<groupId>org.jowidgets</groupId>
