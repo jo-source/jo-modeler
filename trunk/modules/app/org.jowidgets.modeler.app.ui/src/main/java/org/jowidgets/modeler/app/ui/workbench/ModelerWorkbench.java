@@ -78,8 +78,14 @@ public class ModelerWorkbench implements IWorkbenchFactory {
 				if (application != null) {
 					model.addApplication(application);
 				}
-				model.addApplication(ModelerApplicationFactory.create());
-				model.addApplication(UserAdminApplicationFactory.create());
+				final IWorkbenchApplicationModel modelerAppp = ModelerApplicationFactory.create();
+				if (modelerAppp.getChildrenCount() > 0) {
+					model.addApplication(modelerAppp);
+				}
+				final IWorkbenchApplicationModel userAdminApp = UserAdminApplicationFactory.create();
+				if (userAdminApp.getChildrenCount() > 0) {
+					model.addApplication(userAdminApp);
+				}
 			}
 		});
 
