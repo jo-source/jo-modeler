@@ -32,7 +32,9 @@ import org.jowidgets.api.widgets.blueprint.builder.ITableSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.cap.ui.api.control.InputControlSupportRegistry;
 import org.jowidgets.cap.ui.api.image.ImageResolver;
+import org.jowidgets.cap.ui.api.types.RelationRenderingPolicy;
 import org.jowidgets.cap.ui.api.widgets.IBeanFormBluePrint;
+import org.jowidgets.cap.ui.api.widgets.IBeanRelationTreeBluePrint;
 import org.jowidgets.modeler.common.dto.IconDescriptor;
 import org.jowidgets.modeler.ui.icons.IconDescriptorControlProvider;
 import org.jowidgets.modeler.ui.icons.IconDescriptorResolver;
@@ -62,5 +64,11 @@ public final class ModelerDefaultsInitializer {
 			}
 		});
 
+		BPF.addDefaultsInitializer(IBeanRelationTreeBluePrint.class, new IDefaultInitializer<IBeanRelationTreeBluePrint<?>>() {
+			@Override
+			public void initialize(final IBeanRelationTreeBluePrint<?> bluePrint) {
+				bluePrint.setRelationRenderingPolicy(RelationRenderingPolicy.GREY_EMPTY_RELATIONS);
+			}
+		});
 	}
 }
