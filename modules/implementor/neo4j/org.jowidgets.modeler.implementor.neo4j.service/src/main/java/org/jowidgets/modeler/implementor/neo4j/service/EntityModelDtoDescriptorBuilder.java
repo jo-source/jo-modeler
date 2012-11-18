@@ -56,7 +56,7 @@ final class EntityModelDtoDescriptorBuilder {
 	private EntityModelDtoDescriptorBuilder() {}
 
 	static IBeanDtoDescriptor create(final EntityModel entityModel) {
-		return create(entityModel, entityModel.getLabelSingular(), entityModel.getLabelSingular());
+		return create(entityModel, entityModel.getLabelSingular(), entityModel.getLabelPlural());
 	}
 
 	static IBeanDtoDescriptor create(final EntityModel entityModel, final String labelSingular, final String labelPlural) {
