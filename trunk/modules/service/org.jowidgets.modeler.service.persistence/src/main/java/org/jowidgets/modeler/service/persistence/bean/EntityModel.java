@@ -141,21 +141,20 @@ public class EntityModel extends Bean implements IEntityModel {
 		this.renderingPattern = renderingPattern;
 	}
 
-	@Override
 	public Long getIconId() {
 		return iconId;
 	}
 
-	@Override
 	public void setIconId(final Long id) {
 		this.iconId = id;
-		if (this.icon != null && !NullCompatibleEquivalence.equals(this.icon.getId(), iconId)) {
-			icon = EntityManagerProvider.get().find(Icon.class, iconId);
+		if (!NullCompatibleEquivalence.equals(icon != null ? this.icon.getId() : null, iconId)) {
+			if (iconId != null) {
+				icon = EntityManagerProvider.get().find(Icon.class, iconId);
+			}
+			else {
+				icon = null;
+			}
 		}
-	}
-
-	public Icon getIcon() {
-		return icon;
 	}
 
 	@Override
@@ -173,6 +172,9 @@ public class EntityModel extends Bean implements IEntityModel {
 	public void setIconDescriptor(final IconDescriptor iconDescriptor) {
 		if (iconDescriptor != null) {
 			setIconId(iconDescriptor.getIconId());
+		}
+		else {
+			setIconId(null);
 		}
 	}
 

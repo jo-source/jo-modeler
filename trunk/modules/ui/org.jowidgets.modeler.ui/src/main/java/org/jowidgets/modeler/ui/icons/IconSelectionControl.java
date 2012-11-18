@@ -78,14 +78,18 @@ public final class IconSelectionControl extends AbstractInputControl<IconDescrip
 		final IInputDialogBluePrint<IconDescriptor> inputDialogBp = BPF.inputDialog(new IconContentCreator());
 		inputDialogBp.setValidationLabel(null);
 		inputDialogBp.setMinPackSize(new Dimension(800, 600));
+		inputDialogBp.setContentScrolled(false);
 		//TODO MG i18n
 		inputDialogBp.setIcon(IconsSmall.EDIT).setTitle("Edit icon");
 		final IInputDialog<IconDescriptor> inputDialog = Toolkit.getActiveWindow().createChildWindow(inputDialogBp);
+		inputDialog.setMinSize(new Dimension(300, 300));
 		inputDialog.setValue(getValue());
 		inputDialog.setVisible(true);
 		if (inputDialog.isOkPressed()) {
 			setValue(inputDialog.getValue());
+			fireInputChanged();
 		}
+		inputDialog.dispose();
 	}
 
 	@Override

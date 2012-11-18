@@ -36,7 +36,12 @@ public final class IconDescriptorConverter extends AbstractObjectLabelConverter<
 
 	@Override
 	public IImageConstant getIcon(final IconDescriptor descriptor) {
-		return new DynamicIcon(descriptor);
+		if (descriptor != null) {
+			return new DynamicIcon(descriptor);
+		}
+		else {
+			return null;
+		}
 	}
 
 }

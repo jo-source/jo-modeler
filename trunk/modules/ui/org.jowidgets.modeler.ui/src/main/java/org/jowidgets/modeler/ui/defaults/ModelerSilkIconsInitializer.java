@@ -53,6 +53,7 @@ public final class ModelerSilkIconsInitializer {
 		registry.registerImageConstant(ModelerIcons.ICON_ADD, SilkIcons.IMAGE_ADD);
 		registry.registerImageConstant(ModelerIcons.ARROW_UP, SilkIcons.ARROW_UP);
 		registry.registerImageConstant(ModelerIcons.ARROW_DOWN, SilkIcons.ARROW_DOWN);
+		registry.registerImageConstant(ModelerIcons.DELETE_ICON, SilkIcons.DELETE);
 	}
 
 }

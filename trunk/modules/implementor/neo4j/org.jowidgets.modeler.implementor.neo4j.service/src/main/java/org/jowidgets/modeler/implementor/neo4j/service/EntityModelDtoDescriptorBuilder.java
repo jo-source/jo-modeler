@@ -43,13 +43,11 @@ import org.jowidgets.cap.common.api.bean.IPropertyBuilder;
 import org.jowidgets.cap.common.api.sort.ISort;
 import org.jowidgets.cap.common.api.validation.IBeanValidator;
 import org.jowidgets.i18n.api.IMessage;
-import org.jowidgets.modeler.common.dto.IconDescriptor;
 import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
 import org.jowidgets.modeler.service.lookup.ValueTypeLookUpService;
 import org.jowidgets.modeler.service.persistence.bean.AbstractPropertyModel;
 import org.jowidgets.modeler.service.persistence.bean.EntityModel;
 import org.jowidgets.modeler.service.persistence.bean.EntityPropertyModel;
-import org.jowidgets.modeler.service.persistence.bean.Icon;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.EmptyCheck;
 
@@ -65,7 +63,6 @@ final class EntityModelDtoDescriptorBuilder {
 		final Collection<IProperty> properties = createProperties(entityModel);
 		final Collection<ISort> defaultSorting = Collections.emptyList();
 		final Collection<IBeanValidator<?>> beanValidators = Collections.emptyList();
-		entityModel.getIcon();
 
 		return CapCommonToolkit.dtoDescriptor(
 				properties,
@@ -74,18 +71,8 @@ final class EntityModelDtoDescriptorBuilder {
 				labelPlural,
 				null,
 				entityModel.getRenderingPattern(),
-				getIconDescriptor(entityModel),
+				entityModel.getIconDescriptor(),
 				beanValidators);
-	}
-
-	private static IconDescriptor getIconDescriptor(final EntityModel entityModel) {
-		final Icon icon = entityModel.getIcon();
-		if (icon != null) {
-			return icon.getDescriptor();
-		}
-		else {
-			return null;
-		}
 	}
 
 	private static Collection<IProperty> createProperties(final EntityModel entityModel) {

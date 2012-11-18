@@ -35,8 +35,11 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import org.jowidgets.api.color.Colors;
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IComboBox;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IIcon;
@@ -61,12 +64,15 @@ import org.jowidgets.cap.ui.api.execution.IExecutionTask;
 import org.jowidgets.cap.ui.api.widgets.ICapApiBluePrintFactory;
 import org.jowidgets.cap.ui.tools.execution.AbstractUiResultCallback;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IInputListener;
+import org.jowidgets.common.widgets.controller.IMouseButtonEvent;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.modeler.common.dto.IconDescriptor;
 import org.jowidgets.modeler.common.entity.EntityIds;
 import org.jowidgets.modeler.common.lookup.LookUpIds;
 import org.jowidgets.service.api.ServiceProvider;
+import org.jowidgets.tools.controller.MouseAdapter;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 import org.jowidgets.util.EmptyCheck;
 import org.jowidgets.util.concurrent.DaemonThreadFactory;
@@ -78,15 +84,17 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 	private static final List<ISort> SORTING = createSorting();
 
 	private final IReaderService<Void> readerService;
+	private final IInputListener filterInputListener;
+	private final IInputListener imediateFilterInputListener;
 
 	private IComboBox<Object> iconSetFilterCmb;
 	private IInputField<String> iconFilterField;
 
-	@SuppressWarnings("unused")
 	private IIcon currentIcon;
-	@SuppressWarnings("unused")
 	private IInputField<String> currentIconField;
+	private IButton deleteButton;
 
+	private IconCompositeLayout contentLayouter;
 	private IComposite content;
 
 	private ScheduledExecutorService executorService;
@@ -107,6 +115,8 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 		if (readerService == null) {
 			throw new IllegalStateException("No reader service found for icons");
 		}
+		this.filterInputListener = new FilterInputListener();
+		this.imediateFilterInputListener = new ImediateFilterInputListener();
 	}
 
 	private static List<ISort> createSorting() {
@@ -120,9 +130,9 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 	public void createContent(final IInputContentContainer container) {
 		final ICapApiBluePrintFactory cbpf = CapUiToolkit.bluePrintFactory();
 
-		container.setLayout(new MigLayoutDescriptor("[grow, 0::]", "[][grow, 0::]"));
+		container.setLayout(new MigLayoutDescriptor("[grow, 0::]", "[]15[]15[grow, 0::]"));
 		final IComposite searchBar = container.add(BPF.composite(), "growx, w 0::, wrap");
-		searchBar.setLayout(new MigLayoutDescriptor("[][grow, 0::]15[][grow, 0::]", "[][]15[][]"));
+		searchBar.setLayout(new MigLayoutDescriptor("0[][grow, 0::]15[][grow, 0::]0", "0[][]0"));
 
 		searchBar.add(BPF.textSeparator("Filter").setMarkup(Markup.STRONG), "span 4, growx, w 0::, wrap");
 		searchBar.add(BPF.textLabel("Icon set"));
@@ -131,21 +141,34 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 		searchBar.add(BPF.textLabel("Icon"));
 		this.iconFilterField = searchBar.add(BPF.inputFieldString(), "growx, w 0::, sg g1, wrap");
 
-		searchBar.add(BPF.textSeparator("Selected icon").setMarkup(Markup.STRONG), "span 4, growx, w 0::, wrap");
-		currentIcon = searchBar.add(BPF.icon(), "w 16!");
-		currentIconField = searchBar.add(BPF.inputFieldString().setEditable(false), "growx, w 0::, span 3");
+		final IComposite selectedIconBar = container.add(BPF.composite(), "growx, w 0::, wrap");
+		selectedIconBar.setLayout(new MigLayoutDescriptor("0[]2[grow, 0::]2[]0", "0[][]0"));
 
-		this.content = container.add(BPF.composite(), "growx, w 0::, growy, h 0::");
-		//TODO MG make a own dynamic layout
-		content.setLayout(new MigLayoutDescriptor(
-			"wrap",
-			"6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6[]6",
-			"6[]6"));
+		selectedIconBar.add(BPF.textSeparator("Selected icon").setMarkup(Markup.STRONG), "span 3, growx, w 0::, wrap");
+		currentIcon = selectedIconBar.add(BPF.icon(), "h 16!, w 16!");
+		currentIconField = selectedIconBar.add(BPF.inputFieldString().setEditable(false), "growx, w 0::");
+		deleteButton = selectedIconBar.add(BPF.button().setIcon(ModelerIcons.DELETE_ICON), "h 22!, w 22!");
+		deleteButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				setCurrentIcon(null);
+			}
+		});
 
-		final IInputListener filterInputListener = new FilterInputListener();
+		this.content = container.add(BPF.scrollComposite().setHorizontalBar(false), "growx, w 0::, growy, h 0::");
+		this.contentLayouter = new IconCompositeLayout(content, container);
 
-		iconSetFilterCmb.addInputListener(filterInputListener);
+		iconSetFilterCmb.addInputListener(imediateFilterInputListener);
 		iconFilterField.addInputListener(filterInputListener);
+
+		container.addDisposeListener(new IDisposeListener() {
+			@Override
+			public void onDispose() {
+				if (loader != null) {
+					loader.cancel();
+				}
+			}
+		});
 	}
 
 	@Override
@@ -153,12 +176,33 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 		if (value != null) {
 			iconSetFilterCmb.setValue(value.getIconSetId());
 		}
-		this.value = value;
+		else {
+			final List<Object> elements = iconSetFilterCmb.getElements();
+			if (elements != null && elements.size() > 0) {
+				iconSetFilterCmb.setValue(elements.iterator().next());
+			}
+			else {
+				iconSetFilterCmb.setValue(null);
+			}
+		}
+		setCurrentIcon(value);
 	}
 
 	@Override
 	public IconDescriptor getValue() {
 		return value;
+	}
+
+	private void setCurrentIcon(final IconDescriptor value) {
+		if (value != null) {
+			currentIconField.setValue(value.getIconLabel() + " (" + value.getIconSetLabel() + ")");
+			currentIcon.setIcon(new DynamicIcon(value));
+		}
+		else {
+			currentIconField.setValue(null);
+			currentIcon.setIcon(null);
+		}
+		this.value = value;
 	}
 
 	private void load(final boolean immediate) {
@@ -175,28 +219,39 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 	}
 
 	private void setLoading() {
-		//CHECKSTYLE:OFF
-		System.out.println("Start loading");
-		//CHECKSTYLE:ON
+		content.layoutBegin();
+		content.setLayout(new MigLayoutDescriptor("[grow, 0::]", "[]"));
+		content.removeAll();
+		content.add(BPF.textLabel("Loading icons ..."), "growx, w 0::");
+		content.layoutEnd();
 	}
 
 	private void setIcons(final List<IBeanDto> icons) {
 		content.layoutBegin();
+		content.setLayout(contentLayouter);
 		content.removeAll();
-		for (final IBeanDto icon : icons) {
-			final IconDescriptor iconDescriptor = (IconDescriptor) icon.getValue(org.jowidgets.modeler.common.bean.IIcon.DESCRIPTOR_PROPERTY);
-			content.add(BPF.icon().setIcon(new DynamicIcon(iconDescriptor)));
+		for (final IBeanDto iconDto : icons) {
+			final IconDescriptor iconDescriptor = (IconDescriptor) iconDto.getValue(org.jowidgets.modeler.common.bean.IIcon.DESCRIPTOR_PROPERTY);
+			if (iconDescriptor != null) {
+				final IIcon icon = content.add(BPF.icon().setIcon(new DynamicIcon(iconDescriptor)));
+				icon.setToolTipText(iconDescriptor.getIconLabel() + " (" + iconDescriptor.getIconSetLabel() + ")");
+				icon.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mousePressed(final IMouseButtonEvent mouseEvent) {
+						setCurrentIcon(iconDescriptor);
+					}
+				});
+			}
 		}
 		content.layoutEnd();
-		//CHECKSTYLE:OFF
-		System.out.println("Set icons: " + icons);
-		//CHECKSTYLE:ON
 	}
 
 	private void setError(final Throwable exception) {
-		//CHECKSTYLE:OFF
-		System.out.println("Set error: " + exception);
-		//CHECKSTYLE:ON
+		content.layoutBegin();
+		content.setLayout(new MigLayoutDescriptor("[grow, 0::]", "[]"));
+		content.removeAll();
+		content.add(BPF.textLabel("Error while loading icons").setForegroundColor(Colors.ERROR), "growx, w 0::");
+		content.layoutEnd();
 	}
 
 	private ScheduledExecutorService getExecutorService() {
@@ -259,6 +314,13 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 		}
 	}
 
+	private final class ImediateFilterInputListener implements IInputListener {
+		@Override
+		public void inputChanged() {
+			load(true);
+		}
+	}
+
 	private final class IconsLoader {
 
 		private final IUiThreadAccess uiThreadAccess;
@@ -295,12 +357,16 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 			final IResultCallback<List<IBeanDto>> resultCallback = new AbstractUiResultCallback<List<IBeanDto>>() {
 				@Override
 				protected void finishedUi(final List<IBeanDto> result) {
-					setIcons(result);
+					if (!content.isDisposed()) {
+						setIcons(result);
+					}
 				}
 
 				@Override
 				protected void exceptionUi(final Throwable exception) {
-					setError(exception);
+					if (!content.isDisposed()) {
+						setError(exception);
+					}
 				}
 			};
 			readerService.read(resultCallback, null, filter, SORTING, 0, MAX_PAGE_SIZE, null, executionTask);
