@@ -83,18 +83,18 @@ public interface IRelationModel extends IBean {
 	void setDestinationEntityModelId(Long id);
 
 	@NotNull
-	@Size(min = 2, max = 25)
+	@Size(min = 2, max = 100)
 	String getName();
 
 	void setName(String name);
 
 	@NotNull
-	@Size(min = 1, max = 25)
+	@Size(min = 1, max = 100)
 	String getLabel();
 
 	void setLabel(String label);
 
-	@Size(max = 25)
+	@Size(max = 100)
 	String getInverseLabel();
 
 	void setInverseLabel(String inverseLabel);
