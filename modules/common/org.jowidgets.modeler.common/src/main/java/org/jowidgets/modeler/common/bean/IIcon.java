@@ -74,7 +74,7 @@ public interface IIcon extends IBean {
 
 	void setKey(String key);
 
-	@Size(max = 25)
+	@Size(max = 255)
 	String getLabel();
 
 	void setLabel(String label);

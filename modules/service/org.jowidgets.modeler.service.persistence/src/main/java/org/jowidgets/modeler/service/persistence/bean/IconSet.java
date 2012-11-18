@@ -31,6 +31,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -53,7 +54,7 @@ public class IconSet extends Bean implements IIconSet {
 	@Basic
 	private String label;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "iconSet")
+	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "iconSet")
 	@BatchSize(size = 1000)
 	@OrderBy("key")
 	private final List<Icon> icons = new LinkedList<Icon>();
