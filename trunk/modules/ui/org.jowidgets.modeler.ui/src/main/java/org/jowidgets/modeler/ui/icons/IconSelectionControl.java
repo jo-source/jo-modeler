@@ -123,7 +123,9 @@ public final class IconSelectionControl extends AbstractInputControl<IconDescrip
 	}
 
 	@Override
-	public void setEditable(final boolean editable) {}
+	public void setEditable(final boolean editable) {
+		editButton.setEnabled(editable);
+	}
 
 	@Override
 	protected IValidationResult createValidationResult() {

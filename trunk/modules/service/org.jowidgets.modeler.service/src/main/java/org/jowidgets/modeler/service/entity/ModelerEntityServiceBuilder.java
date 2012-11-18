@@ -28,6 +28,7 @@
 
 package org.jowidgets.modeler.service.entity;
 
+import org.jowidgets.cap.common.api.service.ICreatorService;
 import org.jowidgets.cap.common.api.service.IReaderService;
 import org.jowidgets.cap.service.api.entity.IBeanEntityBluePrint;
 import org.jowidgets.cap.service.api.entity.IBeanEntityLinkBluePrint;
@@ -89,6 +90,7 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 
 		//IIcon
 		bp = addEntity().setEntityId(EntityIds.ICON).setBeanType(Icon.class);
+		bp.setCreatorService((ICreatorService) null);
 		bp.setDtoDescriptor(new IconDtoDescriptorBuilder());
 
 		//Linked property models of entity models

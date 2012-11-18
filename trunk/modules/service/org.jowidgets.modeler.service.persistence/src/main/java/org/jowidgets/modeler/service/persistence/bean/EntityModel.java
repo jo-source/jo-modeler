@@ -77,7 +77,7 @@ public class EntityModel extends Bean implements IEntityModel {
 	@Column(name = "ICON_ID", nullable = true)
 	private Long iconId;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parentModel")
+	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "parentModel")
 	@BatchSize(size = 1000)
 	private final Set<EntityPropertyModel> entityPropertyModels = new HashSet<EntityPropertyModel>();
 
