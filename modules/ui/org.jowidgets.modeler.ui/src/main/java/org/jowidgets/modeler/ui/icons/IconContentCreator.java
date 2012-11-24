@@ -173,19 +173,24 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 
 	@Override
 	public void setValue(final IconDescriptor value) {
+		iconSetFilterCmb.removeInputListener(imediateFilterInputListener);
+		final Object iconSetId;
 		if (value != null) {
-			iconSetFilterCmb.setValue(value.getIconSetId());
+			iconSetId = value.getIconSetId();
 		}
 		else {
 			final List<Object> elements = iconSetFilterCmb.getElements();
 			if (elements != null && elements.size() > 0) {
-				iconSetFilterCmb.setValue(elements.iterator().next());
+				iconSetId = elements.iterator().next();
 			}
 			else {
-				iconSetFilterCmb.setValue(null);
+				iconSetId = null;
 			}
 		}
+		iconSetFilterCmb.setValue(iconSetId);
 		setCurrentIcon(value);
+		load(true);
+		iconSetFilterCmb.addInputListener(imediateFilterInputListener);
 	}
 
 	@Override

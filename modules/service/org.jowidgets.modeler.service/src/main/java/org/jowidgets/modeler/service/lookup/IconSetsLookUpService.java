@@ -55,6 +55,7 @@ public final class IconSetsLookUpService implements ISyncLookUpService {
 		final CriteriaQuery<IconSet> criteriaQuery = em.getCriteriaBuilder().createQuery(IconSet.class);
 		criteriaQuery.from(IconSet.class);
 
+		result.add(lookUpToolkit.lookUpEntry(null, ""));
 		for (final IconSet iconSet : em.createQuery(criteriaQuery).getResultList()) {
 			result.add(lookUpToolkit.lookUpEntry(iconSet.getId(), iconSet.getLabel()));
 		}
