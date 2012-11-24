@@ -31,6 +31,12 @@ package org.jowidgets.modeler.ui.plugins;
 import org.jowidgets.cap.ui.api.plugin.IAttributePlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuContributionPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuInterceptorPlugin;
+import org.jowidgets.cap.ui.api.plugin.IEntityComponentMasterTableViewPlugin;
+import org.jowidgets.cap.ui.api.plugin.IEntityComponentRelationTreeDetailViewPlugin;
+import org.jowidgets.cap.ui.api.plugin.IEntityComponentRelationTreeViewPlugin;
+import org.jowidgets.cap.ui.tools.workbench.EntityComponentMasterTableToolBarPlugin;
+import org.jowidgets.cap.ui.tools.workbench.EntityComponentRelationTreeDetailToolBarPlugin;
+import org.jowidgets.cap.ui.tools.workbench.EntityComponentRelationTreeToolBarPlugin;
 import org.jowidgets.modeler.common.bean.IEntityModel;
 import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
 import org.jowidgets.modeler.common.bean.IIcon;
@@ -52,6 +58,10 @@ public final class ModelerPluginProviderHolder extends PluginProviderHolder {
 	private static final class ModelerPluginProviderBuilder extends PluginProviderBuilder {
 
 		public ModelerPluginProviderBuilder() {
+			addPlugin(IEntityComponentMasterTableViewPlugin.ID, new EntityComponentMasterTableToolBarPlugin());
+			addPlugin(IEntityComponentRelationTreeViewPlugin.ID, new EntityComponentRelationTreeToolBarPlugin());
+			addPlugin(IEntityComponentRelationTreeDetailViewPlugin.ID, new EntityComponentRelationTreeDetailToolBarPlugin());
+
 			addBeanTableMenuContributionPlugin(new PropertyModelMenuContributionPlugin(), IEntityPropertyModel.class);
 			addBeanTableMenuContributionPlugin(new IconSetMenuContributionPlugin(), IIconSet.class);
 
