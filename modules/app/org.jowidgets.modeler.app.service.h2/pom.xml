@@ -54,8 +54,8 @@
 						</component>
 					</components>
 					<componentProperties>
-						<persistenceunit>userAdminPersistenceUnit</persistenceunit>
-						<outputfilename>userAdmin_schema.sql</outputfilename>
+						<persistenceunit>modelerPersistenceUnit</persistenceunit>
+						<outputfilename>modeler_schema.sql</outputfilename>
 						<drop>true</drop>
 						<create>true</create>
 						<export>false</export>
