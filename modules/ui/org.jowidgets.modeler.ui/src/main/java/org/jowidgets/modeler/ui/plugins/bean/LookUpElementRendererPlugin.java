@@ -34,7 +34,9 @@ import org.jowidgets.cap.ui.api.model.ILabelModel;
 import org.jowidgets.cap.ui.api.plugin.IBeanProxyLabelRendererPlugin;
 import org.jowidgets.cap.ui.tools.bean.BeanProxyLabelRendererWrapper;
 import org.jowidgets.cap.ui.tools.model.LabelModelWrapper;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.modeler.common.bean.ILookUpElement;
+import org.jowidgets.modeler.ui.icons.ModelerIcons;
 import org.jowidgets.plugin.api.IPluginProperties;
 import org.jowidgets.util.EmptyCheck;
 import org.jowidgets.util.IDecorator;
@@ -63,6 +65,11 @@ public final class LookUpElementRendererPlugin implements IBeanProxyLabelRendere
 									result.append(")");
 								}
 								return result.toString();
+							}
+
+							@Override
+							public IImageConstant getIcon() {
+								return ModelerIcons.LOOK_UP_ELEMENT;
 							}
 
 						};
