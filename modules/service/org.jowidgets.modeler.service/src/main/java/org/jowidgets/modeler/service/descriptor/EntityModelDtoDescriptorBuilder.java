@@ -82,6 +82,14 @@ public class EntityModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuilde
 		propertyBp.setLabel(getMessage("deleteIcon.label"));
 		propertyBp.setDescription(getMessage("deleteIcon.description"));
 
+		propertyBp = addProperty(IEntityModel.CREATE_LINK_ICON_DESCRIPTOR_PROPERTY);
+		propertyBp.setLabel(getMessage("createLinkIcon.label"));
+		propertyBp.setDescription(getMessage("createLinkIcon.description"));
+
+		propertyBp = addProperty(IEntityModel.DELETE_LINK_ICON_DESCRIPTOR_PROPERTY);
+		propertyBp.setLabel(getMessage("deleteLinkIcon.label"));
+		propertyBp.setDescription(getMessage("deleteLinkIcon.description"));
+
 		propertyBp = addProperty(IEntityModel.PROPERTIES_NAMES_PROPERTY);
 		propertyBp.setLabel(getMessage("propertiesNames.label"));
 		propertyBp.setDescription(getMessage("propertiesNames.description"));

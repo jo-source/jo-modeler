@@ -54,6 +54,8 @@ public interface IEntityModel extends IBean {
 	String ICON_DESCRIPTOR_PROPERTY = "iconDescriptor";
 	String CREATE_ICON_DESCRIPTOR_PROPERTY = "createIconDescriptor";
 	String DELETE_ICON_DESCRIPTOR_PROPERTY = "deleteIconDescriptor";
+	String CREATE_LINK_ICON_DESCRIPTOR_PROPERTY = "createLinkIconDescriptor";
+	String DELETE_LINK_ICON_DESCRIPTOR_PROPERTY = "deleteLinkIconDescriptor";
 	String PROPERTIES_NAMES_PROPERTY = "propertiesNames";
 
 	List<String> ALL_PROPERTIES = new LinkedList<String>() {
@@ -66,6 +68,8 @@ public interface IEntityModel extends IBean {
 			add(ICON_DESCRIPTOR_PROPERTY);
 			add(CREATE_ICON_DESCRIPTOR_PROPERTY);
 			add(DELETE_ICON_DESCRIPTOR_PROPERTY);
+			add(CREATE_LINK_ICON_DESCRIPTOR_PROPERTY);
+			add(DELETE_LINK_ICON_DESCRIPTOR_PROPERTY);
 			add(PROPERTIES_NAMES_PROPERTY);
 		}
 	};
@@ -104,6 +108,14 @@ public interface IEntityModel extends IBean {
 	IconDescriptor getDeleteIconDescriptor();
 
 	void setDeleteIconDescriptor(IconDescriptor iconDescriptor);
+
+	IconDescriptor getCreateLinkIconDescriptor();
+
+	void setCreateLinkIconDescriptor(IconDescriptor iconDescriptor);
+
+	IconDescriptor getDeleteLinkIconDescriptor();
+
+	void setDeleteLinkIconDescriptor(IconDescriptor iconDescriptor);
 
 	List<String> getPropertiesNames();
 }

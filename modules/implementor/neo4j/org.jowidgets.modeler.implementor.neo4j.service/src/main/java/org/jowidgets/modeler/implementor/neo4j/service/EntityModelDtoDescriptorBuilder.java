@@ -75,6 +75,8 @@ final class EntityModelDtoDescriptorBuilder {
 		builder.setIconDescriptor(entityModel.getIconDescriptor());
 		builder.setCreateIconDescriptor(entityModel.getCreateIconDescriptor());
 		builder.setDeleteIconDescriptor(entityModel.getDeleteIconDescriptor());
+		builder.setCreateLinkIconDescriptor(entityModel.getCreateLinkIconDescriptor());
+		builder.setDeleteLinkIconDescriptor(entityModel.getDeleteLinkIconDescriptor());
 
 		return builder.build();
 	}
