@@ -6,7 +6,7 @@
 
 	<parent>
 		<groupId>org.jowidgets.modeler</groupId>
-		<artifactId>org.jowidgets.modeler.service.parent</artifactId>
+		<artifactId>org.jowidgets.modeler.implementor.neo4j.parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
