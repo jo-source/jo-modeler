@@ -34,6 +34,7 @@ import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
 import org.jowidgets.modeler.common.bean.IPropertyModel;
 import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
+import org.jowidgets.modeler.common.icons.ModelerIconsCommon;
 import org.jowidgets.modeler.common.lookup.LookUpIds;
 import org.jowidgets.util.Assert;
 
@@ -42,6 +43,11 @@ public final class EntityPropertyModelDtoDescriptorBuilder extends AbstractPrope
 	public EntityPropertyModelDtoDescriptorBuilder() {
 		super(IEntityPropertyModel.class);
 
+		setIconDescriptor(ModelerIconsCommon.PROPERTY_MODEL);
+		setCreateIconDescriptor(ModelerIconsCommon.PROPERTY_MODEL_CREATE);
+		setDeleteIconDescriptor(ModelerIconsCommon.PROPERTY_MODEL_DELETE);
+		setCreateLinkIconDescriptor(ModelerIconsCommon.PROPERTY_MODEL_LINK_CREATE);
+		setDeleteLinkIconDescriptor(ModelerIconsCommon.PROPERTY_MODEL_LINK_DELETE);
 		setDefaultSorting(Sort.create(IEntityPropertyModel.PARENT_MODEL_ID_PROPERTY), Sort.create(IPropertyModel.ORDER_PROPERTY));
 
 		addIdProperty();

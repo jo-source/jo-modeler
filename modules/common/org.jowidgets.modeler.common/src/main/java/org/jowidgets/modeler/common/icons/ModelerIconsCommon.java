@@ -25,12 +25,9 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.modeler.ui.icons;
+package org.jowidgets.modeler.common.icons;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.modeler.common.icons.ModelerIconsCommon;
-
-public enum ModelerIcons implements IImageConstant {
+public enum ModelerIconsCommon {
 
 	MODELER_ICON,
 
@@ -81,8 +78,5 @@ public enum ModelerIcons implements IImageConstant {
 	ARROW_DOWN,
 	DELETE,
 	LINK;
-	public static ModelerIcons getIcon(final ModelerIconsCommon commonConstant) {
-		return valueOf(commonConstant.name());
-	}
 
 }

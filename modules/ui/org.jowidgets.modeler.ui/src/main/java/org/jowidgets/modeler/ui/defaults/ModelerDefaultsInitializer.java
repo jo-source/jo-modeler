@@ -36,8 +36,10 @@ import org.jowidgets.cap.ui.api.types.RelationRenderingPolicy;
 import org.jowidgets.cap.ui.api.widgets.IBeanFormBluePrint;
 import org.jowidgets.cap.ui.api.widgets.IBeanRelationTreeBluePrint;
 import org.jowidgets.modeler.common.dto.IconDescriptor;
+import org.jowidgets.modeler.common.icons.ModelerIconsCommon;
 import org.jowidgets.modeler.ui.icons.IconDescriptorControlProvider;
 import org.jowidgets.modeler.ui.icons.IconDescriptorResolver;
+import org.jowidgets.modeler.ui.icons.ModelerIconsCommonResolver;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class ModelerDefaultsInitializer {
@@ -47,6 +49,7 @@ public final class ModelerDefaultsInitializer {
 	public static void initialize() {
 
 		ImageResolver.register(IconDescriptor.class, new IconDescriptorResolver());
+		ImageResolver.register(ModelerIconsCommon.class, new ModelerIconsCommonResolver());
 
 		InputControlSupportRegistry.setControl(IconDescriptor.class, IconDescriptorControlProvider.create());
 

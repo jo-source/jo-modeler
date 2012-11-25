@@ -33,6 +33,7 @@ import org.jowidgets.cap.common.api.sort.Sort;
 import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.modeler.common.bean.ILookUpElement;
 import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
+import org.jowidgets.modeler.common.icons.ModelerIconsCommon;
 import org.jowidgets.util.Assert;
 
 public class LookUpElementDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
@@ -46,7 +47,11 @@ public class LookUpElementDtoDescriptorBuilder extends AbstractDtoDescriptorBuil
 
 		setLabelSingular(getMessage(labelSingularKey));
 		setLabelPlural(getMessage(labelPluralKey));
-		setRenderingPattern("$" + ILookUpElement.KEY_PROPERTY + "$");
+		setIconDescriptor(ModelerIconsCommon.LOOK_UP_ELEMENT);
+		setCreateIconDescriptor(ModelerIconsCommon.LOOK_UP_ELEMENT_CREATE);
+		setDeleteIconDescriptor(ModelerIconsCommon.LOOK_UP_ELEMENT_DELETE);
+		setCreateLinkIconDescriptor(ModelerIconsCommon.LOOK_UP_ELEMENT_LINK_CREATE);
+		setDeleteLinkIconDescriptor(ModelerIconsCommon.LOOK_UP_ELEMENT_LINK_DELETE);
 		setDefaultSorting(Sort.create(ILookUpElement.KEY_PROPERTY));
 
 		addIdProperty();

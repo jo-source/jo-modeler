@@ -49,14 +49,45 @@ public final class ModelerSilkIconsInitializer {
 		registry.registerImageConstant(ModelerIcons.ENTITY_MODEL_CREATE, SilkIcons.TABLE_ADD);
 		registry.registerImageConstant(ModelerIcons.ENTITY_MODEL_DELETE, SilkIcons.TABLE_DELETE);
 		registry.registerImageConstant(ModelerIcons.ENTITY_MODEL_LINK_CREATE, SilkIcons.TABLE_ADD);
-		registry.registerImageConstant(ModelerIcons.ENTITY_MODEL_LINK_DELETE, IconsSmall.DELETE);
+		registry.registerImageConstant(ModelerIcons.ENTITY_MODEL_LINK_DELETE, SilkIcons.LINK_DELETE);
+
 		registry.registerImageConstant(ModelerIcons.PROPERTY_MODEL, SilkIcons.TAG_BLUE);
+		registry.registerImageConstant(ModelerIcons.PROPERTY_MODEL_CREATE, SilkIcons.TAG_BLUE_ADD);
+		registry.registerImageConstant(ModelerIcons.PROPERTY_MODEL_DELETE, SilkIcons.TAG_BLUE_DELETE);
+		registry.registerImageConstant(ModelerIcons.PROPERTY_MODEL_LINK_CREATE, SilkIcons.TAG_BLUE_ADD);
+		registry.registerImageConstant(ModelerIcons.PROPERTY_MODEL_LINK_DELETE, SilkIcons.LINK_DELETE);
+
 		registry.registerImageConstant(ModelerIcons.RELATION_MODEL, SilkIcons.TABLE_RELATIONSHIP);
-		registry.registerImageConstant(ModelerIcons.LOOK_UP, SilkIcons.EYE);
-		registry.registerImageConstant(ModelerIcons.LOOK_UP_ELEMENT, SilkIcons.VCARD);
-		registry.registerImageConstant(ModelerIcons.ICON, SilkIcons.PICTURE);
+		registry.registerImageConstant(ModelerIcons.RELATION_MODEL_CREATE, IconsSmall.ADD);
+		registry.registerImageConstant(ModelerIcons.RELATION_MODEL_DELETE, IconsSmall.DELETE);
+		registry.registerImageConstant(ModelerIcons.RELATION_MODEL_LINK_CREATE, SilkIcons.LINK_ADD);
+		registry.registerImageConstant(ModelerIcons.RELATION_MODEL_LINK_DELETE, SilkIcons.LINK_DELETE);
+
 		registry.registerImageConstant(ModelerIcons.ICON_SET, SilkIcons.PICTURES);
+		registry.registerImageConstant(ModelerIcons.ICON_SET_CREATE, IconsSmall.ADD);
+		registry.registerImageConstant(ModelerIcons.ICON_SET_DELETE, IconsSmall.DELETE);
+		registry.registerImageConstant(ModelerIcons.ICON_SET_LINK_CREATE, SilkIcons.LINK_ADD);
+		registry.registerImageConstant(ModelerIcons.ICON_SET_LINK_DELETE, SilkIcons.LINK_DELETE);
+
+		registry.registerImageConstant(ModelerIcons.ICON, SilkIcons.PICTURE);
+		registry.registerImageConstant(ModelerIcons.ICON_CREATE, SilkIcons.PICTURE_ADD);
+		registry.registerImageConstant(ModelerIcons.ICON_DELETE, SilkIcons.PICTURE_DELETE);
+		registry.registerImageConstant(ModelerIcons.ICON_LINK_CREATE, SilkIcons.PICTURE_ADD);
+		registry.registerImageConstant(ModelerIcons.ICON_LINK_DELETE, SilkIcons.LINK_DELETE);
 		registry.registerImageConstant(ModelerIcons.ICON_ADD, SilkIcons.PICTURE_ADD);
+
+		registry.registerImageConstant(ModelerIcons.LOOK_UP, SilkIcons.EYE);
+		registry.registerImageConstant(ModelerIcons.LOOK_UP_CREATE, IconsSmall.ADD);
+		registry.registerImageConstant(ModelerIcons.LOOK_UP_DELETE, IconsSmall.DELETE);
+		registry.registerImageConstant(ModelerIcons.LOOK_UP_LINK_CREATE, SilkIcons.LINK_ADD);
+		registry.registerImageConstant(ModelerIcons.LOOK_UP_LINK_DELETE, SilkIcons.LINK_DELETE);
+
+		registry.registerImageConstant(ModelerIcons.LOOK_UP_ELEMENT, SilkIcons.VCARD);
+		registry.registerImageConstant(ModelerIcons.LOOK_UP_ELEMENT_CREATE, SilkIcons.VCARD_ADD);
+		registry.registerImageConstant(ModelerIcons.LOOK_UP_ELEMENT_DELETE, SilkIcons.VCARD_DELETE);
+		registry.registerImageConstant(ModelerIcons.LOOK_UP_ELEMENT_LINK_CREATE, SilkIcons.VCARD_ADD);
+		registry.registerImageConstant(ModelerIcons.LOOK_UP_ELEMENT_LINK_DELETE, SilkIcons.LINK_DELETE);
+
 		registry.registerImageConstant(ModelerIcons.ARROW_UP, SilkIcons.ARROW_UP);
 		registry.registerImageConstant(ModelerIcons.ARROW_DOWN, SilkIcons.ARROW_DOWN);
 		registry.registerImageConstant(ModelerIcons.DELETE, SilkIcons.DELETE);

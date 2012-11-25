@@ -42,18 +42,13 @@ import org.jowidgets.modeler.common.bean.IEntityModel;
 import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
 import org.jowidgets.modeler.common.bean.IIcon;
 import org.jowidgets.modeler.common.bean.IIconSet;
-import org.jowidgets.modeler.common.bean.ILookUp;
 import org.jowidgets.modeler.common.bean.ILookUpElement;
-import org.jowidgets.modeler.common.bean.IRelationModel;
 import org.jowidgets.modeler.ui.plugins.attribute.EntityModelAttributesPlugin;
+import org.jowidgets.modeler.ui.plugins.attribute.GlobalModelerAttributesPlugin;
 import org.jowidgets.modeler.ui.plugins.attribute.IconAttributesPlugin;
 import org.jowidgets.modeler.ui.plugins.bean.EntityModelRendererPlugin;
 import org.jowidgets.modeler.ui.plugins.bean.IconRendererPlugin;
-import org.jowidgets.modeler.ui.plugins.bean.IconSetRendererPlugin;
 import org.jowidgets.modeler.ui.plugins.bean.LookUpElementRendererPlugin;
-import org.jowidgets.modeler.ui.plugins.bean.LookUpRendererPlugin;
-import org.jowidgets.modeler.ui.plugins.bean.PropertyModelRendererPlugin;
-import org.jowidgets.modeler.ui.plugins.bean.RelationModelRendererPlugin;
 import org.jowidgets.modeler.ui.plugins.table.IconSetMenuContributionPlugin;
 import org.jowidgets.modeler.ui.plugins.table.PropertyModelMenuContributionPlugin;
 import org.jowidgets.modeler.ui.plugins.table.PropertyModelMenuInterceptorPlugin;
@@ -69,16 +64,14 @@ public final class ModelerPluginProviderHolder extends PluginProviderHolder {
 	private static final class ModelerPluginProviderBuilder extends PluginProviderBuilder {
 
 		public ModelerPluginProviderBuilder() {
+			addPlugin(IAttributePlugin.ID, new GlobalModelerAttributesPlugin());
+
 			addPlugin(IEntityComponentMasterTableViewPlugin.ID, new EntityComponentMasterTableToolBarPlugin());
 			addPlugin(IEntityComponentRelationTreeViewPlugin.ID, new EntityComponentRelationTreeToolBarPlugin());
 			addPlugin(IEntityComponentRelationTreeDetailViewPlugin.ID, new EntityComponentRelationTreeDetailToolBarPlugin());
 
 			addBeanProxyRendererPlugin(new EntityModelRendererPlugin(), IEntityModel.class);
-			addBeanProxyRendererPlugin(new PropertyModelRendererPlugin(), IEntityPropertyModel.class);
-			addBeanProxyRendererPlugin(new RelationModelRendererPlugin(), IRelationModel.class);
-			addBeanProxyRendererPlugin(new LookUpRendererPlugin(), ILookUp.class);
 			addBeanProxyRendererPlugin(new LookUpElementRendererPlugin(), ILookUpElement.class);
-			addBeanProxyRendererPlugin(new IconSetRendererPlugin(), IIconSet.class);
 			addBeanProxyRendererPlugin(new IconRendererPlugin(), IIcon.class);
 
 			addBeanTableMenuContributionPlugin(new PropertyModelMenuContributionPlugin(), IEntityPropertyModel.class);
