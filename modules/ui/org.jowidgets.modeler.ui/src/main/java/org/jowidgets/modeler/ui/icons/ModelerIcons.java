@@ -34,10 +34,16 @@ public enum ModelerIcons implements IImageConstant {
 	MODELER_ICON,
 
 	ENTITY_MODEL,
+	ENTITY_MODEL_CREATE,
+	ENTITY_MODEL_DELETE,
+	ENTITY_MODEL_LINK_CREATE,
+	ENTITY_MODEL_LINK_DELETE,
+
 	PROPERTY_MODEL,
 	RELATION_MODEL,
 
 	LOOK_UP,
+	LOOK_UP_ELEMENT,
 
 	ICON,
 	ICON_SET,
@@ -45,7 +51,7 @@ public enum ModelerIcons implements IImageConstant {
 
 	ARROW_UP,
 	ARROW_DOWN,
-
-	DELETE_ICON;
+	DELETE,
+	LINK;
 
 }
