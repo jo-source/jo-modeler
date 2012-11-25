@@ -29,6 +29,7 @@
 package org.jowidgets.modeler.ui.plugins;
 
 import org.jowidgets.cap.ui.api.plugin.IAttributePlugin;
+import org.jowidgets.cap.ui.api.plugin.IBeanProxyLabelRendererPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuContributionPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuInterceptorPlugin;
 import org.jowidgets.cap.ui.api.plugin.IEntityComponentMasterTableViewPlugin;
@@ -41,8 +42,18 @@ import org.jowidgets.modeler.common.bean.IEntityModel;
 import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
 import org.jowidgets.modeler.common.bean.IIcon;
 import org.jowidgets.modeler.common.bean.IIconSet;
+import org.jowidgets.modeler.common.bean.ILookUp;
+import org.jowidgets.modeler.common.bean.ILookUpElement;
+import org.jowidgets.modeler.common.bean.IRelationModel;
 import org.jowidgets.modeler.ui.plugins.attribute.EntityModelAttributesPlugin;
 import org.jowidgets.modeler.ui.plugins.attribute.IconAttributesPlugin;
+import org.jowidgets.modeler.ui.plugins.bean.EntityModelRendererPlugin;
+import org.jowidgets.modeler.ui.plugins.bean.IconRendererPlugin;
+import org.jowidgets.modeler.ui.plugins.bean.IconSetRendererPlugin;
+import org.jowidgets.modeler.ui.plugins.bean.LookUpElementRendererPlugin;
+import org.jowidgets.modeler.ui.plugins.bean.LookUpRendererPlugin;
+import org.jowidgets.modeler.ui.plugins.bean.PropertyModelRendererPlugin;
+import org.jowidgets.modeler.ui.plugins.bean.RelationModelRendererPlugin;
 import org.jowidgets.modeler.ui.plugins.table.IconSetMenuContributionPlugin;
 import org.jowidgets.modeler.ui.plugins.table.PropertyModelMenuContributionPlugin;
 import org.jowidgets.modeler.ui.plugins.table.PropertyModelMenuInterceptorPlugin;
@@ -61,6 +72,14 @@ public final class ModelerPluginProviderHolder extends PluginProviderHolder {
 			addPlugin(IEntityComponentMasterTableViewPlugin.ID, new EntityComponentMasterTableToolBarPlugin());
 			addPlugin(IEntityComponentRelationTreeViewPlugin.ID, new EntityComponentRelationTreeToolBarPlugin());
 			addPlugin(IEntityComponentRelationTreeDetailViewPlugin.ID, new EntityComponentRelationTreeDetailToolBarPlugin());
+
+			addBeanProxyRendererPlugin(new EntityModelRendererPlugin(), IEntityModel.class);
+			addBeanProxyRendererPlugin(new PropertyModelRendererPlugin(), IEntityPropertyModel.class);
+			addBeanProxyRendererPlugin(new RelationModelRendererPlugin(), IRelationModel.class);
+			addBeanProxyRendererPlugin(new LookUpRendererPlugin(), ILookUp.class);
+			addBeanProxyRendererPlugin(new LookUpElementRendererPlugin(), ILookUpElement.class);
+			addBeanProxyRendererPlugin(new IconSetRendererPlugin(), IIconSet.class);
+			addBeanProxyRendererPlugin(new IconRendererPlugin(), IIcon.class);
 
 			addBeanTableMenuContributionPlugin(new PropertyModelMenuContributionPlugin(), IEntityPropertyModel.class);
 			addBeanTableMenuContributionPlugin(new IconSetMenuContributionPlugin(), IIconSet.class);
@@ -94,5 +113,10 @@ public final class ModelerPluginProviderHolder extends PluginProviderHolder {
 		private void addAttributesPlugin(final IAttributePlugin plugin, final Class<?>... beanTypes) {
 			addPlugin(IAttributePlugin.ID, plugin, IAttributePlugin.BEAN_TYPE_PROPERTY_KEY, beanTypes);
 		}
+
+		private void addBeanProxyRendererPlugin(final IBeanProxyLabelRendererPlugin<?> plugin, final Class<?> beanType) {
+			addPlugin(IBeanProxyLabelRendererPlugin.ID, plugin, IBeanProxyLabelRendererPlugin.BEAN_TYPE_PROPERTY_KEY, beanType);
+		}
+
 	}
 }

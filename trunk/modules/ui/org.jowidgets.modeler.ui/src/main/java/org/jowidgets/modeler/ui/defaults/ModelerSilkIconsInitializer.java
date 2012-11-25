@@ -29,6 +29,7 @@
 package org.jowidgets.modeler.ui.defaults;
 
 import org.jowidgets.addons.icons.silkicons.SilkIcons;
+import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.modeler.ui.icons.ModelerIcons;
@@ -45,15 +46,21 @@ public final class ModelerSilkIconsInitializer {
 
 		registry.registerImageConstant(ModelerIcons.MODELER_ICON, SilkIcons.TABLE);
 		registry.registerImageConstant(ModelerIcons.ENTITY_MODEL, SilkIcons.TABLE);
-		registry.registerImageConstant(ModelerIcons.PROPERTY_MODEL, SilkIcons.TEXTFIELD);
-		registry.registerImageConstant(ModelerIcons.RELATION_MODEL, SilkIcons.LINK);
-		registry.registerImageConstant(ModelerIcons.LOOK_UP, SilkIcons.FIND);
-		registry.registerImageConstant(ModelerIcons.ICON, SilkIcons.IMAGE);
-		registry.registerImageConstant(ModelerIcons.ICON_SET, SilkIcons.IMAGES);
-		registry.registerImageConstant(ModelerIcons.ICON_ADD, SilkIcons.IMAGE_ADD);
+		registry.registerImageConstant(ModelerIcons.ENTITY_MODEL_CREATE, SilkIcons.TABLE_ADD);
+		registry.registerImageConstant(ModelerIcons.ENTITY_MODEL_DELETE, SilkIcons.TABLE_DELETE);
+		registry.registerImageConstant(ModelerIcons.ENTITY_MODEL_LINK_CREATE, SilkIcons.TABLE_ADD);
+		registry.registerImageConstant(ModelerIcons.ENTITY_MODEL_LINK_DELETE, IconsSmall.DELETE);
+		registry.registerImageConstant(ModelerIcons.PROPERTY_MODEL, SilkIcons.TAG_BLUE);
+		registry.registerImageConstant(ModelerIcons.RELATION_MODEL, SilkIcons.TABLE_RELATIONSHIP);
+		registry.registerImageConstant(ModelerIcons.LOOK_UP, SilkIcons.EYE);
+		registry.registerImageConstant(ModelerIcons.LOOK_UP_ELEMENT, SilkIcons.VCARD);
+		registry.registerImageConstant(ModelerIcons.ICON, SilkIcons.PICTURE);
+		registry.registerImageConstant(ModelerIcons.ICON_SET, SilkIcons.PICTURES);
+		registry.registerImageConstant(ModelerIcons.ICON_ADD, SilkIcons.PICTURE_ADD);
 		registry.registerImageConstant(ModelerIcons.ARROW_UP, SilkIcons.ARROW_UP);
 		registry.registerImageConstant(ModelerIcons.ARROW_DOWN, SilkIcons.ARROW_DOWN);
-		registry.registerImageConstant(ModelerIcons.DELETE_ICON, SilkIcons.DELETE);
+		registry.registerImageConstant(ModelerIcons.DELETE, SilkIcons.DELETE);
+		registry.registerImageConstant(ModelerIcons.LINK, SilkIcons.LINK);
 	}
 
 }

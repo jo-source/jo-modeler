@@ -147,7 +147,7 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 		selectedIconBar.add(BPF.textSeparator("Selected icon").setMarkup(Markup.STRONG), "span 3, growx, w 0::, wrap");
 		currentIcon = selectedIconBar.add(BPF.icon(), "h 16!, w 16!");
 		currentIconField = selectedIconBar.add(BPF.inputFieldString().setEditable(false), "growx, w 0::");
-		deleteButton = selectedIconBar.add(BPF.button().setIcon(ModelerIcons.DELETE_ICON), "h 22!, w 22!");
+		deleteButton = selectedIconBar.add(BPF.button().setIcon(ModelerIcons.DELETE), "h 22!, w 22!");
 		deleteButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {

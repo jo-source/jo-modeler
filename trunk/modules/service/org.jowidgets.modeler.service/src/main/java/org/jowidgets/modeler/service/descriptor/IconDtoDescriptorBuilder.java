@@ -47,7 +47,7 @@ public class IconDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
 		setLabelSingular(getMessage(labelSingularKey));
 		setLabelPlural(getMessage(labelPluralKey));
 		setRenderingPattern("$" + IIcon.KEY_PROPERTY + "$");
-		setDefaultSorting(Sort.create(IIcon.KEY_PROPERTY));
+		setDefaultSorting(Sort.create(IIcon.ICON_SET_LABEL_PROPERTY), Sort.create(IIcon.KEY_PROPERTY));
 
 		addIdProperty();
 
