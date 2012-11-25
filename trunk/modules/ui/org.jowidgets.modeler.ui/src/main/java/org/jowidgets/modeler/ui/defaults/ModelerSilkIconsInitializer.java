@@ -29,7 +29,6 @@
 package org.jowidgets.modeler.ui.defaults;
 
 import org.jowidgets.addons.icons.silkicons.SilkIcons;
-import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.modeler.ui.icons.ModelerIcons;
@@ -58,15 +57,15 @@ public final class ModelerSilkIconsInitializer {
 		registry.registerImageConstant(ModelerIcons.PROPERTY_MODEL_LINK_DELETE, SilkIcons.LINK_DELETE);
 
 		registry.registerImageConstant(ModelerIcons.RELATION_MODEL, SilkIcons.TABLE_RELATIONSHIP);
-		registry.registerImageConstant(ModelerIcons.RELATION_MODEL_CREATE, IconsSmall.ADD);
-		registry.registerImageConstant(ModelerIcons.RELATION_MODEL_DELETE, IconsSmall.DELETE);
-		registry.registerImageConstant(ModelerIcons.RELATION_MODEL_LINK_CREATE, SilkIcons.LINK_ADD);
+		registry.registerImageConstant(ModelerIcons.RELATION_MODEL_CREATE, SilkIcons.TABLE_RELATIONSHIP_ADD);
+		registry.registerImageConstant(ModelerIcons.RELATION_MODEL_DELETE, SilkIcons.TABLE_RELATIONSHIP_DELETE);
+		registry.registerImageConstant(ModelerIcons.RELATION_MODEL_LINK_CREATE, SilkIcons.TABLE_RELATIONSHIP_ADD);
 		registry.registerImageConstant(ModelerIcons.RELATION_MODEL_LINK_DELETE, SilkIcons.LINK_DELETE);
 
 		registry.registerImageConstant(ModelerIcons.ICON_SET, SilkIcons.PICTURES);
-		registry.registerImageConstant(ModelerIcons.ICON_SET_CREATE, IconsSmall.ADD);
-		registry.registerImageConstant(ModelerIcons.ICON_SET_DELETE, IconsSmall.DELETE);
-		registry.registerImageConstant(ModelerIcons.ICON_SET_LINK_CREATE, SilkIcons.LINK_ADD);
+		registry.registerImageConstant(ModelerIcons.ICON_SET_CREATE, SilkIcons.PICTURES_ADD);
+		registry.registerImageConstant(ModelerIcons.ICON_SET_DELETE, SilkIcons.PICTURES_DELETE);
+		registry.registerImageConstant(ModelerIcons.ICON_SET_LINK_CREATE, SilkIcons.PICTURES_ADD);
 		registry.registerImageConstant(ModelerIcons.ICON_SET_LINK_DELETE, SilkIcons.LINK_DELETE);
 
 		registry.registerImageConstant(ModelerIcons.ICON, SilkIcons.PICTURE);
@@ -77,9 +76,9 @@ public final class ModelerSilkIconsInitializer {
 		registry.registerImageConstant(ModelerIcons.ICON_ADD, SilkIcons.PICTURE_ADD);
 
 		registry.registerImageConstant(ModelerIcons.LOOK_UP, SilkIcons.EYE);
-		registry.registerImageConstant(ModelerIcons.LOOK_UP_CREATE, IconsSmall.ADD);
-		registry.registerImageConstant(ModelerIcons.LOOK_UP_DELETE, IconsSmall.DELETE);
-		registry.registerImageConstant(ModelerIcons.LOOK_UP_LINK_CREATE, SilkIcons.LINK_ADD);
+		registry.registerImageConstant(ModelerIcons.LOOK_UP_CREATE, SilkIcons.EYE_ADD);
+		registry.registerImageConstant(ModelerIcons.LOOK_UP_DELETE, SilkIcons.EYE_DELETE);
+		registry.registerImageConstant(ModelerIcons.LOOK_UP_LINK_CREATE, SilkIcons.EYE_ADD);
 		registry.registerImageConstant(ModelerIcons.LOOK_UP_LINK_DELETE, SilkIcons.LINK_DELETE);
 
 		registry.registerImageConstant(ModelerIcons.LOOK_UP_ELEMENT, SilkIcons.VCARD);
