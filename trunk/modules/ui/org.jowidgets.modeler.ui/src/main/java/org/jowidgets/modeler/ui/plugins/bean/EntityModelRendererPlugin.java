@@ -38,7 +38,6 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.modeler.common.bean.IEntityModel;
 import org.jowidgets.modeler.common.dto.IconDescriptor;
 import org.jowidgets.modeler.ui.icons.DynamicIcon;
-import org.jowidgets.modeler.ui.icons.ModelerIcons;
 import org.jowidgets.plugin.api.IPluginProperties;
 import org.jowidgets.util.IDecorator;
 
@@ -60,7 +59,7 @@ public final class EntityModelRendererPlugin implements IBeanProxyLabelRendererP
 									return new DynamicIcon(iconDescriptor);
 								}
 								else {
-									return ModelerIcons.ENTITY_MODEL;
+									return super.getIcon();
 								}
 							}
 						};

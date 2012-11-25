@@ -33,6 +33,7 @@ import org.jowidgets.cap.common.api.sort.Sort;
 import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.modeler.common.bean.IIcon;
 import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
+import org.jowidgets.modeler.common.icons.ModelerIconsCommon;
 import org.jowidgets.util.Assert;
 
 public class IconDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
@@ -47,6 +48,11 @@ public class IconDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
 		setLabelSingular(getMessage(labelSingularKey));
 		setLabelPlural(getMessage(labelPluralKey));
 		setRenderingPattern("$" + IIcon.KEY_PROPERTY + "$");
+		setIconDescriptor(ModelerIconsCommon.ICON);
+		setCreateIconDescriptor(ModelerIconsCommon.ICON_CREATE);
+		setDeleteIconDescriptor(ModelerIconsCommon.ICON_DELETE);
+		setCreateLinkIconDescriptor(ModelerIconsCommon.ICON_LINK_CREATE);
+		setDeleteLinkIconDescriptor(ModelerIconsCommon.ICON_LINK_DELETE);
 		setDefaultSorting(Sort.create(IIcon.ICON_SET_LABEL_PROPERTY), Sort.create(IIcon.KEY_PROPERTY));
 
 		addIdProperty();

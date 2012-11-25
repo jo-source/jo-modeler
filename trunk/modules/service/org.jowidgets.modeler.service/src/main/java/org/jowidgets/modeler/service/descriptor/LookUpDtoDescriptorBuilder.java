@@ -34,6 +34,7 @@ import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.modeler.common.bean.ILookUp;
 import org.jowidgets.modeler.common.dto.LookUpDisplayFormat;
 import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
+import org.jowidgets.modeler.common.icons.ModelerIconsCommon;
 import org.jowidgets.modeler.common.lookup.LookUpIds;
 import org.jowidgets.util.Assert;
 
@@ -49,6 +50,11 @@ public class LookUpDtoDescriptorBuilder extends AbstractDtoDescriptorBuilder {
 		setLabelSingular(getMessage(labelSingularKey));
 		setLabelPlural(getMessage(labelPluralKey));
 		setRenderingPattern("$" + ILookUp.LABEL_PROPERTY + "$");
+		setIconDescriptor(ModelerIconsCommon.LOOK_UP);
+		setCreateIconDescriptor(ModelerIconsCommon.LOOK_UP_CREATE);
+		setDeleteIconDescriptor(ModelerIconsCommon.LOOK_UP_DELETE);
+		setCreateLinkIconDescriptor(ModelerIconsCommon.LOOK_UP_LINK_CREATE);
+		setDeleteLinkIconDescriptor(ModelerIconsCommon.LOOK_UP_LINK_DELETE);
 		setDefaultSorting(Sort.create(ILookUp.NAME_PROPERTY));
 
 		addIdProperty();

@@ -26,21 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.ui.plugins.bean;
+package org.jowidgets.modeler.ui.icons;
 
-import org.jowidgets.cap.ui.api.bean.IBeanProxyLabelRenderer;
-import org.jowidgets.cap.ui.api.plugin.IBeanProxyLabelRendererPlugin;
-import org.jowidgets.cap.ui.tools.bean.BeanLabelProxyRendererIconDecorator;
-import org.jowidgets.modeler.common.bean.IIconSet;
-import org.jowidgets.modeler.ui.icons.ModelerIcons;
-import org.jowidgets.plugin.api.IPluginProperties;
-import org.jowidgets.util.IDecorator;
+import org.jowidgets.cap.ui.api.image.IImageResolver;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.modeler.common.icons.ModelerIconsCommon;
 
-public final class IconSetRendererPlugin implements IBeanProxyLabelRendererPlugin<IIconSet> {
+public class ModelerIconsCommonResolver implements IImageResolver<ModelerIconsCommon> {
 
 	@Override
-	public IDecorator<IBeanProxyLabelRenderer<IIconSet>> getRendererDecorator(final IPluginProperties properties) {
-		return new BeanLabelProxyRendererIconDecorator<IIconSet>(ModelerIcons.ICON_SET);
+	public IImageConstant resolve(final ModelerIconsCommon commonConstant) {
+		return ModelerIcons.getIcon(commonConstant);
 	}
-
 }

@@ -34,6 +34,7 @@ import org.jowidgets.cap.common.api.sort.Sort;
 import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.modeler.common.bean.IRelationModel;
 import org.jowidgets.modeler.common.i18n.entity.ModelerEntityMessages;
+import org.jowidgets.modeler.common.icons.ModelerIconsCommon;
 import org.jowidgets.modeler.common.lookup.LookUpIds;
 import org.jowidgets.modeler.service.lookup.CardinalityLookUpService;
 import org.jowidgets.util.Assert;
@@ -50,6 +51,11 @@ public class RelationModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuil
 		setLabelSingular(getMessage(labelSingularKey));
 		setLabelPlural(getMessage(labelPluralKey));
 		setRenderingPattern("$" + IRelationModel.LABEL_PROPERTY + "$ - $" + IRelationModel.INVERSE_PROPERTY + "$");
+		setIconDescriptor(ModelerIconsCommon.RELATION_MODEL);
+		setCreateIconDescriptor(ModelerIconsCommon.RELATION_MODEL_CREATE);
+		setDeleteIconDescriptor(ModelerIconsCommon.RELATION_MODEL_DELETE);
+		setCreateLinkIconDescriptor(ModelerIconsCommon.RELATION_MODEL_LINK_CREATE);
+		setDeleteLinkIconDescriptor(ModelerIconsCommon.RELATION_MODEL_LINK_DELETE);
 		setDefaultSorting(Sort.create(IRelationModel.NAME_PROPERTY));
 
 		addIdProperty();
