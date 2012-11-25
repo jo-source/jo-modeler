@@ -91,6 +91,20 @@ public class EntityModel extends Bean implements IEntityModel {
 	@Column(name = "DELETE_ICON_ID", nullable = true)
 	private Long deleteIconId;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CREATE_LINK_ICON_ID", nullable = true, insertable = false, updatable = false)
+	private Icon createLinkIcon;
+
+	@Column(name = "CREATE_LINK_ICON_ID", nullable = true)
+	private Long createLinkIconId;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "DELETE_LINK_ICON_ID", nullable = true, insertable = false, updatable = false)
+	private Icon deleteLinkIcon;
+
+	@Column(name = "DELETE_LINK_ICON_ID", nullable = true)
+	private Long deleteLinkIconId;
+
 	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "parentModel")
 	@BatchSize(size = 1000)
 	private final Set<EntityPropertyModel> entityPropertyModels = new HashSet<EntityPropertyModel>();
@@ -251,6 +265,72 @@ public class EntityModel extends Bean implements IEntityModel {
 		}
 		else {
 			setDeleteIconId(null);
+		}
+	}
+
+	public void setCreateLinkIconId(final Long id) {
+		this.createLinkIconId = id;
+		if (!NullCompatibleEquivalence.equals(createLinkIcon != null ? this.createLinkIcon.getId() : null, createLinkIconId)) {
+			if (createIconId != null) {
+				createLinkIcon = EntityManagerProvider.get().find(Icon.class, createLinkIconId);
+			}
+			else {
+				createLinkIcon = null;
+			}
+		}
+	}
+
+	@Override
+	@QueryPath(path = "createLinkIconId")
+	public IconDescriptor getCreateLinkIconDescriptor() {
+		if (createLinkIcon != null) {
+			return createLinkIcon.getDescriptor();
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
+	public void setCreateLinkIconDescriptor(final IconDescriptor iconDescriptor) {
+		if (iconDescriptor != null) {
+			setCreateLinkIconId(iconDescriptor.getIconId());
+		}
+		else {
+			setCreateLinkIconId(null);
+		}
+	}
+
+	public void setDeleteLinkIconId(final Long id) {
+		this.deleteLinkIconId = id;
+		if (!NullCompatibleEquivalence.equals(deleteLinkIcon != null ? this.deleteLinkIcon.getId() : null, deleteLinkIconId)) {
+			if (deleteLinkIconId != null) {
+				deleteLinkIcon = EntityManagerProvider.get().find(Icon.class, deleteLinkIconId);
+			}
+			else {
+				deleteLinkIcon = null;
+			}
+		}
+	}
+
+	@Override
+	@QueryPath(path = "deleteLinkIconId")
+	public IconDescriptor getDeleteLinkIconDescriptor() {
+		if (deleteLinkIcon != null) {
+			return deleteLinkIcon.getDescriptor();
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
+	public void setDeleteLinkIconDescriptor(final IconDescriptor iconDescriptor) {
+		if (iconDescriptor != null) {
+			setDeleteLinkIconId(iconDescriptor.getIconId());
+		}
+		else {
+			setDeleteLinkIconId(null);
 		}
 	}
 

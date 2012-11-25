@@ -38,5 +38,9 @@ public final class EntityModelAttributesPlugin extends AbstractAttributesPlugin 
 	@Override
 	protected void modifyAttributes(final IAttributeCollectionModifierBuilder modifier) {
 		modifier.addModifier(IEntityModel.ICON_DESCRIPTOR_PROPERTY).setTableAlignment(AlignmentHorizontal.CENTER);
+		modifier.addModifier(IEntityModel.CREATE_ICON_DESCRIPTOR_PROPERTY).setTableAlignment(AlignmentHorizontal.CENTER);
+		modifier.addModifier(IEntityModel.CREATE_LINK_ICON_DESCRIPTOR_PROPERTY).setTableAlignment(AlignmentHorizontal.CENTER);
+		modifier.addModifier(IEntityModel.DELETE_ICON_DESCRIPTOR_PROPERTY).setTableAlignment(AlignmentHorizontal.CENTER);
+		modifier.addModifier(IEntityModel.DELETE_LINK_ICON_DESCRIPTOR_PROPERTY).setTableAlignment(AlignmentHorizontal.CENTER);
 	}
 }
