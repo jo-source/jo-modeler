@@ -37,6 +37,7 @@ import java.util.List;
 import org.jowidgets.cap.common.api.CapCommonToolkit;
 import org.jowidgets.cap.common.api.bean.IBean;
 import org.jowidgets.cap.common.api.bean.IBeanDtoDescriptor;
+import org.jowidgets.cap.common.api.bean.IBeanDtoDescriptorBuilder;
 import org.jowidgets.cap.common.api.bean.IBeanPropertyBuilder;
 import org.jowidgets.cap.common.api.bean.IProperty;
 import org.jowidgets.cap.common.api.bean.IPropertyBuilder;
@@ -64,15 +65,18 @@ final class EntityModelDtoDescriptorBuilder {
 		final Collection<ISort> defaultSorting = Collections.emptyList();
 		final Collection<IBeanValidator<?>> beanValidators = Collections.emptyList();
 
-		return CapCommonToolkit.dtoDescriptor(
-				properties,
-				defaultSorting,
-				labelSingular,
-				labelPlural,
-				null,
-				entityModel.getRenderingPattern(),
-				entityModel.getIconDescriptor(),
-				beanValidators);
+		final IBeanDtoDescriptorBuilder builder = CapCommonToolkit.dtoDescriptorBuilder();
+		builder.setProperties(properties);
+		builder.setValidators(beanValidators);
+		builder.setDefaultSorting(defaultSorting);
+		builder.setLabelSingular(labelSingular);
+		builder.setLabelPlural(labelPlural);
+		builder.setRenderingPattern(entityModel.getRenderingPattern());
+		builder.setIconDescriptor(entityModel.getIconDescriptor());
+		builder.setCreateIconDescriptor(entityModel.getCreateIconDescriptor());
+		builder.setDeleteIconDescriptor(entityModel.getDeleteIconDescriptor());
+
+		return builder.build();
 	}
 
 	private static Collection<IProperty> createProperties(final EntityModel entityModel) {
