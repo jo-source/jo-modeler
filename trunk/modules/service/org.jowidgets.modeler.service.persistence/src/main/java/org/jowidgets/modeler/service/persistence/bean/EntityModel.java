@@ -77,6 +77,20 @@ public class EntityModel extends Bean implements IEntityModel {
 	@Column(name = "ICON_ID", nullable = true)
 	private Long iconId;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CREATE_ICON_ID", nullable = true, insertable = false, updatable = false)
+	private Icon createIcon;
+
+	@Column(name = "CREATE_ICON_ID", nullable = true)
+	private Long createIconId;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "DELETE_ICON_ID", nullable = true, insertable = false, updatable = false)
+	private Icon deleteIcon;
+
+	@Column(name = "DELETE_ICON_ID", nullable = true)
+	private Long deleteIconId;
+
 	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "parentModel")
 	@BatchSize(size = 1000)
 	private final Set<EntityPropertyModel> entityPropertyModels = new HashSet<EntityPropertyModel>();
@@ -141,10 +155,6 @@ public class EntityModel extends Bean implements IEntityModel {
 		this.renderingPattern = renderingPattern;
 	}
 
-	public Long getIconId() {
-		return iconId;
-	}
-
 	public void setIconId(final Long id) {
 		this.iconId = id;
 		if (!NullCompatibleEquivalence.equals(icon != null ? this.icon.getId() : null, iconId)) {
@@ -175,6 +185,72 @@ public class EntityModel extends Bean implements IEntityModel {
 		}
 		else {
 			setIconId(null);
+		}
+	}
+
+	public void setCreateIconId(final Long id) {
+		this.createIconId = id;
+		if (!NullCompatibleEquivalence.equals(createIcon != null ? this.createIcon.getId() : null, createIconId)) {
+			if (createIconId != null) {
+				createIcon = EntityManagerProvider.get().find(Icon.class, createIconId);
+			}
+			else {
+				createIcon = null;
+			}
+		}
+	}
+
+	@Override
+	@QueryPath(path = "createIconId")
+	public IconDescriptor getCreateIconDescriptor() {
+		if (createIcon != null) {
+			return createIcon.getDescriptor();
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
+	public void setCreateIconDescriptor(final IconDescriptor iconDescriptor) {
+		if (iconDescriptor != null) {
+			setCreateIconId(iconDescriptor.getIconId());
+		}
+		else {
+			setCreateIconId(null);
+		}
+	}
+
+	public void setDeleteIconId(final Long id) {
+		this.deleteIconId = id;
+		if (!NullCompatibleEquivalence.equals(deleteIcon != null ? this.deleteIcon.getId() : null, deleteIconId)) {
+			if (deleteIconId != null) {
+				deleteIcon = EntityManagerProvider.get().find(Icon.class, deleteIconId);
+			}
+			else {
+				deleteIcon = null;
+			}
+		}
+	}
+
+	@Override
+	@QueryPath(path = "deleteIconId")
+	public IconDescriptor getDeleteIconDescriptor() {
+		if (deleteIcon != null) {
+			return deleteIcon.getDescriptor();
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
+	public void setDeleteIconDescriptor(final IconDescriptor iconDescriptor) {
+		if (iconDescriptor != null) {
+			setDeleteIconId(iconDescriptor.getIconId());
+		}
+		else {
+			setDeleteIconId(null);
 		}
 	}
 
