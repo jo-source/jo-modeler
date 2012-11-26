@@ -28,6 +28,7 @@
 
 package org.jowidgets.modeler.ui.icons;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -102,6 +103,8 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 
 	private IconDescriptor value;
 
+	private boolean onLoad;
+
 	public IconContentCreator() {
 		final IEntityService entityService = ServiceProvider.getService(IEntityService.ID);
 		if (entityService == null) {
@@ -117,6 +120,8 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 		}
 		this.filterInputListener = new FilterInputListener();
 		this.imediateFilterInputListener = new ImediateFilterInputListener();
+
+		this.onLoad = false;
 	}
 
 	private static List<ISort> createSorting() {
@@ -224,6 +229,7 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 	}
 
 	private void setLoading() {
+		onLoad = true;
 		content.layoutBegin();
 		content.setLayout(new MigLayoutDescriptor("[grow, 0::]", "[]"));
 		content.removeAll();
@@ -232,10 +238,20 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 	}
 
 	private void setIcons(final List<IBeanDto> icons) {
-		content.layoutBegin();
-		content.setLayout(contentLayouter);
+		onLoad = false;
 		content.removeAll();
-		for (final IBeanDto iconDto : icons) {
+		content.setLayout(contentLayouter);
+		setIcons(icons.iterator());
+	}
+
+	private void setIcons(final Iterator<IBeanDto> iterator) {
+		if (content.isDisposed() || onLoad) {
+			return;
+		}
+		content.layoutBegin();
+		int count = 0;
+		while (iterator.hasNext() && count < 500) {
+			final IBeanDto iconDto = iterator.next();
 			final IconDescriptor iconDescriptor = (IconDescriptor) iconDto.getValue(org.jowidgets.modeler.common.bean.IIcon.DESCRIPTOR_PROPERTY);
 			if (iconDescriptor != null) {
 				final IIcon icon = content.add(BPF.icon().setIcon(new DynamicIcon(iconDescriptor)));
@@ -247,11 +263,23 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 					}
 				});
 			}
+			count++;
 		}
 		content.layoutEnd();
+		if (iterator.hasNext()) {
+			Toolkit.getUiThreadAccess().invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					if (!content.isDisposed() && !onLoad) {
+						setIcons(iterator);
+					}
+				}
+			});
+		}
 	}
 
 	private void setError(final Throwable exception) {
+		onLoad = false;
 		content.layoutBegin();
 		content.setLayout(new MigLayoutDescriptor("[grow, 0::]", "[]"));
 		content.removeAll();
