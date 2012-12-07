@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -70,6 +69,10 @@ public class EntityModel extends Bean implements IEntityModel {
 	@Basic
 	private String renderingPattern;
 
+	@Basic
+	@Column(name = "ORDINAL")
+	private Integer order;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ICON_ID", nullable = true, insertable = false, updatable = false)
 	private Icon icon;
@@ -105,15 +108,15 @@ public class EntityModel extends Bean implements IEntityModel {
 	@Column(name = "DELETE_LINK_ICON_ID", nullable = true)
 	private Long deleteLinkIconId;
 
-	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "parentModel")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parentModel")
 	@BatchSize(size = 1000)
 	private final Set<EntityPropertyModel> entityPropertyModels = new HashSet<EntityPropertyModel>();
 
-	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "destinationEntityModel")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "destinationEntityModel")
 	@BatchSize(size = 1000)
 	private final Set<RelationModel> destinationEntityOfSourceEntityRelation = new HashSet<RelationModel>();
 
-	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "sourceEntityModel")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sourceEntityModel")
 	@BatchSize(size = 1000)
 	private final Set<RelationModel> sourceEntityOfDestinationEntityRelation = new HashSet<RelationModel>();;
 
@@ -167,6 +170,16 @@ public class EntityModel extends Bean implements IEntityModel {
 	@Override
 	public void setRenderingPattern(final String renderingPattern) {
 		this.renderingPattern = renderingPattern;
+	}
+
+	@Override
+	public Integer getOrder() {
+		return order;
+	}
+
+	@Override
+	public void setOrder(final Integer order) {
+		this.order = order;
 	}
 
 	public void setIconId(final Long id) {
@@ -349,6 +362,19 @@ public class EntityModel extends Bean implements IEntityModel {
 		final EntityManager em = EntityManagerProvider.get();
 		for (final EntityPropertyModel property : entityPropertyModels) {
 			em.remove(property);
+		}
+		final Set<RelationModel> removedRelations = new HashSet<RelationModel>();
+		for (final RelationModel relationModel : sourceEntityOfDestinationEntityRelation) {
+			if (!removedRelations.contains(relationModel)) {
+				em.remove(relationModel);
+				removedRelations.add(relationModel);
+			}
+		}
+		for (final RelationModel relationModel : destinationEntityOfSourceEntityRelation) {
+			if (!removedRelations.contains(relationModel)) {
+				em.remove(relationModel);
+				removedRelations.add(relationModel);
+			}
 		}
 	}
 

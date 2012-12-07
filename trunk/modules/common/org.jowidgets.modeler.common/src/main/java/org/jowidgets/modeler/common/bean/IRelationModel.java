@@ -55,6 +55,8 @@ public interface IRelationModel extends IBean {
 	String SYMMETRIC_PROPERTY = "symmetric";
 	String SOURCE_CARDINALITY_PROPERTY = "sourceCardinality";
 	String DESTINATION_CARDINALITY_PROPERTY = "destinationCardinality";
+	String SOURCE_ORDER_PROPERTY = "sourceOrder";
+	String DESTINATION_ORDER_PROPERTY = "destinationOrder";
 
 	List<String> ALL_PROPERTIES = new LinkedList<String>() {
 		private static final long serialVersionUID = 1L;
@@ -68,6 +70,8 @@ public interface IRelationModel extends IBean {
 			add(SYMMETRIC_PROPERTY);
 			add(SOURCE_CARDINALITY_PROPERTY);
 			add(DESTINATION_CARDINALITY_PROPERTY);
+			add(SOURCE_ORDER_PROPERTY);
+			add(DESTINATION_ORDER_PROPERTY);
 			add(IBean.VERSION_PROPERTY);
 		}
 	};
@@ -113,4 +117,12 @@ public interface IRelationModel extends IBean {
 	Cardinality getDestinationCardinality();
 
 	void setDestinationCardinality(Cardinality cardinality);
+
+	Integer getSourceOrder();
+
+	void setSourceOrder(Integer order);
+
+	Integer getDestinationOrder();
+
+	void setDestinationOrder(Integer order);
 }

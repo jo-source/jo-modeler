@@ -60,6 +60,12 @@ public class RelationModel extends Bean implements IRelationModel {
 	@Basic
 	private Cardinality destinationCardinality;
 
+	@Basic
+	private Integer sourceOrder;
+
+	@Basic
+	private Integer destinationOrder;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SOURCE_ENTITY_MODEL_ID", nullable = false, insertable = false, updatable = false)
 	private EntityModel sourceEntityModel;
@@ -160,6 +166,26 @@ public class RelationModel extends Bean implements IRelationModel {
 	@Override
 	public void setDestinationCardinality(final Cardinality destinationCardinality) {
 		this.destinationCardinality = destinationCardinality;
+	}
+
+	@Override
+	public Integer getDestinationOrder() {
+		return destinationOrder;
+	}
+
+	@Override
+	public void setDestinationOrder(final Integer destinationOrder) {
+		this.destinationOrder = destinationOrder;
+	}
+
+	@Override
+	public Integer getSourceOrder() {
+		return sourceOrder;
+	}
+
+	@Override
+	public void setSourceOrder(final Integer sourceOrder) {
+		this.sourceOrder = sourceOrder;
 	}
 
 }

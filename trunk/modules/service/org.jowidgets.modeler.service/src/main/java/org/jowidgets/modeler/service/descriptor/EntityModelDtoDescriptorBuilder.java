@@ -53,11 +53,17 @@ public class EntityModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuilde
 		setDeleteIconDescriptor(ModelerIconsCommon.ENTITY_MODEL_DELETE);
 		setCreateLinkIconDescriptor(ModelerIconsCommon.ENTITY_MODEL_LINK_CREATE);
 		setDeleteLinkIconDescriptor(ModelerIconsCommon.ENTITY_MODEL_LINK_DELETE);
-		setDefaultSorting(Sort.create(IEntityModel.NAME_PROPERTY));
+		setDefaultSorting(Sort.create(IEntityModel.ORDER_PROPERTY));
 
 		addIdProperty();
 
-		IBeanPropertyBluePrint propertyBp = addProperty(IEntityModel.NAME_PROPERTY);
+		IBeanPropertyBluePrint propertyBp = addProperty(IEntityModel.ORDER_PROPERTY);
+		propertyBp.setLabel(getMessage("order.label"));
+		propertyBp.setDescription(getMessage("order.description"));
+		propertyBp.setDefaultValue(Integer.valueOf(0));
+		propertyBp.setMandatory(true);
+
+		propertyBp = addProperty(IEntityModel.NAME_PROPERTY);
 		propertyBp.setLabel(getMessage("name.label"));
 		propertyBp.setDescription(getMessage("name.description"));
 		propertyBp.setMandatory(true);
