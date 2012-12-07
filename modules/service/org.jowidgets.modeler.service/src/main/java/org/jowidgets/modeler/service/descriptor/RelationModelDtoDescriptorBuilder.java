@@ -56,7 +56,9 @@ public class RelationModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuil
 		setDeleteIconDescriptor(ModelerIconsCommon.RELATION_MODEL_DELETE);
 		setCreateLinkIconDescriptor(ModelerIconsCommon.RELATION_MODEL_LINK_CREATE);
 		setDeleteLinkIconDescriptor(ModelerIconsCommon.RELATION_MODEL_LINK_DELETE);
-		setDefaultSorting(Sort.create(IRelationModel.NAME_PROPERTY));
+		setDefaultSorting(
+				Sort.create(IRelationModel.SOURCE_ENTITY_MODEL_ID_PROPERTY),
+				Sort.create(IRelationModel.DESTINATION_ORDER_PROPERTY));
 
 		addIdProperty();
 
@@ -86,6 +88,12 @@ public class RelationModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuil
 		propertyBp.setMandatory(true);
 		propertyBp.setLookUpValueRange(LookUpIds.ENTITY_MODELS);
 
+		propertyBp = addProperty(IRelationModel.SOURCE_ORDER_PROPERTY);
+		propertyBp.setLabel(getMessage("sourceOrder.label"));
+		propertyBp.setDescription(getMessage("sourceOrder.description"));
+		propertyBp.setMandatory(true);
+		propertyBp.setDefaultValue(Integer.valueOf(0));
+
 		propertyBp = addProperty(IRelationModel.SOURCE_CARDINALITY_PROPERTY);
 		propertyBp.setLabel(getMessage("sourceCardinality.label"));
 		propertyBp.setDescription(getMessage("sourceCardinality.description"));
@@ -98,6 +106,12 @@ public class RelationModelDtoDescriptorBuilder extends AbstractDtoDescriptorBuil
 		propertyBp.setDescription(getMessage("destinationEntityModel.description"));
 		propertyBp.setMandatory(true);
 		propertyBp.setLookUpValueRange(LookUpIds.ENTITY_MODELS);
+
+		propertyBp = addProperty(IRelationModel.DESTINATION_ORDER_PROPERTY);
+		propertyBp.setLabel(getMessage("destinationOrder.label"));
+		propertyBp.setDescription(getMessage("destinationOrder.description"));
+		propertyBp.setMandatory(true);
+		propertyBp.setDefaultValue(Integer.valueOf(0));
 
 		propertyBp = addProperty(IRelationModel.DESTINATION_CARDINALITY_PROPERTY);
 		propertyBp.setLabel(getMessage("destinationCardinality.label"));

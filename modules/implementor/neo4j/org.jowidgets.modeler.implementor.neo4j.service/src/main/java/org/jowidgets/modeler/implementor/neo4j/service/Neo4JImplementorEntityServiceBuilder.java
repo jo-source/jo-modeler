@@ -35,7 +35,9 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.jowidgets.cap.common.api.bean.IBeanDtoDescriptor;
 import org.jowidgets.cap.common.api.bean.IProperty;
@@ -48,11 +50,13 @@ import org.jowidgets.cap.service.jpa.api.IEntityManagerContextTemplate;
 import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
 import org.jowidgets.cap.service.neo4j.tools.BeanPropertyMapNodeBean;
 import org.jowidgets.cap.service.neo4j.tools.Neo4JEntityServiceBuilderWrapper;
+import org.jowidgets.modeler.common.bean.IEntityModel;
 import org.jowidgets.modeler.service.persistence.bean.EntityModel;
 import org.jowidgets.modeler.service.persistence.bean.RelationModel;
 import org.jowidgets.service.api.IServiceRegistry;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.EmptyCheck;
+import org.jowidgets.util.NullCompatibleComparison;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.RelationshipType;
 
@@ -73,8 +77,10 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 
 	private void buildInEmContext() {
 		final EntityManager em = EntityManagerProvider.get();
-		final CriteriaQuery<EntityModel> query = em.getCriteriaBuilder().createQuery(EntityModel.class);
-		query.from(EntityModel.class);
+		final CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		final CriteriaQuery<EntityModel> query = criteriaBuilder.createQuery(EntityModel.class);
+		final Root<EntityModel> root = query.from(EntityModel.class);
+		query.orderBy(criteriaBuilder.asc(root.get(IEntityModel.ORDER_PROPERTY)));
 		for (final EntityModel entityModel : em.createQuery(query).getResultList()) {
 			addEntityModel(entityModel);
 		}
@@ -257,8 +263,6 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 		private final String linkedLabel;
 		private final boolean inverse;
 
-		private final boolean isSelfReference;
-
 		private RelationDescriptor(
 			final EntityModel entity,
 			final EntityModel linkedEntity,
@@ -271,8 +275,6 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 			this.relation = relation;
 			this.linkedLabel = linkedLabel;
 			this.inverse = inverse;
-
-			this.isSelfReference = entity.getId().equals(linkedEntity.getId());
 		}
 
 		private EntityModel getEntity() {
@@ -297,42 +299,22 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 
 		@Override
 		public int compareTo(final RelationDescriptor relationDescriptor) {
-			final int selfReferenceResult = compareToSelfSelfReference(relationDescriptor);
-			if (selfReferenceResult != 0) {
-				return selfReferenceResult;
-			}
-			final int linkedEntityResult = linkedEntity.getLabelPlural().compareTo(
-					relationDescriptor.getLinkedEntity().getLabelPlural());
-			if (linkedEntityResult != 0) {
-				return linkedEntityResult;
-			}
-			final int relationResult = getRelation().getName().compareTo(relationDescriptor.getRelation().getName());
-			if (relationResult != 0) {
-				return relationResult;
+			final int relationOrderResult = NullCompatibleComparison.compareTo(
+					getRelationOrder(),
+					relationDescriptor.getRelationOrder());
+			if (relationOrderResult != 0) {
+				return relationOrderResult;
 			}
 			return linkedLabel.compareTo(relationDescriptor.getLinkedLabel());
 		}
 
-		private int compareToSelfSelfReference(final RelationDescriptor relationDescriptor) {
-			if (isSelfReference && relationDescriptor.isSelfReference) {
-				if (relation.getSymmetric().booleanValue() == relationDescriptor.getRelation().getSymmetric().booleanValue()) {
-					return 0;
-				}
-				else if (relation.getSymmetric().booleanValue()) {
-					return 1;
-				}
-				else {
-					return -1;
-				}
-			}
-			else if (isSelfReference) {
-				return 1;
-			}
-			else if (relationDescriptor.isSelfReference) {
-				return -1;
+		private Integer getRelationOrder() {
+			if (!inverse || relation.getSymmetric().booleanValue()) {
+				return relation.getDestinationOrder();
+
 			}
 			else {
-				return 0;
+				return relation.getSourceOrder();
 			}
 		}
 
