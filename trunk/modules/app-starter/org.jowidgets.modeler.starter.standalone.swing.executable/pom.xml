@@ -1,0 +1,61 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>org.jowidgets.modeler.starter.standalone.swing.executable</artifactId>
+
+	<parent>
+		<groupId>org.jowidgets.modeler</groupId>
+		<artifactId>org.jowidgets.modeler.starter.parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.jowidgets.modeler</groupId>
+			<artifactId>org.jowidgets.modeler.starter.standalone.swing</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+	</dependencies>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>onejar-maven-plugin.googlecode.com</id>
+			<url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.dstovall</groupId>
+				<artifactId>onejar-maven-plugin</artifactId>
+				<version>1.4.1</version>
+				<executions>
+					<execution>
+						<configuration>
+							<mainClass>org.jowidgets.modeler.starter.standalone.swing.ModelerStarterStandaloneSwing</mainClass>
+							<filename>${project.build.finalName}-jar-with-dependencies.jar</filename>
+							<classifier>jar-with-dependencies</classifier>
+							<attachToBuild>true</attachToBuild>
+						</configuration>
+						<goals>
+							<goal>one-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- <build> <plugins> <plugin> <artifactId>maven-assembly-plugin</artifactId> 
+		<configuration> <archive> <manifest> <addClasspath>true</addClasspath> <mainClass>org.jowidgets.modeler.starter.standalone.swing.ModelerStarterStandaloneSwing</mainClass> 
+		</manifest> </archive> <descriptors> <descriptor>src/assembly/unpack_assembly.xml</descriptor> 
+		</descriptors> </configuration> <executions> <execution> <id>make-my-jar-with-dependencies</id> 
+		<phase>package</phase> <goals> <goal>single</goal> </goals> </execution> 
+		</executions> </plugin> </plugins> </build> -->
+
+</project>

@@ -27,11 +27,14 @@
 		<module>../org.jowidgets.modeler.starter.standalone.common</module>
 		<module>../org.jowidgets.modeler.starter.standalone.swing</module>
 		<module>../org.jowidgets.modeler.starter.standalone.swing.webstart</module>
+		<module>../org.jowidgets.modeler.starter.standalone.swing.executable</module>
 		<module>../org.jowidgets.modeler.starter.standalone.swt.common</module>
 		<module>../org.jowidgets.modeler.starter.standalone.swt.win</module>
 		<module>../org.jowidgets.modeler.starter.standalone.swt.win.webstart</module>
+		<module>../org.jowidgets.modeler.starter.standalone.swt.win.executable</module>	
 		<module>../org.jowidgets.modeler.starter.standalone.swt.gtk64</module>
 		<module>../org.jowidgets.modeler.starter.standalone.swt.gtk64.webstart</module>
+		<module>../org.jowidgets.modeler.starter.standalone.swt.gtk64.executable</module>
 	</modules>
 
 </project>

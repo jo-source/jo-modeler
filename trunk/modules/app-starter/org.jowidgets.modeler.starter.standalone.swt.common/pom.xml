@@ -20,13 +20,7 @@
 		
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.cap.addons.widgets.graph.impl.prefuse.swt</artifactId>
-			<version>${jocap.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.spi.impl.bridge.swt.awt</artifactId>
+			<artifactId>org.jowidgets.spi.impl.swt</artifactId>
 			<version>${jowidgets.version}</version>
 		</dependency>
 		
