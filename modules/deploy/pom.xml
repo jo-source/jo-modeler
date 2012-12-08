@@ -77,6 +77,39 @@
 									<destFileName>modeler-h2-web.war</destFileName>
 									<outputDirectory>${deploy.dir}</outputDirectory>
 								</artifactItem>
+								
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>org.jowidgets.modeler.starter.standalone.swing.executable</artifactId>
+									<version>${project.version}</version>
+									<classifier>jar-with-dependencies</classifier>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<destFileName>modeler-swing.jar</destFileName>
+									<outputDirectory>${deploy.dir}</outputDirectory>
+								</artifactItem>
+								
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>org.jowidgets.modeler.starter.standalone.swt.win.executable</artifactId>
+									<version>${project.version}</version>
+									<classifier>jar-with-dependencies</classifier>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<destFileName>modeler-swt-win.jar</destFileName>
+									<outputDirectory>${deploy.dir}</outputDirectory>
+								</artifactItem>
+								
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>org.jowidgets.modeler.starter.standalone.swt.gtk64.executable</artifactId>
+									<version>${project.version}</version>
+									<classifier>jar-with-dependencies</classifier>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<destFileName>modeler-swt-gtk64.jar</destFileName>
+									<outputDirectory>${deploy.dir}</outputDirectory>
+								</artifactItem>
 
 							</artifactItems>
 						</configuration>
