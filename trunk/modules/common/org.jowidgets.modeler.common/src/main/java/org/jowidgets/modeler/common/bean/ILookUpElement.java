@@ -66,7 +66,7 @@ public interface ILookUpElement extends IBean {
 	};
 
 	@NotNull
-	@Size(min = 2, max = 25)
+	@Size(min = 1, max = 25)
 	String getKey();
 
 	void setKey(String key);
