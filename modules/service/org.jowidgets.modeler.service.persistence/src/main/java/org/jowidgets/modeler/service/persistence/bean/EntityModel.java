@@ -46,6 +46,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Index;
+import org.jowidgets.cap.service.jpa.api.query.FilterParameterConverter;
 import org.jowidgets.cap.service.jpa.api.query.QueryPath;
 import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
 import org.jowidgets.modeler.common.bean.IEntityModel;
@@ -196,6 +197,7 @@ public class EntityModel extends Bean implements IEntityModel {
 
 	@Override
 	@QueryPath(path = "iconId")
+	@FilterParameterConverter(IconDescriptorQueryConverter.class)
 	public IconDescriptor getIconDescriptor() {
 		if (icon != null) {
 			return icon.getDescriptor();
