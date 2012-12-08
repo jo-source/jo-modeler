@@ -28,15 +28,23 @@
 
 package org.jowidgets.modeler.app.service.common;
 
+import org.jowidgets.modeler.common.security.ModelerAuthKeys;
 import org.jowidgets.modeler.service.persistence.ModelerPersistenceUnitNames;
 import org.jowidgets.security.api.ICredentials;
 import org.jowidgets.security.api.IPrincipal;
 import org.jowidgets.security.tools.AuthenticationServiceWrapper;
 import org.jowidgets.useradmin.service.authentication.AuthenticationService;
+import org.jowidgets.useradmin.service.data.UserAdminDataGenerator;
 
 public final class ModelerAuthenticationService extends AuthenticationServiceWrapper<IPrincipal<String>, ICredentials> {
 
 	public ModelerAuthenticationService() {
 		super(new AuthenticationService(ModelerPersistenceUnitNames.MODELER));
+
+		//create modeler admin if not yet exists
+		new UserAdminDataGenerator().createDataIfRoleNotExists(
+				ModelerPersistenceUnitNames.MODELER,
+				"MODELER_ADMIN",
+				ModelerAuthKeys.ALL_AUTHORIZATIONS);
 	}
 }
