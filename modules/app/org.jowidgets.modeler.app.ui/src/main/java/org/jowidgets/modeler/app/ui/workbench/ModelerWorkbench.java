@@ -28,6 +28,8 @@
 
 package org.jowidgets.modeler.app.ui.workbench;
 
+import java.util.Locale;
+
 import org.jowidgets.cap.ui.tools.workbench.CapWorkbenchModelBuilder;
 import org.jowidgets.modeler.ui.application.ModelApplicationFactory;
 import org.jowidgets.modeler.ui.application.ModelerApplicationFactory;
@@ -53,6 +55,8 @@ public class ModelerWorkbench implements IWorkbenchFactory {
 
 	@Override
 	public IWorkbench create() {
+
+		Locale.setDefault(Locale.US);
 
 		SLF4JBridgeHandler.removeHandlersForRootLogger();
 		SLF4JBridgeHandler.install();
