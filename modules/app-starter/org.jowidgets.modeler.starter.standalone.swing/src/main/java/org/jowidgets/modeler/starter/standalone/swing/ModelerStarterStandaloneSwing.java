@@ -28,8 +28,6 @@
 
 package org.jowidgets.modeler.starter.standalone.swing;
 
-import java.util.Locale;
-
 import javax.swing.UIManager;
 
 import org.jowidgets.modeler.app.ui.workbench.ModelerWorkbench;
@@ -41,8 +39,6 @@ public final class ModelerStarterStandaloneSwing {
 	private ModelerStarterStandaloneSwing() {}
 
 	public static void main(final String[] args) throws Exception {
-		//TODO MG remove this later
-		Locale.setDefault(Locale.US);
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		SwingOptions.setJoWidgetsTabLayout(true);
