@@ -53,14 +53,14 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 
 public final class ModelerWorkbench implements IWorkbenchFactory {
 
-	private final boolean maximized;
+	private final boolean rwt;
 
 	public ModelerWorkbench() {
 		this(false);
 	}
 
-	public ModelerWorkbench(final boolean maximized) {
-		this.maximized = maximized;
+	public ModelerWorkbench(final boolean rwt) {
+		this.rwt = rwt;
 	}
 
 	@Override
@@ -80,7 +80,8 @@ public final class ModelerWorkbench implements IWorkbenchFactory {
 
 		builder.setIcon(ModelerIcons.MODELER_ICON);
 		builder.setLabel(ModelerMessages.MODELER_LABEL.get());
-		builder.setInitialMaximized(maximized);
+		builder.setInitialMaximized(rwt);
+		builder.setDecorated(!rwt);
 
 		builder.addInitializeCallback(new IWorkbenchInitializeCallback() {
 			@Override
