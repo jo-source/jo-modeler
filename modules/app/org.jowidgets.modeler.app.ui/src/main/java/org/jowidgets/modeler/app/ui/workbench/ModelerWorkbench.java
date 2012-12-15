@@ -51,7 +51,17 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchModelBuilder;
 import org.jowidgets.workbench.toolkit.api.WorkbenchPartFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
-public class ModelerWorkbench implements IWorkbenchFactory {
+public final class ModelerWorkbench implements IWorkbenchFactory {
+
+	private final boolean maximized;
+
+	public ModelerWorkbench() {
+		this(false);
+	}
+
+	public ModelerWorkbench(final boolean maximized) {
+		this.maximized = maximized;
+	}
 
 	@Override
 	public IWorkbench create() {
@@ -70,6 +80,7 @@ public class ModelerWorkbench implements IWorkbenchFactory {
 
 		builder.setIcon(ModelerIcons.MODELER_ICON);
 		builder.setLabel(ModelerMessages.MODELER_LABEL.get());
+		builder.setInitialMaximized(maximized);
 
 		builder.addInitializeCallback(new IWorkbenchInitializeCallback() {
 			@Override
