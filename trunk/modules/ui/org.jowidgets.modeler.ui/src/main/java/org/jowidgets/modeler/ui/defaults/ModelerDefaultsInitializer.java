@@ -28,6 +28,7 @@
 
 package org.jowidgets.modeler.ui.defaults;
 
+import org.jowidgets.api.types.AutoPackPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.ITableSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.cap.ui.api.control.InputControlSupportRegistry;
@@ -35,6 +36,7 @@ import org.jowidgets.cap.ui.api.image.ImageResolver;
 import org.jowidgets.cap.ui.api.types.RelationRenderingPolicy;
 import org.jowidgets.cap.ui.api.widgets.IBeanFormBluePrint;
 import org.jowidgets.cap.ui.api.widgets.IBeanRelationTreeBluePrint;
+import org.jowidgets.cap.ui.api.widgets.IBeanTableBluePrint;
 import org.jowidgets.modeler.common.dto.IconDescriptor;
 import org.jowidgets.modeler.common.icons.ModelerIconsCommon;
 import org.jowidgets.modeler.ui.icons.IconDescriptorControlProvider;
@@ -52,6 +54,13 @@ public final class ModelerDefaultsInitializer {
 		ImageResolver.register(ModelerIconsCommon.class, new ModelerIconsCommonResolver());
 
 		InputControlSupportRegistry.setControl(IconDescriptor.class, IconDescriptorControlProvider.create());
+
+		BPF.addDefaultsInitializer(IBeanTableBluePrint.class, new IDefaultInitializer<IBeanTableBluePrint<?>>() {
+			@Override
+			public void initialize(final IBeanTableBluePrint<?> bluePrint) {
+				bluePrint.setAutoPackPolicy(AutoPackPolicy.ONCE);
+			}
+		});
 
 		BPF.addDefaultsInitializer(IBeanFormBluePrint.class, new IDefaultInitializer<IBeanFormBluePrint<?>>() {
 			@Override
