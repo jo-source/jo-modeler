@@ -109,7 +109,7 @@ public abstract class AbstractModelerServiceProviderBuilder extends CapServicePr
 	}
 
 	private IServicesDecoratorProvider createCancelServiceDecoratorProvider() {
-		return HibernateServiceToolkit.serviceDecoratorProviderBuilder(ModelerPersistenceUnitNames.MODELER).build();
+		return HibernateServiceToolkit.cancelServiceDecoratorProviderBuilder(ModelerPersistenceUnitNames.MODELER).build();
 	}
 
 	protected void onCreateJpaServiceDecoratorProvider(final IJpaServicesDecoratorProviderBuilder builder) {}
