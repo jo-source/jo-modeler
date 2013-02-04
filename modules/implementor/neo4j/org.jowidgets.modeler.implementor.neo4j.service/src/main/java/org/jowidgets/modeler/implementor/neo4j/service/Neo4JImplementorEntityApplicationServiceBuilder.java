@@ -30,13 +30,16 @@ package org.jowidgets.modeler.implementor.neo4j.service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.jowidgets.cap.service.jpa.api.EntityManagerContextTemplate;
 import org.jowidgets.cap.service.jpa.api.EntityManagerFactoryProvider;
 import org.jowidgets.cap.service.jpa.api.IEntityManagerContextTemplate;
 import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
 import org.jowidgets.cap.service.tools.entity.EntityApplicationServiceBuilder;
+import org.jowidgets.modeler.common.bean.IEntityModel;
 import org.jowidgets.modeler.service.persistence.bean.EntityModel;
 import org.jowidgets.util.Assert;
 
@@ -58,8 +61,10 @@ public final class Neo4JImplementorEntityApplicationServiceBuilder extends Entit
 
 	private void buildInEmContext() {
 		final EntityManager em = EntityManagerProvider.get();
-		final CriteriaQuery<EntityModel> query = em.getCriteriaBuilder().createQuery(EntityModel.class);
-		query.from(EntityModel.class);
+		final CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		final CriteriaQuery<EntityModel> query = criteriaBuilder.createQuery(EntityModel.class);
+		final Root<EntityModel> root = query.from(EntityModel.class);
+		query.orderBy(criteriaBuilder.asc(root.get(IEntityModel.ORDER_PROPERTY)));
 		for (final EntityModel entityModel : em.createQuery(query).getResultList()) {
 			addNode(entityModel.getName());
 		}
