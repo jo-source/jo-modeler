@@ -128,6 +128,11 @@ public final class IconSelectionControl extends AbstractInputControl<IconDescrip
 	}
 
 	@Override
+	public boolean isEditable() {
+		return editButton.isEnabled();
+	}
+
+	@Override
 	protected IValidationResult createValidationResult() {
 		return ValidationResult.ok();
 	}
