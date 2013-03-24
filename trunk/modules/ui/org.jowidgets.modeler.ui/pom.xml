@@ -30,6 +30,12 @@
 			<artifactId>org.jowidgets.cap.ui</artifactId>
 			<version>${jocap.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.cap.addons.plugins.beanform.document</artifactId>
+			<version>${jocap.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.jowidgets</groupId>
