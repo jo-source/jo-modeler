@@ -41,6 +41,7 @@ import org.jowidgets.cap.common.api.bean.IBeanDtoDescriptorBuilder;
 import org.jowidgets.cap.common.api.bean.IBeanPropertyBuilder;
 import org.jowidgets.cap.common.api.bean.IProperty;
 import org.jowidgets.cap.common.api.bean.IPropertyBuilder;
+import org.jowidgets.cap.common.api.dto.IDocument;
 import org.jowidgets.cap.common.api.sort.ISort;
 import org.jowidgets.cap.common.api.validation.IBeanValidator;
 import org.jowidgets.i18n.api.IMessage;
@@ -141,6 +142,9 @@ final class EntityModelDtoDescriptorBuilder {
 		}
 		else if (Boolean.class.getName().equals(valueType)) {
 			return Boolean.class;
+		}
+		else if (IDocument.class.getName().equals(valueType)) {
+			return IDocument.class;
 		}
 		else if (valueType.startsWith(ValueTypeLookUpService.LOOK_UP_VALUE_TYPE_KEY_PREFIX)) {
 			return String.class;

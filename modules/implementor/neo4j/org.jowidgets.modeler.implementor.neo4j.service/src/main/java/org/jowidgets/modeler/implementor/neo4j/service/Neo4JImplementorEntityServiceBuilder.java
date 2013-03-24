@@ -48,7 +48,6 @@ import org.jowidgets.cap.service.jpa.api.EntityManagerContextTemplate;
 import org.jowidgets.cap.service.jpa.api.EntityManagerFactoryProvider;
 import org.jowidgets.cap.service.jpa.api.IEntityManagerContextTemplate;
 import org.jowidgets.cap.service.jpa.tools.entity.EntityManagerProvider;
-import org.jowidgets.cap.service.neo4j.tools.BeanPropertyMapNodeBean;
 import org.jowidgets.cap.service.neo4j.tools.Neo4JEntityServiceBuilderWrapper;
 import org.jowidgets.modeler.common.bean.IEntityModel;
 import org.jowidgets.modeler.service.persistence.bean.EntityModel;
@@ -89,7 +88,7 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 	private void addEntityModel(final EntityModel entityModel) {
 		final IBeanEntityBluePrint bp = addEntity();
 		bp.setEntityId(entityModel.getName());
-		bp.setBeanType(BeanPropertyMapNodeBean.class);
+		bp.setBeanType(Neo4JImplementorBeanPropertyMapNodeBean.class);
 		bp.setBeanTypeId(entityModel.getName());
 		bp.setDtoDescriptor(EntityModelDtoDescriptorBuilder.create(entityModel));
 		addLinkedEntities(bp, entityModel, true);
@@ -192,12 +191,12 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 			//create linked
 			final IBeanEntityBluePrint linkedBp = addEntity();
 			linkedBp.setEntityId(linkedEntityId);
-			linkedBp.setBeanType(BeanPropertyMapNodeBean.class);
+			linkedBp.setBeanType(Neo4JImplementorBeanPropertyMapNodeBean.class);
 			linkedBp.setBeanTypeId(linkedEntity.getName());
 			linkedBp.setDtoDescriptor(linkedDtoDescriptor);
 			final IReaderService<Void> linkedReaderService = getServiceFactory().relatedReaderService(
 					entity.getName(),
-					BeanPropertyMapNodeBean.class,
+					Neo4JImplementorBeanPropertyMapNodeBean.class,
 					linkedEntity.getName(),
 					relationship,
 					direction,
@@ -209,12 +208,12 @@ public final class Neo4JImplementorEntityServiceBuilder extends Neo4JEntityServi
 			//create linkable
 			final IBeanEntityBluePrint linkableBp = addEntity();
 			linkableBp.setEntityId(linkableEntityId);
-			linkableBp.setBeanType(BeanPropertyMapNodeBean.class);
+			linkableBp.setBeanType(Neo4JImplementorBeanPropertyMapNodeBean.class);
 			linkableBp.setBeanTypeId(linkedEntity.getName());
 			linkableBp.setDtoDescriptor(linkableDtoDescriptor);
 			final IReaderService<Void> linkableReaderService = getServiceFactory().relatedReaderService(
 					entity.getName(),
-					BeanPropertyMapNodeBean.class,
+					Neo4JImplementorBeanPropertyMapNodeBean.class,
 					linkedEntity.getName(),
 					relationship,
 					direction,

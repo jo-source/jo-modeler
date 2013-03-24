@@ -37,6 +37,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
 
 import org.jowidgets.cap.common.api.CapCommonToolkit;
+import org.jowidgets.cap.common.api.dto.IDocument;
 import org.jowidgets.cap.common.api.execution.IExecutionCallback;
 import org.jowidgets.cap.common.api.lookup.ILookUpEntry;
 import org.jowidgets.cap.common.api.lookup.ILookUpToolkit;
@@ -56,6 +57,7 @@ public final class ValueTypeLookUpService implements ISyncLookUpService {
 	public static final String DOUBLE_KEY = Double.class.getName();
 	public static final String DATE_KEY = Date.class.getName();
 	public static final String BOOLEAN_KEY = Boolean.class.getName();
+	public static final String DOCUMENT_KEY = IDocument.class.getName();
 
 	private static final IMessage LOOK_UP_LABEL = Messages.getMessage("ValueTypeLookUpService.lookUp");
 
@@ -70,6 +72,7 @@ public final class ValueTypeLookUpService implements ISyncLookUpService {
 		result.add(lookUpToolkit.lookUpEntry(DOUBLE_KEY, "Double"));
 		result.add(lookUpToolkit.lookUpEntry(BOOLEAN_KEY, "Boolean"));
 		result.add(lookUpToolkit.lookUpEntry(DATE_KEY, "Date"));
+		result.add(lookUpToolkit.lookUpEntry(DOCUMENT_KEY, "Document"));
 
 		addLookUps(result);
 		addEntityModels(result);
