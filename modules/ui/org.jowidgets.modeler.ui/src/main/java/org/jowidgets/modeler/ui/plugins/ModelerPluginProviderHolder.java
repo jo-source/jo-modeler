@@ -28,7 +28,10 @@
 
 package org.jowidgets.modeler.ui.plugins;
 
+import org.jowidgets.cap.addons.plugins.beanform.document.api.DocumentBeanFormPluginFactory;
+import org.jowidgets.cap.common.api.bean.IBeanDto;
 import org.jowidgets.cap.ui.api.plugin.IAttributePlugin;
+import org.jowidgets.cap.ui.api.plugin.IBeanFormPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanProxyLabelRendererPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuContributionPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuInterceptorPlugin;
@@ -81,6 +84,8 @@ public final class ModelerPluginProviderHolder extends PluginProviderHolder {
 
 			addAttributesPlugin(new IconAttributesPlugin(), IIcon.class);
 			addAttributesPlugin(new EntityModelAttributesPlugin(), IEntityModel.class);
+
+			addBeanFormPlugin(DocumentBeanFormPluginFactory.create(), IBeanDto.class);
 		}
 
 		private void addBeanTableMenuContributionPlugin(
@@ -109,6 +114,10 @@ public final class ModelerPluginProviderHolder extends PluginProviderHolder {
 
 		private void addBeanProxyRendererPlugin(final IBeanProxyLabelRendererPlugin<?> plugin, final Class<?> beanType) {
 			addPlugin(IBeanProxyLabelRendererPlugin.ID, plugin, IBeanProxyLabelRendererPlugin.BEAN_TYPE_PROPERTY_KEY, beanType);
+		}
+
+		private void addBeanFormPlugin(final IBeanFormPlugin plugin, final Class<?>... beanTypes) {
+			addPlugin(IBeanFormPlugin.ID, plugin, IBeanFormPlugin.BEAN_TYPE_PROPERTY_KEY, beanTypes);
 		}
 
 	}
