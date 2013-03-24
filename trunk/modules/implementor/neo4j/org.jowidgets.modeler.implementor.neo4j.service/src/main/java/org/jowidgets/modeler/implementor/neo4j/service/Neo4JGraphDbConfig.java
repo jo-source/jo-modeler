@@ -34,6 +34,7 @@ import org.jowidgets.cap.service.neo4j.api.GraphDBConfig;
 import org.jowidgets.cap.service.neo4j.api.IGraphDBConfig;
 import org.jowidgets.cap.service.neo4j.api.IGraphDBConfigBuilder;
 import org.jowidgets.cap.service.neo4j.tools.GraphDbConfigWrapper;
+import org.jowidgets.modeler.service.persistence.ModelerPersistenceUnitNames;
 
 public final class Neo4JGraphDbConfig extends GraphDbConfigWrapper {
 
@@ -46,6 +47,7 @@ public final class Neo4JGraphDbConfig extends GraphDbConfigWrapper {
 		final String rootPath = getRootPath();
 		if (rootPath != null) {
 			builder.setGraphDbService(rootPath, true);
+			builder.setBeanFactory(new Neo4JImplementorBeanFactory(ModelerPersistenceUnitNames.MODELER));
 		}
 		return builder.build();
 	}
