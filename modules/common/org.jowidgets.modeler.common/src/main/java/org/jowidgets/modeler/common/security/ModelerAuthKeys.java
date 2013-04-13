@@ -35,6 +35,8 @@ import java.util.List;
 
 public final class ModelerAuthKeys {
 
+	public static final String MODELER_ADMIN_GROUP = "MODELER_ADMIN";
+
 	//Executor services
 	public static final String EXECUTOR_MOVE_PROPERTIES_UP = "EXECUTOR_MOVE_PROPERTIES_UP";
 	public static final String EXECUTOR_MOVE_PROPERTIES_DOWN = "EXECUTOR_MOVE_PROPERTIES_DOWN";

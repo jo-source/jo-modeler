@@ -29,8 +29,8 @@
 package org.jowidgets.modeler.app.service.h2.util;
 
 import org.jowidgets.modeler.common.security.ModelerAuthKeys;
-import org.jowidgets.modeler.service.persistence.ModelerPersistenceUnitNames;
 import org.jowidgets.useradmin.service.data.UserAdminDataGenerator;
+import org.jowidgets.useradmin.service.persistence.UseradminPersistenceUnitNames;
 
 public final class ModelerDataGeneratorH2 {
 
@@ -38,8 +38,8 @@ public final class ModelerDataGeneratorH2 {
 
 	public static void main(final String[] args) {
 		new UserAdminDataGenerator().dropAndCreateData(
-				ModelerPersistenceUnitNames.MODELER,
-				"MODELER_ADMIN",
+				UseradminPersistenceUnitNames.USER_ADMIN,
+				ModelerAuthKeys.MODELER_ADMIN_GROUP,
 				ModelerAuthKeys.ALL_AUTHORIZATIONS);
 	}
 
