@@ -112,6 +112,28 @@
 								
 								<artifactItem>
 									<groupId>${project.groupId}</groupId>
+									<artifactId>org.jowidgets.modeler.starter.standalone.swt.win64.executable</artifactId>
+									<version>${project.version}</version>
+									<classifier>jar-with-dependencies</classifier>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<destFileName>modeler-swt-win64.jar</destFileName>
+									<outputDirectory>${deploy.dir}</outputDirectory>
+								</artifactItem>
+								
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>org.jowidgets.modeler.starter.standalone.swt.osx64.executable</artifactId>
+									<version>${project.version}</version>
+									<classifier>jar-with-dependencies</classifier>
+									<type>jar</type>
+									<overWrite>true</overWrite>
+									<destFileName>modeler-swt-osx64.jar</destFileName>
+									<outputDirectory>${deploy.dir}</outputDirectory>
+								</artifactItem>
+								
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
 									<artifactId>org.jowidgets.modeler.starter.standalone.swt.gtk64.executable</artifactId>
 									<version>${project.version}</version>
 									<classifier>jar-with-dependencies</classifier>
