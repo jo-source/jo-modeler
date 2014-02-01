@@ -28,13 +28,21 @@
 
 package org.jowidgets.modeler.implementor.neo4j.service;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 import org.jowidgets.cap.service.neo4j.api.GraphDBConfig;
 import org.jowidgets.cap.service.neo4j.api.IGraphDBConfig;
 import org.jowidgets.cap.service.neo4j.api.IGraphDBConfigBuilder;
 import org.jowidgets.cap.service.neo4j.tools.GraphDbConfigWrapper;
 import org.jowidgets.modeler.service.persistence.ModelerPersistenceUnitNames;
+import org.jowidgets.util.EmptyCheck;
+import org.jowidgets.util.io.IoUtils;
 
 public final class Neo4JGraphDbConfig extends GraphDbConfigWrapper {
 
@@ -44,7 +52,7 @@ public final class Neo4JGraphDbConfig extends GraphDbConfigWrapper {
 
 	private static IGraphDBConfig create() {
 		final IGraphDBConfigBuilder builder = GraphDBConfig.builder();
-		final String rootPath = getRootPath();
+		final String rootPath = getGraphDbPath();
 		if (rootPath != null) {
 			builder.setGraphDbService(rootPath, true);
 			builder.setBeanFactory(new Neo4JImplementorBeanFactory(ModelerPersistenceUnitNames.MODELER));
@@ -52,13 +60,45 @@ public final class Neo4JGraphDbConfig extends GraphDbConfigWrapper {
 		return builder.build();
 	}
 
-	private static String getRootPath() {
+	private static String getGraphDbPath() {
+		String result = getGraphDbPathFromConfig();
+		if (EmptyCheck.isEmpty(result)) {
+			result = getGraphDbPathFromUserHome();
+		}
+		return result;
+	}
+
+	private static String getGraphDbPathFromUserHome() {
 		final String userHome = System.getProperty("user.home");
 		if (userHome != null) {
 			return userHome + File.separator + ".implementor";
 		}
 		else {
 			return null;
+		}
+	}
+
+	private static String getGraphDbPathFromConfig() {
+		try {
+			final Properties dbProperties = new Properties();
+			final InputStream inputStream = getDbPropertiesAsStream();
+			dbProperties.load(inputStream);
+			IoUtils.tryCloseSilent(inputStream);
+			return (String) dbProperties.get("path");
+		}
+		catch (final IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private static InputStream getDbPropertiesAsStream() throws FileNotFoundException {
+		final String dbPropertiesFileName = "db.properties";
+		final String rootFolder = System.getProperty("org.jowidgets.modeler.implementor.path");
+		if (rootFolder != null) {
+			return new BufferedInputStream(new FileInputStream(rootFolder + "/" + dbPropertiesFileName));
+		}
+		else {
+			return Neo4JGraphDbConfig.class.getClassLoader().getResourceAsStream(dbPropertiesFileName);
 		}
 	}
 
