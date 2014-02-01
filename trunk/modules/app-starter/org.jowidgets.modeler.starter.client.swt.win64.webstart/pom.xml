@@ -1,24 +1,25 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>org.jowidgets.modeler.starter.client.swt.win.webstart</artifactId>
-	
+	<artifactId>org.jowidgets.modeler.starter.client.swt.win64.webstart</artifactId>
+
 	<parent>
 		<groupId>org.jowidgets.modeler</groupId>
 		<artifactId>org.jowidgets.modeler.starter.parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
-	
+
 	<dependencies>
-	    <dependency>
+		<dependency>
 			<groupId>org.jowidgets.modeler</groupId>
-			<artifactId>org.jowidgets.modeler.starter.client.swt.win</artifactId>
+			<artifactId>org.jowidgets.modeler.starter.client.swt.win64</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -51,12 +52,12 @@
 						</keystoreConfig>
 					</sign>
 					<jnlp>
-						<outputFile>modeler_client_swt_win.jnlp</outputFile>
-						<mainClass>org.jowidgets.modeler.starter.client.swt.win.ModelerStarterClientSwtWin</mainClass>
+						<outputFile>modeler_client_swt_win64.jnlp</outputFile>
+						<mainClass>org.jowidgets.modeler.starter.client.swt.win64.ModelerStarterClientSwtWin64</mainClass>
 					</jnlp>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>

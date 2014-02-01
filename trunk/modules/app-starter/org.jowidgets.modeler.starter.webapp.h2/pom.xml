@@ -43,6 +43,20 @@
         
         <dependency>
             <groupId>org.jowidgets.modeler</groupId>
+            <artifactId>org.jowidgets.modeler.starter.client.swt.win64.webstart</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jowidgets.modeler</groupId>
+            <artifactId>org.jowidgets.modeler.starter.client.swt.osx64.webstart</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jowidgets.modeler</groupId>
             <artifactId>org.jowidgets.modeler.starter.client.swt.gtk64.webstart</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>provided</scope>
@@ -97,6 +111,18 @@
 								<artifactItem>
                                     <groupId>org.jowidgets.modeler</groupId>
                                     <artifactId>org.jowidgets.modeler.starter.client.swt.win.webstart</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.jowidgets.modeler</groupId>
+                                    <artifactId>org.jowidgets.modeler.starter.client.swt.win64.webstart</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.jowidgets.modeler</groupId>
+                                    <artifactId>org.jowidgets.modeler.starter.client.swt.osx64.webstart</artifactId>
                                     <version>${project.version}</version>
                                     <type>zip</type>
                                 </artifactItem>
