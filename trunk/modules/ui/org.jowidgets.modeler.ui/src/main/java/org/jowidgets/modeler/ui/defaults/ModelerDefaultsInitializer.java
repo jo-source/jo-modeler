@@ -59,6 +59,7 @@ public final class ModelerDefaultsInitializer {
 			@Override
 			public void initialize(final IBeanTableBluePrint<?> bluePrint) {
 				bluePrint.setAutoPackPolicy(AutoPackPolicy.ONCE);
+				bluePrint.setSearchFilterToolbarVisible(true);
 			}
 		});
 
