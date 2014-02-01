@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.starter.webapp.rwt.common;
+package org.jowidgets.modeler.starter.webapp.rwt.legacy.common;
 
 import org.eclipse.rwt.branding.AbstractBranding;
 

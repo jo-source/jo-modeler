@@ -28,6 +28,8 @@
 		<module>../org.jowidgets.modeler.starter.webapp.h2</module>
 		<module>../org.jowidgets.modeler.starter.webapp.rwt.common</module>
 		<module>../org.jowidgets.modeler.starter.webapp.rwt.h2</module>
+		<module>../org.jowidgets.modeler.starter.webapp.rwt.legacy.common</module>
+		<module>../org.jowidgets.modeler.starter.webapp.rwt.legacy.h2</module>
 		<module>../org.jowidgets.modeler.starter.standalone.common</module>
 		<module>../org.jowidgets.modeler.starter.standalone.swing</module>
 		<module>../org.jowidgets.modeler.starter.standalone.swing.webstart</module>

@@ -70,6 +70,16 @@
 
 								<artifactItem>
 									<groupId>${project.groupId}</groupId>
+									<artifactId>org.jowidgets.modeler.starter.webapp.rwt.legacy.h2</artifactId>
+									<version>${project.version}</version>
+									<type>war</type>
+									<overWrite>true</overWrite>
+									<destFileName>modeler-h2-web-legacy.war</destFileName>
+									<outputDirectory>${deploy.dir}</outputDirectory>
+								</artifactItem>
+								
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
 									<artifactId>org.jowidgets.modeler.starter.webapp.rwt.h2</artifactId>
 									<version>${project.version}</version>
 									<type>war</type>
