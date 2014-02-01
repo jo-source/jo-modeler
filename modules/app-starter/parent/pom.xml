@@ -19,6 +19,10 @@
 		<module>../org.jowidgets.modeler.starter.client.swt.common</module>
 		<module>../org.jowidgets.modeler.starter.client.swt.win</module>
 		<module>../org.jowidgets.modeler.starter.client.swt.win.webstart</module>
+		<module>../org.jowidgets.modeler.starter.client.swt.win64</module>
+		<module>../org.jowidgets.modeler.starter.client.swt.win64.webstart</module>	
+		<module>../org.jowidgets.modeler.starter.client.swt.osx64</module>
+		<module>../org.jowidgets.modeler.starter.client.swt.osx64.webstart</module>	
 		<module>../org.jowidgets.modeler.starter.client.swt.gtk64</module>
 		<module>../org.jowidgets.modeler.starter.client.swt.gtk64.webstart</module>
 		<module>../org.jowidgets.modeler.starter.webapp.h2</module>
