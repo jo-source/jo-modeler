@@ -16,6 +16,10 @@
 		<module>../org.jowidgets.modeler.starter.client.common</module>
 		<module>../org.jowidgets.modeler.starter.client.swing</module>
 		<module>../org.jowidgets.modeler.starter.client.swing.webstart</module>
+		<module>../org.jowidgets.modeler.starter.client.swing.win</module>
+		<module>../org.jowidgets.modeler.starter.client.swing.win.webstart</module>
+		<module>../org.jowidgets.modeler.starter.client.swing.win64</module>
+		<module>../org.jowidgets.modeler.starter.client.swing.win64.webstart</module>
 		<module>../org.jowidgets.modeler.starter.client.swt.common</module>
 		<module>../org.jowidgets.modeler.starter.client.swt.win</module>
 		<module>../org.jowidgets.modeler.starter.client.swt.win.webstart</module>

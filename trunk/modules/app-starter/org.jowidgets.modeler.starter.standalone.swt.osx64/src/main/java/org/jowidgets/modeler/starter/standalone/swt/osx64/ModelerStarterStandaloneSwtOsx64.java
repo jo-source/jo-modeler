@@ -31,6 +31,7 @@ package org.jowidgets.modeler.starter.standalone.swt.osx64;
 import org.jowidgets.modeler.app.ui.workbench.ModelerWorkbench;
 import org.jowidgets.spi.impl.swt.common.options.SplitlayoutMode;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
+import org.jowidgets.tools.osx.OsxMainThreadExecutor;
 import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class ModelerStarterStandaloneSwtOsx64 {
@@ -38,10 +39,15 @@ public final class ModelerStarterStandaloneSwtOsx64 {
 	private ModelerStarterStandaloneSwtOsx64() {}
 
 	public static void main(final String[] args) throws Exception {
-		SwtOptions.setClassicTabs(true);
-		SwtOptions.setSplitLayoutMode(SplitlayoutMode.ON_MOUSE_RELEASE);
-		new WorkbenchRunner().run(new ModelerWorkbench(false, false));
-		System.exit(0);
+		OsxMainThreadExecutor.runAppInOsxMainThread(new Runnable() {
+			@Override
+			public void run() {
+				SwtOptions.setClassicTabs(true);
+				SwtOptions.setSplitLayoutMode(SplitlayoutMode.ON_MOUSE_RELEASE);
+				new WorkbenchRunner().run(new ModelerWorkbench(false, false));
+				System.exit(0);
+			}
+		});
 	}
 
 }

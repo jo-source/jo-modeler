@@ -69,6 +69,20 @@
 			<scope>provided</scope>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.jowidgets.modeler</groupId>
+			<artifactId>org.jowidgets.modeler.starter.client.swing.win.webstart</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jowidgets.modeler</groupId>
+			<artifactId>org.jowidgets.modeler.starter.client.swing.win64.webstart</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
@@ -114,6 +128,18 @@
 								<artifactItem>
 									<groupId>org.jowidgets.modeler</groupId>
 									<artifactId>org.jowidgets.modeler.starter.client.swing.webstart</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.jowidgets.modeler</groupId>
+									<artifactId>org.jowidgets.modeler.starter.client.swing.win.webstart</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.jowidgets.modeler</groupId>
+									<artifactId>org.jowidgets.modeler.starter.client.swing.win64.webstart</artifactId>
 									<version>${project.version}</version>
 									<type>zip</type>
 								</artifactItem>

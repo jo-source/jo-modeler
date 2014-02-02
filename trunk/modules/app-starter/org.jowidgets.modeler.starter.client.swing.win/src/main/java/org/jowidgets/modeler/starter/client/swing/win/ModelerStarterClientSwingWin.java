@@ -26,28 +26,22 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.starter.client.swt.osx64;
+package org.jowidgets.modeler.starter.client.swing.win;
 
-import org.jowidgets.modeler.app.ui.workbench.ModelerWorkbench;
-import org.jowidgets.spi.impl.swt.common.options.SplitlayoutMode;
-import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
-import org.jowidgets.tools.osx.OsxMainThreadExecutor;
-import org.jowidgets.workbench.impl.WorkbenchRunner;
+import javax.swing.UIManager;
 
-public final class ModelerStarterClientSwtOsx64 {
+import org.jowidgets.modeler.starter.client.common.ModelerStarterClient;
+import org.jowidgets.spi.impl.swing.common.options.SwingOptions;
 
-	private ModelerStarterClientSwtOsx64() {}
+public final class ModelerStarterClientSwingWin {
+
+	private ModelerStarterClientSwingWin() {}
 
 	public static void main(final String[] args) throws Exception {
-		OsxMainThreadExecutor.runAppInOsxMainThread(new Runnable() {
-			@Override
-			public void run() {
-				SwtOptions.setClassicTabs(true);
-				SwtOptions.setSplitLayoutMode(SplitlayoutMode.ON_MOUSE_RELEASE);
-				new WorkbenchRunner().run(new ModelerWorkbench(false, false));
-				System.exit(0);
-			}
-		});
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		SwingOptions.setJoWidgetsTabLayout(true);
+		ModelerStarterClient.startClient();
+		System.exit(0);
 	}
 
 }
