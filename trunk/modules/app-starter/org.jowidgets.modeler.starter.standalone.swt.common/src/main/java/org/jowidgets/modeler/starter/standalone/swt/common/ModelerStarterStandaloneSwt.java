@@ -29,6 +29,7 @@
 package org.jowidgets.modeler.starter.standalone.swt.common;
 
 import org.jowidgets.modeler.app.ui.workbench.ModelerWorkbench;
+import org.jowidgets.spi.impl.swt.common.options.SplitlayoutMode;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.workbench.impl.WorkbenchRunner;
 
@@ -38,6 +39,7 @@ public final class ModelerStarterStandaloneSwt {
 
 	public static void startClient() {
 		SwtOptions.setClassicTabs(true);
+		SwtOptions.setSplitLayoutMode(SplitlayoutMode.ON_MOUSE_RELEASE);
 		new WorkbenchRunner().run(new ModelerWorkbench());
 		System.exit(0);
 	}
