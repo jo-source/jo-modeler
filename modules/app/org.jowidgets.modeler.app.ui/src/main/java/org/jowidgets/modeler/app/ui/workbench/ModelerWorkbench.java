@@ -52,13 +52,15 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 public final class ModelerWorkbench implements IWorkbenchFactory {
 
 	private final boolean rwt;
+	private final boolean autoCompletionCombos;
 
 	public ModelerWorkbench() {
-		this(false);
+		this(false, true);
 	}
 
-	public ModelerWorkbench(final boolean rwt) {
+	public ModelerWorkbench(final boolean rwt, final boolean autoCompletionCombos) {
 		this.rwt = rwt;
+		this.autoCompletionCombos = autoCompletionCombos;
 	}
 
 	@Override
@@ -68,7 +70,7 @@ public final class ModelerWorkbench implements IWorkbenchFactory {
 		SLF4JBridgeHandler.install();
 
 		ModelerSilkIconsInitializer.initialize();
-		ModelerDefaultsInitializer.initialize();
+		ModelerDefaultsInitializer.initialize(autoCompletionCombos);
 
 		LookupInitializer.initializeLookupsAsync();
 

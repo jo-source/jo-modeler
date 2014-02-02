@@ -35,7 +35,7 @@ public final class ModelerRwtEntryPoint extends CapRwtEntryPoint {
 	//StartUrl: http://127.0.0.1:8080/modeler-xxxx-web/Modeler   
 	//where xxxx is the db, e.g. h2, oracle, ...
 	public ModelerRwtEntryPoint() {
-		super(new ModelerWorkbench(true));
+		super(new ModelerWorkbench(true, false));
 	}
 
 }

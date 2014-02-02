@@ -14,8 +14,20 @@
 	
 		<dependency>
 			<groupId>org.jowidgets.modeler</groupId>
-			<artifactId>org.jowidgets.modeler.starter.standalone.swt.common</artifactId>
+			<artifactId>org.jowidgets.modeler.starter.standalone.common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+            <groupId>org.jowidgets</groupId>
+            <artifactId>org.jowidgets.addons.widgets.browser.impl.swt</artifactId>
+            <version>${jowidgets.version}</version>
+        </dependency>
+		
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.spi.impl.swt</artifactId>
+			<version>${jowidgets.version}</version>
 		</dependency>
 		
 		<dependency>

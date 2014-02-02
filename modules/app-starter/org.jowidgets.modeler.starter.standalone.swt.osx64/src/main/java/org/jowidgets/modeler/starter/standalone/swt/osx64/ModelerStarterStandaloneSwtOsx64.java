@@ -28,14 +28,18 @@
 
 package org.jowidgets.modeler.starter.standalone.swt.osx64;
 
-import org.jowidgets.modeler.starter.standalone.swt.common.ModelerStarterStandaloneSwt;
+import org.jowidgets.modeler.app.ui.workbench.ModelerWorkbench;
+import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
+import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class ModelerStarterStandaloneSwtOsx64 {
 
 	private ModelerStarterStandaloneSwtOsx64() {}
 
 	public static void main(final String[] args) throws Exception {
-		ModelerStarterStandaloneSwt.startClient();
+		SwtOptions.setClassicTabs(true);
+		new WorkbenchRunner().run(new ModelerWorkbench(false, false));
+		System.exit(0);
 	}
 
 }
