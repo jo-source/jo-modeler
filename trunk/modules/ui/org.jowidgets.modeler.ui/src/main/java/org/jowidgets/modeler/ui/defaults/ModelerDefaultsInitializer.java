@@ -29,6 +29,7 @@
 package org.jowidgets.modeler.ui.defaults;
 
 import org.jowidgets.api.types.AutoPackPolicy;
+import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ITableSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.cap.ui.api.control.InputControlSupportRegistry;
@@ -48,12 +49,21 @@ public final class ModelerDefaultsInitializer {
 
 	private ModelerDefaultsInitializer() {}
 
-	public static void initialize() {
+	public static void initialize(final boolean autoCompletionCombos) {
 
 		ImageResolver.register(IconDescriptor.class, new IconDescriptorResolver());
 		ImageResolver.register(ModelerIconsCommon.class, new ModelerIconsCommonResolver());
 
 		InputControlSupportRegistry.setControl(IconDescriptor.class, IconDescriptorControlProvider.create());
+
+		BPF.addDefaultsInitializer(
+				IComboBoxSelectionSetupBuilder.class,
+				new IDefaultInitializer<IComboBoxSelectionSetupBuilder<?, ?>>() {
+					@Override
+					public void initialize(final IComboBoxSelectionSetupBuilder<?, ?> setupBuilder) {
+						setupBuilder.setAutoCompletion(autoCompletionCombos);
+					}
+				});
 
 		BPF.addDefaultsInitializer(IBeanTableBluePrint.class, new IDefaultInitializer<IBeanTableBluePrint<?>>() {
 			@Override
