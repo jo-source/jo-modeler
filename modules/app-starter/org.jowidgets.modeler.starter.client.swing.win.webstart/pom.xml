@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>org.jowidgets.modeler.starter.client.swing.win.webstart</artifactId>
+	
+	<parent>
+		<groupId>org.jowidgets.modeler</groupId>
+		<artifactId>org.jowidgets.modeler.starter.parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
+	
+	<dependencies>
+	    <dependency>
+			<groupId>org.jowidgets.modeler</groupId>
+			<artifactId>org.jowidgets.modeler.starter.client.swing.win</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>webstart-maven-plugin</artifactId>
+				<version>1.0-beta-6</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jnlp-inline</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<updateManifestEntries>
+						<Application-Name>jo-modeler</Application-Name>
+						<Permissions>all-permissions</Permissions>
+						<Codebase>*</Codebase>
+					</updateManifestEntries>
+					<sign>
+						<keystore>${basedir}/keystore</keystore>
+						<keypass>keystore</keypass>
+						<storepass>keystore</storepass>
+						<alias>key</alias>
+						<verify>true</verify>
+						<keystoreConfig>
+							<delete>false</delete>
+							<gen>false</gen>
+						</keystoreConfig>
+					</sign>
+					<jnlp>
+						<outputFile>modeler_client_swing_win.jnlp</outputFile>
+						<mainClass>org.jowidgets.modeler.starter.client.swing.win.ModelerStarterClientSwingWin</mainClass>
+					</jnlp>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>

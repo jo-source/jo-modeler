@@ -31,7 +31,6 @@ package org.jowidgets.modeler.starter.client.swing;
 import javax.swing.UIManager;
 
 import org.jowidgets.modeler.starter.client.common.ModelerStarterClient;
-import org.jowidgets.spi.impl.swing.common.options.SwingOptions;
 
 public final class ModelerStarterClientSwing {
 
@@ -40,7 +39,6 @@ public final class ModelerStarterClientSwing {
 	public static void main(final String[] args) throws Exception {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		SwingOptions.setJoWidgetsTabLayout(true);
 		ModelerStarterClient.startClient();
 		System.exit(0);
 	}
