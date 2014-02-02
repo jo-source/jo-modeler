@@ -29,6 +29,7 @@
 package org.jowidgets.modeler.starter.client.swt.common;
 
 import org.jowidgets.modeler.starter.client.common.ModelerStarterClient;
+import org.jowidgets.spi.impl.swt.common.options.SplitlayoutMode;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 
 public final class ModelerStarterClientSwt {
@@ -37,6 +38,7 @@ public final class ModelerStarterClientSwt {
 
 	public static void startClient() {
 		SwtOptions.setClassicTabs(true);
+		SwtOptions.setSplitLayoutMode(SplitlayoutMode.ON_MOUSE_RELEASE);
 		ModelerStarterClient.startClient();
 		System.exit(0);
 	}
