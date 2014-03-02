@@ -40,6 +40,7 @@ public final class ModelerStarterClientSwingWin {
 	public static void main(final String[] args) throws Exception {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		SwingOptions.setJoWidgetsTabLayout(true);
+		SwingOptions.setDefaultTableTransferHandler(false);
 		ModelerStarterClient.startClient();
 		System.exit(0);
 	}

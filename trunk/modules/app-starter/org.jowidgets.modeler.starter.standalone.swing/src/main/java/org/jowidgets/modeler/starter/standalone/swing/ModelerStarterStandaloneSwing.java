@@ -42,6 +42,7 @@ public final class ModelerStarterStandaloneSwing {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		SwingOptions.setJoWidgetsTabLayout(true);
+		SwingOptions.setDefaultTableTransferHandler(false);
 		new WorkbenchRunner().run(new ModelerWorkbench());
 		System.exit(0);
 	}
