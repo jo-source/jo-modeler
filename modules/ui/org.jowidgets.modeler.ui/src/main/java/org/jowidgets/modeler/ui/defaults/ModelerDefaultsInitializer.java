@@ -70,6 +70,8 @@ public final class ModelerDefaultsInitializer {
 			public void initialize(final IBeanTableBluePrint<?> bluePrint) {
 				bluePrint.setAutoPackPolicy(AutoPackPolicy.ONCE);
 				bluePrint.setSearchFilterToolbarVisible(true);
+				bluePrint.setDefaultCopyAction(true);
+				bluePrint.setDefaultPasteAction(true);
 			}
 		});
 
