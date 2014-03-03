@@ -41,6 +41,7 @@ public final class ModelerStarterClientSwingWin64 {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		SwingOptions.setJoWidgetsTabLayout(true);
 		SwingOptions.setDefaultTableTransferHandler(false);
+		SwingOptions.setDefaultTreeTransferHandler(false);
 		ModelerStarterClient.startClient();
 		System.exit(0);
 	}

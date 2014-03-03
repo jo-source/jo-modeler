@@ -93,6 +93,8 @@ public final class ModelerDefaultsInitializer {
 			@Override
 			public void initialize(final IBeanRelationTreeBluePrint<?> bluePrint) {
 				bluePrint.setRelationRenderingPolicy(RelationRenderingPolicy.GREY_EMPTY_RELATIONS);
+				bluePrint.setDefaultCopyAction(true);
+				bluePrint.setDefaultLinkPasteAction(true);
 			}
 		});
 	}

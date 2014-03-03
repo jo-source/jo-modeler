@@ -43,6 +43,7 @@ public final class ModelerStarterStandaloneSwing {
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		SwingOptions.setJoWidgetsTabLayout(true);
 		SwingOptions.setDefaultTableTransferHandler(false);
+		SwingOptions.setDefaultTreeTransferHandler(false);
 		new WorkbenchRunner().run(new ModelerWorkbench());
 		System.exit(0);
 	}
