@@ -41,6 +41,7 @@ public final class ModelerStarterClientSwing {
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		SwingOptions.setDefaultTableTransferHandler(false);
+		SwingOptions.setDefaultTreeTransferHandler(false);
 		ModelerStarterClient.startClient();
 		System.exit(0);
 	}
