@@ -66,7 +66,7 @@ final class EntityModelDtoDescriptorBuilder {
 		final Collection<ISort> defaultSorting = Collections.emptyList();
 		final Collection<IBeanValidator<?>> beanValidators = Collections.emptyList();
 
-		final IBeanDtoDescriptorBuilder builder = CapCommonToolkit.dtoDescriptorBuilder();
+		final IBeanDtoDescriptorBuilder builder = CapCommonToolkit.dtoDescriptorBuilder(entityModel.getName());
 		builder.setProperties(properties);
 		builder.setValidators(beanValidators);
 		builder.setDefaultSorting(defaultSorting);
