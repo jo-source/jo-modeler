@@ -33,11 +33,13 @@ import org.jowidgets.cap.common.api.bean.IBeanDto;
 import org.jowidgets.cap.ui.api.plugin.IAttributePlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanFormPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanProxyLabelRendererPlugin;
+import org.jowidgets.cap.ui.api.plugin.IBeanProxyPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuContributionPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuInterceptorPlugin;
 import org.jowidgets.cap.ui.api.plugin.IEntityComponentMasterTableViewPlugin;
 import org.jowidgets.cap.ui.api.plugin.IEntityComponentRelationTreeDetailViewPlugin;
 import org.jowidgets.cap.ui.api.plugin.IEntityComponentRelationTreeViewPlugin;
+import org.jowidgets.cap.ui.tools.plugin.BeanMessagePopupPlugin;
 import org.jowidgets.cap.ui.tools.workbench.EntityComponentMasterTableToolBarPlugin;
 import org.jowidgets.cap.ui.tools.workbench.EntityComponentRelationTreeDetailToolBarPlugin;
 import org.jowidgets.cap.ui.tools.workbench.EntityComponentRelationTreeToolBarPlugin;
@@ -86,6 +88,8 @@ public final class ModelerPluginProviderHolder extends PluginProviderHolder {
 			addAttributesPlugin(new EntityModelAttributesPlugin(), IEntityModel.class);
 
 			addBeanFormPlugin(DocumentBeanFormPluginFactory.create(), IBeanDto.class);
+
+			addPlugin(IBeanProxyPlugin.ID, new BeanMessagePopupPlugin());
 		}
 
 		private void addBeanTableMenuContributionPlugin(
