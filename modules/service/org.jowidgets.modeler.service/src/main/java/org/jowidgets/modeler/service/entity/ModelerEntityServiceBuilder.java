@@ -150,8 +150,7 @@ public final class ModelerEntityServiceBuilder extends JpaEntityServiceBuilderWr
 
 	private void addEntityPropertyModelLinkDescriptor(final IBeanEntityBluePrint entityBp) {
 		final IBeanEntityLinkBluePrint bp = entityBp.addLink();
-		bp.setLinkEntityId(EntityIds.LINKED_ENTITY_PROPERTY_MODEL_OF_ENTITY_MODEL);
-		bp.setLinkBeanType(EntityPropertyModel.class);
+		bp.setLinkEntityId(EntityIds.ENTITY_PROPERTY_MODEL);
 		bp.setLinkedEntityId(EntityIds.LINKED_ENTITY_PROPERTY_MODEL_OF_ENTITY_MODEL);
 		bp.setSourceProperties(EntityPropertyModel.PARENT_MODEL_ID_PROPERTY);
 		bp.setLinkDeleterService(null);
