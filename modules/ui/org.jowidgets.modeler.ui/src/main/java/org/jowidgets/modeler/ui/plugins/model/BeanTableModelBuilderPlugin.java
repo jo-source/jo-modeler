@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,23 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.modeler.starter.standalone.swt.common;
+package org.jowidgets.modeler.ui.plugins.model;
 
-import org.jowidgets.modeler.app.ui.workbench.ModelerWorkbench;
-import org.jowidgets.spi.impl.swt.common.options.SplitlayoutMode;
-import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
-import org.jowidgets.workbench.impl.WorkbenchRunner;
+import org.jowidgets.cap.ui.api.plugin.IBeanTableModelBuilderPlugin;
+import org.jowidgets.cap.ui.api.table.IBeanTableModelBuilder;
 
-public final class ModelerStarterStandaloneSwt {
+public final class BeanTableModelBuilderPlugin implements IBeanTableModelBuilderPlugin<Object> {
 
-	private ModelerStarterStandaloneSwt() {}
-
-	public static void startClient() {
-		SwtOptions.setClassicTabs(true);
-		SwtOptions.setSplitLayoutMode(SplitlayoutMode.ON_MOUSE_RELEASE);
-		SwtOptions.setClassicTableSelectionColors();
-		new WorkbenchRunner().run(new ModelerWorkbench());
-		System.exit(0);
+	@Override
+	public void modify(final IBeanTableModelBuilder<Object> builder) {
+		builder.setLastBeanEnabled(true);
 	}
 
 }
