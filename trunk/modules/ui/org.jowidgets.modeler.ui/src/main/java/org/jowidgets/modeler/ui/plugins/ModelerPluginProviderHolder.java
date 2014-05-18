@@ -36,6 +36,7 @@ import org.jowidgets.cap.ui.api.plugin.IBeanProxyLabelRendererPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanProxyPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuContributionPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuInterceptorPlugin;
+import org.jowidgets.cap.ui.api.plugin.IBeanTableModelBuilderPlugin;
 import org.jowidgets.cap.ui.api.plugin.IEntityComponentMasterTableViewPlugin;
 import org.jowidgets.cap.ui.api.plugin.IEntityComponentRelationTreeDetailViewPlugin;
 import org.jowidgets.cap.ui.api.plugin.IEntityComponentRelationTreeViewPlugin;
@@ -54,6 +55,7 @@ import org.jowidgets.modeler.ui.plugins.attribute.IconAttributesPlugin;
 import org.jowidgets.modeler.ui.plugins.bean.EntityModelRendererPlugin;
 import org.jowidgets.modeler.ui.plugins.bean.IconRendererPlugin;
 import org.jowidgets.modeler.ui.plugins.bean.LookUpElementRendererPlugin;
+import org.jowidgets.modeler.ui.plugins.model.BeanTableModelBuilderPlugin;
 import org.jowidgets.modeler.ui.plugins.table.IconSetMenuContributionPlugin;
 import org.jowidgets.modeler.ui.plugins.table.PropertyModelMenuContributionPlugin;
 import org.jowidgets.modeler.ui.plugins.table.PropertyModelMenuInterceptorPlugin;
@@ -70,6 +72,8 @@ public final class ModelerPluginProviderHolder extends PluginProviderHolder {
 
 		public ModelerPluginProviderBuilder() {
 			addPlugin(IAttributePlugin.ID, new GlobalModelerAttributesPlugin());
+
+			addPlugin(IBeanTableModelBuilderPlugin.ID, new BeanTableModelBuilderPlugin());
 
 			addPlugin(IEntityComponentMasterTableViewPlugin.ID, new EntityComponentMasterTableToolBarPlugin());
 			addPlugin(IEntityComponentRelationTreeViewPlugin.ID, new EntityComponentRelationTreeToolBarPlugin());

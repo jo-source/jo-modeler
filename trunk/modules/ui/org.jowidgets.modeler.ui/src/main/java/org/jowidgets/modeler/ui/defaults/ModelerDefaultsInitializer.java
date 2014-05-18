@@ -72,6 +72,7 @@ public final class ModelerDefaultsInitializer {
 				bluePrint.setSearchFilterToolbarVisible(true);
 				bluePrint.setDefaultCopyAction(true);
 				bluePrint.setDefaultPasteAction(true);
+				bluePrint.setEditable(true);
 			}
 		});
 
@@ -85,7 +86,7 @@ public final class ModelerDefaultsInitializer {
 		BPF.addDefaultsInitializer(ITableSetupBuilder.class, new IDefaultInitializer<ITableSetupBuilder<?>>() {
 			@Override
 			public void initialize(final ITableSetupBuilder<?> setupBuilder) {
-				setupBuilder.setEditable(false);
+				setupBuilder.setEditable(true);
 			}
 		});
 
