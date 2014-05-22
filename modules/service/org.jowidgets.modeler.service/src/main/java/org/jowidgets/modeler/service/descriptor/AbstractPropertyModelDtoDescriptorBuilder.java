@@ -50,6 +50,7 @@ public abstract class AbstractPropertyModelDtoDescriptorBuilder extends Abstract
 		IBeanPropertyBluePrint propertyBp = addProperty(IPropertyModel.ORDER_PROPERTY);
 		propertyBp.setLabel(getMessage("order.label"));
 		propertyBp.setDescription(getMessage("order.description"));
+		propertyBp.setEditable(false);
 
 		propertyBp = addProperty(IPropertyModel.NAME_PROPERTY);
 		propertyBp.setLabel(getMessage("name.label"));

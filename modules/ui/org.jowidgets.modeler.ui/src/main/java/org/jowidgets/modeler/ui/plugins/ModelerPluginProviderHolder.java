@@ -34,6 +34,7 @@ import org.jowidgets.cap.ui.api.plugin.IAttributePlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanFormPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanProxyLabelRendererPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanProxyPlugin;
+import org.jowidgets.cap.ui.api.plugin.IBeanRelationTreeDetailPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanRelationTreePlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuContributionPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuInterceptorPlugin;
@@ -63,6 +64,7 @@ import org.jowidgets.modeler.ui.plugins.table.DisableCopyPasteTableMenuIntercept
 import org.jowidgets.modeler.ui.plugins.table.IconSetMenuContributionPlugin;
 import org.jowidgets.modeler.ui.plugins.table.PropertyModelMenuContributionPlugin;
 import org.jowidgets.modeler.ui.plugins.table.PropertyModelMenuInterceptorPlugin;
+import org.jowidgets.modeler.ui.plugins.tree.DisableCopyPasteTreeDetailMenuInterceptorPlugin;
 import org.jowidgets.modeler.ui.plugins.tree.DisableCopyPasteTreeMenuInterceptorPlugin;
 import org.jowidgets.modeler.ui.plugins.tree.DisableDeleteTreeMenuInterceptorPlugin;
 import org.jowidgets.plugin.tools.PluginProviderBuilder;
@@ -109,6 +111,14 @@ public final class ModelerPluginProviderHolder extends PluginProviderHolder {
 					IIcon.class,
 					IIconSet.class);
 
+			addBeanRelationTreeDetailPlugin(
+					new DisableCopyPasteTreeDetailMenuInterceptorPlugin(),
+					IEntityModel.class,
+					IRelationModel.class,
+					ILookUp.class,
+					IIcon.class,
+					IIconSet.class);
+
 			addBeanRelationTreePlugin(new DisableDeleteTreeMenuInterceptorPlugin(), IRelationModel.class);
 
 			addAttributesPlugin(new IconAttributesPlugin(), IIcon.class);
@@ -141,6 +151,10 @@ public final class ModelerPluginProviderHolder extends PluginProviderHolder {
 
 		private void addBeanRelationTreePlugin(final IBeanRelationTreePlugin<?> plugin, final Class<?>... beanTypes) {
 			addPlugin(IBeanRelationTreePlugin.ID, plugin, IBeanRelationTreePlugin.BEAN_TYPE_PROPERTY_KEY, beanTypes);
+		}
+
+		private void addBeanRelationTreeDetailPlugin(final IBeanRelationTreeDetailPlugin<?> plugin, final Class<?>... beanTypes) {
+			addPlugin(IBeanRelationTreeDetailPlugin.ID, plugin, IBeanRelationTreeDetailPlugin.BEAN_TYPE_PROPERTY_KEY, beanTypes);
 		}
 
 		private void addAttributesPlugin(final IAttributePlugin plugin, final Class<?>... beanTypes) {
