@@ -28,35 +28,16 @@
 
 package org.jowidgets.modeler.ui.plugins.tree;
 
-import org.jowidgets.cap.ui.api.command.ICopyActionBuilder;
-import org.jowidgets.cap.ui.api.command.IPasteLinkActionBuilder;
-import org.jowidgets.cap.ui.api.plugin.IBeanRelationTreeDetailPlugin;
-import org.jowidgets.cap.ui.api.widgets.IBeanRelationTreeDetailBluePrint;
-import org.jowidgets.cap.ui.api.widgets.IBeanTable;
-import org.jowidgets.cap.ui.tools.tree.BeanRelationTreeDetailMenuInterceptorAdapter;
+import org.jowidgets.cap.ui.api.plugin.IBeanRelationTreePlugin;
+import org.jowidgets.cap.ui.api.widgets.IBeanRelationTreeBluePrint;
 import org.jowidgets.plugin.api.IPluginProperties;
 
-public final class DisableCopyPasteTreeDetailMenuInterceptorPlugin implements IBeanRelationTreeDetailPlugin<Object> {
+public class DisableCopyPasteBeanRelationTreePlugin implements IBeanRelationTreePlugin<Object> {
 
 	@Override
-	public void modifySetup(final IPluginProperties properties, final IBeanRelationTreeDetailBluePrint<Object> builder) {
-		builder.addMenuInterceptor(new BeanRelationTreeDetailMenuInterceptorAdapter() {
-
-			@Override
-			public IPasteLinkActionBuilder<Object, Object, Object> pasteLinkActionBuilder(
-				final IBeanTable<Object> table,
-				final IPasteLinkActionBuilder<Object, Object, Object> builder) {
-				return null;
-			}
-
-			@Override
-			public ICopyActionBuilder<Object> copyActionBuilder(
-				final IBeanTable<Object> table,
-				final ICopyActionBuilder<Object> builder) {
-				return null;
-			}
-
-		});
+	public void modifySetup(final IPluginProperties properties, final IBeanRelationTreeBluePrint<Object> builder) {
+		builder.setDefaultCopyAction(false);
+		builder.setDefaultLinkPasteAction(false);
 	}
 
 }

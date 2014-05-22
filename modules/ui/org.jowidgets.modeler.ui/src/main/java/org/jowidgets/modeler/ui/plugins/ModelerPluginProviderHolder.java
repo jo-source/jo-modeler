@@ -64,9 +64,9 @@ import org.jowidgets.modeler.ui.plugins.table.DisableCopyPasteTableMenuIntercept
 import org.jowidgets.modeler.ui.plugins.table.IconSetMenuContributionPlugin;
 import org.jowidgets.modeler.ui.plugins.table.PropertyModelMenuContributionPlugin;
 import org.jowidgets.modeler.ui.plugins.table.PropertyModelMenuInterceptorPlugin;
-import org.jowidgets.modeler.ui.plugins.tree.DisableCopyPasteTreeDetailMenuInterceptorPlugin;
-import org.jowidgets.modeler.ui.plugins.tree.DisableCopyPasteTreeMenuInterceptorPlugin;
-import org.jowidgets.modeler.ui.plugins.tree.DisableDeleteTreeMenuInterceptorPlugin;
+import org.jowidgets.modeler.ui.plugins.tree.DisableCopyPasteBeanRelationTreeDetailPlugin;
+import org.jowidgets.modeler.ui.plugins.tree.DisableCopyPasteBeanRelationTreePlugin;
+import org.jowidgets.modeler.ui.plugins.tree.DisableDeleteBeanRelationTreePlugin;
 import org.jowidgets.plugin.tools.PluginProviderBuilder;
 import org.jowidgets.plugin.tools.PluginProviderHolder;
 
@@ -104,7 +104,7 @@ public final class ModelerPluginProviderHolder extends PluginProviderHolder {
 					IIconSet.class);
 
 			addBeanRelationTreePlugin(
-					new DisableCopyPasteTreeMenuInterceptorPlugin(),
+					new DisableCopyPasteBeanRelationTreePlugin(),
 					IEntityModel.class,
 					IRelationModel.class,
 					ILookUp.class,
@@ -112,14 +112,14 @@ public final class ModelerPluginProviderHolder extends PluginProviderHolder {
 					IIconSet.class);
 
 			addBeanRelationTreeDetailPlugin(
-					new DisableCopyPasteTreeDetailMenuInterceptorPlugin(),
+					new DisableCopyPasteBeanRelationTreeDetailPlugin(),
 					IEntityModel.class,
 					IRelationModel.class,
 					ILookUp.class,
 					IIcon.class,
 					IIconSet.class);
 
-			addBeanRelationTreePlugin(new DisableDeleteTreeMenuInterceptorPlugin(), IRelationModel.class);
+			addBeanRelationTreePlugin(new DisableDeleteBeanRelationTreePlugin(), IRelationModel.class);
 
 			addAttributesPlugin(new IconAttributesPlugin(), IIcon.class);
 			addAttributesPlugin(new EntityModelAttributesPlugin(), IEntityModel.class);
