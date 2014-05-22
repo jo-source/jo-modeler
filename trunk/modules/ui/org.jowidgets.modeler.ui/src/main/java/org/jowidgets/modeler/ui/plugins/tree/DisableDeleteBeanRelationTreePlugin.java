@@ -28,27 +28,15 @@
 
 package org.jowidgets.modeler.ui.plugins.tree;
 
-import org.jowidgets.cap.ui.api.command.IDeleterActionBuilder;
 import org.jowidgets.cap.ui.api.plugin.IBeanRelationTreePlugin;
-import org.jowidgets.cap.ui.api.tree.IBeanRelationNodeModel;
 import org.jowidgets.cap.ui.api.widgets.IBeanRelationTreeBluePrint;
-import org.jowidgets.cap.ui.tools.tree.BeanRelationTreeMenuInterceptorAdapter;
 import org.jowidgets.plugin.api.IPluginProperties;
 
-public class DisableDeleteTreeMenuInterceptorPlugin implements IBeanRelationTreePlugin<Object> {
+public class DisableDeleteBeanRelationTreePlugin implements IBeanRelationTreePlugin<Object> {
 
 	@Override
 	public void modifySetup(final IPluginProperties properties, final IBeanRelationTreeBluePrint<Object> builder) {
-		builder.addMenuInterceptor(new BeanRelationTreeMenuInterceptorAdapter() {
-
-			@Override
-			public IDeleterActionBuilder<Object> deleterActionBuilder(
-				final IBeanRelationNodeModel<Object, Object> relationNode,
-				final IDeleterActionBuilder<Object> builder) {
-				return null;
-			}
-
-		});
+		builder.setDefaultDeleterAction(false);
 	}
 
 }
