@@ -37,6 +37,7 @@ import org.jowidgets.cap.ui.api.image.ImageResolver;
 import org.jowidgets.cap.ui.api.types.RelationRenderingPolicy;
 import org.jowidgets.cap.ui.api.widgets.IBeanFormBluePrint;
 import org.jowidgets.cap.ui.api.widgets.IBeanRelationTreeBluePrint;
+import org.jowidgets.cap.ui.api.widgets.IBeanRelationTreeDetailBluePrint;
 import org.jowidgets.cap.ui.api.widgets.IBeanTableBluePrint;
 import org.jowidgets.modeler.common.dto.IconDescriptor;
 import org.jowidgets.modeler.common.icons.ModelerIconsCommon;
@@ -89,6 +90,16 @@ public final class ModelerDefaultsInitializer {
 				setupBuilder.setEditable(true);
 			}
 		});
+
+		BPF.addDefaultsInitializer(
+				IBeanRelationTreeDetailBluePrint.class,
+				new IDefaultInitializer<IBeanRelationTreeDetailBluePrint<?>>() {
+					@Override
+					public void initialize(final IBeanRelationTreeDetailBluePrint<?> bluePrint) {
+						bluePrint.setDefaultCopyAction(true);
+						bluePrint.setDefaultLinkPasteAction(true);
+					}
+				});
 
 		BPF.addDefaultsInitializer(IBeanRelationTreeBluePrint.class, new IDefaultInitializer<IBeanRelationTreeBluePrint<?>>() {
 			@Override
