@@ -34,6 +34,7 @@ import org.jowidgets.cap.ui.api.plugin.IAttributePlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanFormPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanProxyLabelRendererPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanProxyPlugin;
+import org.jowidgets.cap.ui.api.plugin.IBeanRelationTreePlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuContributionPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanTableMenuInterceptorPlugin;
 import org.jowidgets.cap.ui.api.plugin.IBeanTableModelBuilderPlugin;
@@ -48,7 +49,9 @@ import org.jowidgets.modeler.common.bean.IEntityModel;
 import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
 import org.jowidgets.modeler.common.bean.IIcon;
 import org.jowidgets.modeler.common.bean.IIconSet;
+import org.jowidgets.modeler.common.bean.ILookUp;
 import org.jowidgets.modeler.common.bean.ILookUpElement;
+import org.jowidgets.modeler.common.bean.IRelationModel;
 import org.jowidgets.modeler.ui.plugins.attribute.EntityModelAttributesPlugin;
 import org.jowidgets.modeler.ui.plugins.attribute.GlobalModelerAttributesPlugin;
 import org.jowidgets.modeler.ui.plugins.attribute.IconAttributesPlugin;
@@ -56,9 +59,12 @@ import org.jowidgets.modeler.ui.plugins.bean.EntityModelRendererPlugin;
 import org.jowidgets.modeler.ui.plugins.bean.IconRendererPlugin;
 import org.jowidgets.modeler.ui.plugins.bean.LookUpElementRendererPlugin;
 import org.jowidgets.modeler.ui.plugins.model.BeanTableModelBuilderPlugin;
+import org.jowidgets.modeler.ui.plugins.table.DisableCopyPasteTableMenuInterceptorPlugin;
 import org.jowidgets.modeler.ui.plugins.table.IconSetMenuContributionPlugin;
 import org.jowidgets.modeler.ui.plugins.table.PropertyModelMenuContributionPlugin;
 import org.jowidgets.modeler.ui.plugins.table.PropertyModelMenuInterceptorPlugin;
+import org.jowidgets.modeler.ui.plugins.tree.DisableCopyPasteTreeMenuInterceptorPlugin;
+import org.jowidgets.modeler.ui.plugins.tree.DisableDeleteTreeMenuInterceptorPlugin;
 import org.jowidgets.plugin.tools.PluginProviderBuilder;
 import org.jowidgets.plugin.tools.PluginProviderHolder;
 
@@ -88,6 +94,23 @@ public final class ModelerPluginProviderHolder extends PluginProviderHolder {
 
 			addBeanTableMenuInterceptorPlugin(new PropertyModelMenuInterceptorPlugin(), IEntityPropertyModel.class);
 
+			addBeanTableMenuInterceptorPlugin(
+					new DisableCopyPasteTableMenuInterceptorPlugin(),
+					IRelationModel.class,
+					ILookUp.class,
+					IIcon.class,
+					IIconSet.class);
+
+			addBeanRelationTreePlugin(
+					new DisableCopyPasteTreeMenuInterceptorPlugin(),
+					IEntityModel.class,
+					IRelationModel.class,
+					ILookUp.class,
+					IIcon.class,
+					IIconSet.class);
+
+			addBeanRelationTreePlugin(new DisableDeleteTreeMenuInterceptorPlugin(), IRelationModel.class);
+
 			addAttributesPlugin(new IconAttributesPlugin(), IIcon.class);
 			addAttributesPlugin(new EntityModelAttributesPlugin(), IEntityModel.class);
 
@@ -114,6 +137,10 @@ public final class ModelerPluginProviderHolder extends PluginProviderHolder {
 					plugin,
 					IBeanTableMenuInterceptorPlugin.BEAN_TYPE_PROPERTY_KEY,
 					beanTypes);
+		}
+
+		private void addBeanRelationTreePlugin(final IBeanRelationTreePlugin<?> plugin, final Class<?>... beanTypes) {
+			addPlugin(IBeanRelationTreePlugin.ID, plugin, IBeanRelationTreePlugin.BEAN_TYPE_PROPERTY_KEY, beanTypes);
 		}
 
 		private void addAttributesPlugin(final IAttributePlugin plugin, final Class<?>... beanTypes) {
