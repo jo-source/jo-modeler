@@ -31,10 +31,10 @@ package org.jowidgets.modeler.ui.icons;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import org.jowidgets.common.image.IImageStreamProvider;
+import org.jowidgets.common.image.IImageStreamFactoryProvider;
 import org.jowidgets.modeler.common.dto.IconDescriptor;
 
-public final class DynamicIcon implements IImageStreamProvider {
+public final class DynamicIcon implements IImageStreamFactoryProvider {
 
 	private final IconDescriptor iconDescriptor;
 
@@ -43,7 +43,7 @@ public final class DynamicIcon implements IImageStreamProvider {
 	}
 
 	@Override
-	public InputStream getInputStream() {
+	public InputStream createInputStream() {
 		return new ByteArrayInputStream(iconDescriptor.getBytes());
 	}
 
