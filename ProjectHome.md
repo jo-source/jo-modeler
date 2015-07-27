@@ -1,0 +1,1 @@
+Allows to create a data model that will be used to run a crud application.
