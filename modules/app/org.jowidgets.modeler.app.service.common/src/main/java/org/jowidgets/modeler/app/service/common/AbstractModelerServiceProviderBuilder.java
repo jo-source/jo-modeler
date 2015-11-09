@@ -33,6 +33,8 @@ import org.jowidgets.cap.common.api.execution.IExecutableChecker;
 import org.jowidgets.cap.common.api.service.IEntityService;
 import org.jowidgets.cap.common.api.service.IExecutorService;
 import org.jowidgets.cap.common.api.service.ILookUpService;
+import org.jowidgets.cap.common.api.service.IPasswordChangeService;
+import org.jowidgets.cap.security.service.tools.DefaultAuthorizationProviderService;
 import org.jowidgets.cap.service.api.bean.IBeanAccess;
 import org.jowidgets.cap.service.api.executor.IBeanListExecutor;
 import org.jowidgets.cap.service.hibernate.api.HibernateServiceToolkit;
@@ -43,7 +45,7 @@ import org.jowidgets.modeler.common.bean.IEntityPropertyModel;
 import org.jowidgets.modeler.common.checker.MovePropertiesUpExecutableChecker;
 import org.jowidgets.modeler.common.executor.ModelerExecutorServices;
 import org.jowidgets.modeler.common.lookup.LookUpIds;
-import org.jowidgets.modeler.common.security.ModelerAuthKeys;
+import org.jowidgets.modeler.common.security.AuthorizationProviderServiceId;
 import org.jowidgets.modeler.common.service.IIconCreatorService;
 import org.jowidgets.modeler.service.entity.ModelerEntityServiceBuilder;
 import org.jowidgets.modeler.service.executor.MovePropertiesDownExecutor;
@@ -58,17 +60,12 @@ import org.jowidgets.modeler.service.persistence.ModelerPersistenceUnitNames;
 import org.jowidgets.modeler.service.persistence.bean.EntityPropertyModel;
 import org.jowidgets.service.api.IServiceId;
 import org.jowidgets.service.api.IServicesDecoratorProvider;
-import org.jowidgets.useradmin.service.data.UserAdminDataGenerator;
-import org.jowidgets.useradmin.service.persistence.UseradminPersistenceUnitNames;
+import org.jowidgets.useradmin.rest.client.service.PasswordChangeService;
 
 public abstract class AbstractModelerServiceProviderBuilder extends CapServiceProviderBuilder {
 
 	public AbstractModelerServiceProviderBuilder() {
-		//create modeler admin if not yet exists
-		new UserAdminDataGenerator().createDataIfRoleNotExists(
-				UseradminPersistenceUnitNames.USER_ADMIN,
-				ModelerAuthKeys.MODELER_ADMIN_GROUP,
-				ModelerAuthKeys.ALL_AUTHORIZATIONS);
+		addService(AuthorizationProviderServiceId.ID, new DefaultAuthorizationProviderService<String>());
 
 		addService(IEntityService.ID, new ModelerEntityServiceBuilder(this).build());
 
@@ -85,6 +82,8 @@ public abstract class AbstractModelerServiceProviderBuilder extends CapServicePr
 				new MovePropertiesUpExecutor(),
 				new MovePropertiesUpExecutableChecker());
 		addEntityPropertyExecutorService(ModelerExecutorServices.MOVE_ENTITY_PROPERTIES_DOWN, new MovePropertiesDownExecutor());
+
+		addService(IPasswordChangeService.ID, new PasswordChangeService());
 
 		addServiceDecorator(createJpaServiceDecoratorProvider());
 		addServiceDecorator(createCancelServiceDecoratorProvider());

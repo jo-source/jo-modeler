@@ -30,9 +30,9 @@ package org.jowidgets.modeler.starter.client.common;
 
 import org.jowidgets.cap.common.api.service.IAuthorizationProviderService;
 import org.jowidgets.cap.tools.starter.client.AbstractRemoteLoginService;
+import org.jowidgets.modeler.common.security.AuthorizationProviderServiceId;
 import org.jowidgets.modeler.ui.messages.ModelerMessages;
 import org.jowidgets.service.api.IServiceId;
-import org.jowidgets.useradmin.common.security.AuthorizationProviderServiceId;
 
 public class ModelerRemoteLoginService extends AbstractRemoteLoginService {
 

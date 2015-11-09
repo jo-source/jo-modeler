@@ -35,6 +35,7 @@ import org.jowidgets.i18n.api.MessageProvider;
 public final class ModelerMessages {
 
 	public static IMessage MODELER_LABEL = getMessage("Modeler.label");
+	public static IMessage SETTINGS = getMessage("Modeler.settings");
 
 	private static IMessageProvider messageProvider;
 

@@ -20,9 +20,14 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>org.jowidgets.useradmin</groupId>
-			<artifactId>org.jowidgets.useradmin.service.persistence</artifactId>
-			<version>${useradmin.version}</version>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.cap.service.jpa.api</artifactId>
+			<version>${jocap.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
 		</dependency>
 		
 	</dependencies>

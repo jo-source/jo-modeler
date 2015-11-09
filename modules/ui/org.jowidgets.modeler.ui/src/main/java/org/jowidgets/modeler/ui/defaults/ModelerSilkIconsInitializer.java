@@ -32,15 +32,12 @@ import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.modeler.ui.icons.ModelerIcons;
-import org.jowidgets.useradmin.ui.defaults.UserAdminSilkIconsInitializer;
 
 public final class ModelerSilkIconsInitializer {
 
 	private ModelerSilkIconsInitializer() {}
 
 	public static void initialize() {
-		UserAdminSilkIconsInitializer.initialize();
-
 		final IImageRegistry registry = Toolkit.getImageRegistry();
 
 		registry.registerImageConstant(ModelerIcons.MODELER_ICON, SilkIcons.TABLE);

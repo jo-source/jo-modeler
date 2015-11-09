@@ -18,22 +18,10 @@
 			<artifactId>org.jowidgets.modeler.service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>org.jowidgets.useradmin</groupId>
-			<artifactId>org.jowidgets.useradmin.service</artifactId>
-			<version>${useradmin.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jowidgets.useradmin</groupId>
-			<artifactId>org.jowidgets.useradmin.service.authentication</artifactId>
-			<version>${useradmin.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jowidgets.useradmin</groupId>
-			<artifactId>org.jowidgets.useradmin.service.authorization</artifactId>
+			<artifactId>org.jowidgets.useradmin.rest.client</artifactId>
 			<version>${useradmin.version}</version>
 		</dependency>
 

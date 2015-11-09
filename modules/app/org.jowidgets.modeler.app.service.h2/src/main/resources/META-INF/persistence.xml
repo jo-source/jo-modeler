@@ -7,7 +7,7 @@
 		
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		
-		<class>org.jowidgets.useradmin.service.persistence.bean.Bean</class>
+		<class>org.jowidgets.modeler.service.persistence.bean.Bean</class>
 		<class>org.jowidgets.modeler.service.persistence.bean.EntityModel</class>
 		<class>org.jowidgets.modeler.service.persistence.bean.AbstractPropertyModel</class>
 		<class>org.jowidgets.modeler.service.persistence.bean.EntityPropertyModel</class>

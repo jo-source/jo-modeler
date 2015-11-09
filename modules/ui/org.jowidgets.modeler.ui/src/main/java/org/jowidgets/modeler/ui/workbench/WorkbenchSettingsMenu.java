@@ -28,14 +28,14 @@
 
 package org.jowidgets.modeler.ui.workbench;
 
+import org.jowidgets.modeler.ui.action.UserAdminPasswordChangeAction;
+import org.jowidgets.modeler.ui.messages.ModelerMessages;
 import org.jowidgets.tools.model.item.MenuModel;
-import org.jowidgets.useradmin.ui.action.UserAdminPasswordChangeAction;
-import org.jowidgets.useradmin.ui.messages.UserAdminMessages;
 
 public final class WorkbenchSettingsMenu extends MenuModel {
 
 	public WorkbenchSettingsMenu() {
-		setText(UserAdminMessages.SETTINGS.get());
+		setText(ModelerMessages.SETTINGS.get());
 		addAction(new UserAdminPasswordChangeAction());
 	}
 

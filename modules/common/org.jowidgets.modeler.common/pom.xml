@@ -14,9 +14,21 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>org.jowidgets.useradmin</groupId>
-			<artifactId>org.jowidgets.useradmin.common</artifactId>
-			<version>${useradmin.version}</version>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.cap.common</artifactId>
+			<version>${jocap.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.service</artifactId>
+			<version>${jocap.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.cap.security.common</artifactId>
+			<version>${jocap.version}</version>
 		</dependency>
 
 	</dependencies>

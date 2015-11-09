@@ -28,7 +28,9 @@
 
 package org.jowidgets.modeler.app.ui.workbench;
 
+import org.jowidgets.addons.icons.silkicons.SilkIconsSubstitude;
 import org.jowidgets.cap.ui.tools.workbench.CapWorkbenchModelBuilder;
+import org.jowidgets.modeler.ui.action.UserAdminPasswordChangeAction;
 import org.jowidgets.modeler.ui.application.ModelApplicationFactory;
 import org.jowidgets.modeler.ui.application.ModelerApplicationFactory;
 import org.jowidgets.modeler.ui.defaults.ModelerDefaultsInitializer;
@@ -37,8 +39,6 @@ import org.jowidgets.modeler.ui.icons.ModelerIcons;
 import org.jowidgets.modeler.ui.lookup.LookupInitializer;
 import org.jowidgets.modeler.ui.messages.ModelerMessages;
 import org.jowidgets.modeler.ui.workbench.WorkbenchSettingsMenu;
-import org.jowidgets.useradmin.ui.action.UserAdminPasswordChangeAction;
-import org.jowidgets.useradmin.ui.application.UserAdminApplicationFactory;
 import org.jowidgets.workbench.api.IWorkbench;
 import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.api.IWorkbenchFactory;
@@ -69,6 +69,8 @@ public final class ModelerWorkbench implements IWorkbenchFactory {
 		SLF4JBridgeHandler.removeHandlersForRootLogger();
 		SLF4JBridgeHandler.install();
 
+		SilkIconsSubstitude.substitude();
+
 		ModelerSilkIconsInitializer.initialize();
 		ModelerDefaultsInitializer.initialize(autoCompletionCombos);
 
@@ -95,10 +97,6 @@ public final class ModelerWorkbench implements IWorkbenchFactory {
 				final IWorkbenchApplicationModel modelerAppp = ModelerApplicationFactory.create();
 				if (modelerAppp.getChildrenCount() > 0) {
 					model.addApplication(modelerAppp);
-				}
-				final IWorkbenchApplicationModel userAdminApp = UserAdminApplicationFactory.create();
-				if (userAdminApp.getChildrenCount() > 0) {
-					model.addApplication(userAdminApp);
 				}
 			}
 		});

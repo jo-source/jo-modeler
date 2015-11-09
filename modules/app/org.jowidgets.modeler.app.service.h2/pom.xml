@@ -26,12 +26,6 @@
 		</dependency> 
 		
 		<dependency>
-			<groupId>org.jowidgets.useradmin</groupId>
-			<artifactId>org.jowidgets.useradmin.app.service.h2</artifactId>
-			<version>${useradmin.version}</version>
-		</dependency> 
-		
-		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
