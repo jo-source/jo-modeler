@@ -29,10 +29,12 @@
 package org.jowidgets.modeler.starter.client.common;
 
 import org.jowidgets.cap.common.api.service.IAuthorizationProviderService;
+import org.jowidgets.cap.common.api.service.IEntityService;
 import org.jowidgets.cap.tools.starter.client.AbstractRemoteLoginService;
 import org.jowidgets.modeler.common.security.AuthorizationProviderServiceId;
 import org.jowidgets.modeler.ui.messages.ModelerMessages;
 import org.jowidgets.service.api.IServiceId;
+import org.jowidgets.service.api.ServiceProvider;
 
 public class ModelerRemoteLoginService extends AbstractRemoteLoginService {
 
@@ -43,6 +45,15 @@ public class ModelerRemoteLoginService extends AbstractRemoteLoginService {
 	@Override
 	protected IServiceId<? extends IAuthorizationProviderService<?>> getAuthorizationProviderServiceId() {
 		return AuthorizationProviderServiceId.ID;
+	}
+
+	@Override
+	public void afterLoginSuccess() {
+		//Fill entity info cache after successful login in login thread
+		//to avoid entity service access later in the ui thread.
+		final IEntityService service = ServiceProvider.getService(IEntityService.ID);
+		service.clearCache();
+		service.getEntityInfos();
 	}
 
 }
