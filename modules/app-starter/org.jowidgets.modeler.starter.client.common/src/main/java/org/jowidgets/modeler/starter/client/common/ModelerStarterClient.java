@@ -40,7 +40,7 @@ public final class ModelerStarterClient {
 	}
 
 	public static void startClient(final boolean rwt, final boolean autoCompletionCombos) {
-		new CapClientWorkbenchRunner("http://localhost:8080/").run(new ModelerWorkbench(rwt, autoCompletionCombos));
+		new CapClientWorkbenchRunner("http://localhost:8081/").run(new ModelerWorkbench(rwt, autoCompletionCombos));
 	}
 
 }

@@ -35,6 +35,6 @@ public final class ModelerStarterServerH2 {
 	private ModelerStarterServerH2() {}
 
 	public static void main(final String[] args) throws Exception {
-		CapServerStarter.startServer();
+		CapServerStarter.startServer(8081);
 	}
 }
