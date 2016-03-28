@@ -61,10 +61,14 @@ import org.jowidgets.modeler.service.persistence.bean.EntityPropertyModel;
 import org.jowidgets.service.api.IServiceId;
 import org.jowidgets.service.api.IServicesDecoratorProvider;
 import org.jowidgets.useradmin.rest.client.service.PasswordChangeService;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
 public abstract class AbstractModelerServiceProviderBuilder extends CapServiceProviderBuilder {
 
 	public AbstractModelerServiceProviderBuilder() {
+		SLF4JBridgeHandler.removeHandlersForRootLogger();
+		SLF4JBridgeHandler.install();
+
 		addService(AuthorizationProviderServiceId.ID, new DefaultAuthorizationProviderService<String>());
 
 		addService(IEntityService.ID, new ModelerEntityServiceBuilder(this).build());
