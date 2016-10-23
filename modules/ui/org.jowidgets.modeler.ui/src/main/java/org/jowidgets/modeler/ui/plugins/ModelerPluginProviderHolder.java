@@ -78,7 +78,7 @@ public final class ModelerPluginProviderHolder extends PluginProviderHolder {
 
 	private static final class ModelerPluginProviderBuilder extends PluginProviderBuilder {
 
-		public ModelerPluginProviderBuilder() {
+		ModelerPluginProviderBuilder() {
 			addPlugin(IAttributePlugin.ID, new GlobalModelerAttributesPlugin());
 
 			addPlugin(IBeanTableModelBuilderPlugin.ID, new BeanTableModelBuilderPlugin());

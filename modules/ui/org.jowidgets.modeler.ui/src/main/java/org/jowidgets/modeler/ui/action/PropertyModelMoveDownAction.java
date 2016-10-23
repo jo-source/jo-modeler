@@ -91,7 +91,7 @@ public final class PropertyModelMoveDownAction extends ActionWrapper {
 		private final IBeanTableModel<IPropertyModel> model;
 		private final Map<Long, Integer> maxValues;
 
-		public PropertyModelMoveDownEnabledChecker(final IBeanTableModel<IPropertyModel> model) {
+		PropertyModelMoveDownEnabledChecker(final IBeanTableModel<IPropertyModel> model) {
 			Assert.paramNotNull(model, "model");
 			this.model = model;
 			this.maxValues = new HashMap<Long, Integer>();

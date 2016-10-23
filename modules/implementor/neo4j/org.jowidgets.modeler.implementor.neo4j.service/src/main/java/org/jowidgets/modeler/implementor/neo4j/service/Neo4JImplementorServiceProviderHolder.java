@@ -42,7 +42,7 @@ public final class Neo4JImplementorServiceProviderHolder extends DefaultServiceP
 	}
 
 	static class Neo4JImplementorServiceProviderBuilder extends CapServiceProviderBuilder {
-		public Neo4JImplementorServiceProviderBuilder() {
+		Neo4JImplementorServiceProviderBuilder() {
 			final String persistenceUnitName = ModelerPersistenceUnitNames.MODELER;
 			Neo4JImplementorLookUpServicesBuilder.registerLookUpServices(this, persistenceUnitName);
 			addService(IEntityService.ID, new Neo4JImplementorEntityServiceBuilder(this, persistenceUnitName).build());

@@ -105,7 +105,7 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 
 	private boolean onLoad;
 
-	public IconContentCreator() {
+	IconContentCreator() {
 		final IEntityService entityService = ServiceProvider.getService(IEntityService.ID);
 		if (entityService == null) {
 			throw new IllegalStateException("No entity service found");
@@ -252,7 +252,8 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 		int count = 0;
 		while (iterator.hasNext() && count < 500) {
 			final IBeanDto iconDto = iterator.next();
-			final IconDescriptor iconDescriptor = (IconDescriptor) iconDto.getValue(org.jowidgets.modeler.common.bean.IIcon.DESCRIPTOR_PROPERTY);
+			final IconDescriptor iconDescriptor = (IconDescriptor) iconDto.getValue(
+					org.jowidgets.modeler.common.bean.IIcon.DESCRIPTOR_PROPERTY);
 			if (iconDescriptor != null) {
 				final IIcon icon = content.add(BPF.icon().setIcon(new DynamicIcon(iconDescriptor)));
 				icon.setToolTipText(iconDescriptor.getIconLabel() + " (" + iconDescriptor.getIconSetLabel() + ")");
@@ -332,8 +333,10 @@ final class IconContentCreator implements IInputContentCreator<IconDescriptor> {
 	private IFilter createIconFilter() {
 		final String icon = iconFilterField.getValue();
 		if (!EmptyCheck.isEmpty(icon)) {
-			return ArithmeticFilter.create(org.jowidgets.modeler.common.bean.IIcon.KEY_PROPERTY, ArithmeticOperator.EQUAL, icon
-				+ "*");
+			return ArithmeticFilter.create(
+					org.jowidgets.modeler.common.bean.IIcon.KEY_PROPERTY,
+					ArithmeticOperator.EQUAL,
+					icon + "*");
 		}
 		else {
 			return null;
