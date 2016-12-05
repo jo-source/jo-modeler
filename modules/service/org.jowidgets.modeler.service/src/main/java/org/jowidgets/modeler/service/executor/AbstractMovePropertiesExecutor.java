@@ -68,6 +68,6 @@ abstract class AbstractMovePropertiesExecutor implements IBeanListExecutor<Abstr
 		return properties;
 	}
 
-	protected abstract void moveForParentGroup(final ArrayList<AbstractPropertyModel> properties);
+	protected abstract void moveForParentGroup(ArrayList<AbstractPropertyModel> properties);
 
 }
